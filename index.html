@@ -5,7 +5,7 @@
   <title>بازی کلمات طاویتا</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- فونت وزیر -->
+  <!-- فونت وزیرمتن -->
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn/Vazirmatn-font-face.css" rel="stylesheet" />
 
   <style>
@@ -854,7 +854,7 @@
         <span>افسانه‌ای</span>
       </div>
 
-      <!-- ماموریت در کادر زیبا -->
+      <!-- ماموریت -->
       <div id="missionLine" class="mission-line">
         <span class="mission-badge" id="missionBadge">ماموریت این بخش</span>
         <span id="missionText">سعی کن این بخش را بدون هیچ اشتباهی رد کنی.</span>
@@ -930,7 +930,7 @@
         اگر همهٔ مراحل فعلی را رد کنی، <b>استاد کلمات طاویتا</b> می‌شوی 😉
       </div>
 
-      <!-- شروع از اول بازی زیر متن رَنک -->
+      <!-- شروع از اول بازی -->
       <button id="resetBtn" class="primary-btn secondary-btn" type="button">
         🔄 شروع از اول بازی
       </button>
@@ -1018,13 +1018,28 @@
   </div>
 </div>
 
-<!-- صداها -->
+<!-- صداهای افکت کوتاه -->
 <audio id="soundClick"   src="https://cdnfa.com/irangiah/a9be/uploads/tavita/ui-click-97915.mp3" preload="auto"></audio>
-<audio id="soundCorrect" src="https://cdnfa.com/irangiah/a9be/uploads/tavita/success-1-6297.mp3" preload="auto"></audio>
-<audio id="soundLevelUp" src="https://cdnfa.com/irangiah/a9be/uploads/tavita/level-up-191997.mp3" preload="auto"></audio>
+<!-- دکمه ثبت کلمه (دیلینگ) -->
+<audio id="soundCorrect" src="https://cdnfa.com/irangiah/a9be/uploads/tavita/level-up-191997.mp3" preload="auto"></audio>
+<!-- مرحله بعد -->
+<audio id="soundLevelUp" src="https://cdnfa.com/irangiah/a9be/uploads/tavita/success-1-6297.mp3" preload="auto"></audio>
+<!-- قهرمان شدن -->
 <audio id="soundFinal"   src="https://cdnfa.com/irangiah/a9be/uploads/tavita/success-fanfare-trumpets-6185.mp3" preload="auto"></audio>
+
 <audio id="soundTimer"   src="https://cdnfa.com/irangiah/a9be/uploads/new6/new7/analog-timer-74998.mp3" preload="auto" loop></audio>
 <audio id="soundNoWord"  src="https://cdnfa.com/irangiah/a9be/uploads/new6/new7/elevenlabs-2025-11-16t04-57-46-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+
+<!-- صداهای گوینده (الهه) -->
+<audio id="voiceIntro"      src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-37-50-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceLevelDone"  src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-27-15-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceRestart"    src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-35-11-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceCantBuild"  src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-24-27-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceNextLevel"  src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-32-57-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceTimeUp"     src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-31-19-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceRepeat"     src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-26-25-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceModeOn"     src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-30-13-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
+<audio id="voiceChampion"   src="https://cdnfa.com/irangiah/a9be/uploads/new6/new9/elevenlabs-2025-11-16t05-39-34-mark-convoai-pvc-sp100-s50-sb75-v3.mp3" preload="auto"></audio>
 
 <script>
   // ست‌های کاراکتر بر اساس رَنک + عکس جابه‌جایی
@@ -1167,8 +1182,8 @@
   let gameMode = "normal";
   let timerId = null;
   let timeLeft = 0;
-  const TIME_PER_WORD = 10; // ثانیه برای هر کلمه در مود زمان‌دار
-  let modeLocked = false;   // بعد از اولین کلمه قفل می‌شود
+  const TIME_PER_WORD = 10;
+  let modeLocked = false;
 
   const scoreTextEl     = document.getElementById("scoreText");
   const levelNumberEl   = document.getElementById("levelNumber");
@@ -1237,6 +1252,17 @@
   const timerLabel    = document.getElementById("timerLabel");
   const modeHint      = document.getElementById("modeHint");
 
+  // صداهای گوینده
+  const voiceIntro     = document.getElementById("voiceIntro");
+  const voiceLevelDone = document.getElementById("voiceLevelDone");
+  const voiceRestart   = document.getElementById("voiceRestart");
+  const voiceCantBuild = document.getElementById("voiceCantBuild");
+  const voiceNextLevel = document.getElementById("voiceNextLevel");
+  const voiceTimeUp    = document.getElementById("voiceTimeUp");
+  const voiceRepeat    = document.getElementById("voiceRepeat");
+  const voiceModeOn    = document.getElementById("voiceModeOn");
+  const voiceChampion  = document.getElementById("voiceChampion");
+
   totalLevelsEl.textContent = totalLevels.toString();
 
   function loadSoundSetting() {
@@ -1285,13 +1311,24 @@
     playSafe(soundClick);
   });
 
-  function showPopup(key, overrideText) {
+  // پاپ‌آپ عمومی با امکان جلوگیری از پخش ویس
+  function showPopup(key, overrideText, options) {
     const data = POPUPS[key];
     if (!data) return;
     popupImageEl.src = data.img;
     popupTextEl.innerHTML = overrideText || data.text;
     popupBtnLabel.textContent = "باشه، بزن بریم 🚀";
     popupOverlay.style.display = "flex";
+
+    const skipVoice = options && options.skipVoice;
+
+    if (!skipVoice) {
+      if (key === "intro") {
+        playSafe(voiceIntro);
+      } else if (key === "final") {
+        playSafe(voiceChampion);
+      }
+    }
   }
 
   function hidePopup() {
@@ -1532,9 +1569,6 @@
     } catch (e) {}
   }
 
-  const recordLevelEl2 = recordLevelEl;
-  const recordScoreEl2 = recordScoreEl;
-
   function showNamePopupIfNeeded() {
     if (!playerName) {
       nameOverlay.style.display = "flex";
@@ -1542,10 +1576,6 @@
       playerNameInput.focus();
     }
   }
-
-  const recordLevelEl_ = recordLevelEl2;
-
-  const recordScoreEl_ = recordScoreEl2;
 
   function updateMissionForLevel() {
     const lvl = currentLevelIndex + 1;
@@ -1622,6 +1652,7 @@
     renderFoundWords();
     setStatus("زمان تموم شد! این مرحله از اول شروع شد ⏱️", "err");
     setTavita("error", "اوه، زمان تموم شد! بیا یک بار دیگه از اول این مرحله رو بزنیم 😉");
+    playSafe(voiceTimeUp);
     saveGameState();
   }
 
@@ -1784,6 +1815,7 @@
       setTavita("error", "حروفش جور درنمیاد؛ فقط از همین حروف استفاده کن 😉");
       missionHadMistake = true;
       breakComboOnError();
+      playSafe(voiceCantBuild);
       saveGameState();
       return;
     }
@@ -1801,6 +1833,7 @@
       setTavita("error", "این رو قبلاً گفتی؛ یک چیز تازه بگو 😊");
       missionHadMistake = true;
       breakComboOnError();
+      playSafe(voiceRepeat);
       saveGameState();
       return;
     }
@@ -1829,8 +1862,8 @@
       "آفرین! یک کلمهٔ تازه به لیست اضافه شد 👏✨"
     );
 
-    // صدای ثبت کلمهٔ درست → دیلینگ
-    playSafe(soundClick);
+    // صدای ثبت کلمهٔ درست → دیلینگ اختصاصی
+    playSafe(soundCorrect);
     checkMissionOnCorrectWord(w);
     saveGameState();
 
@@ -1842,6 +1875,7 @@
         (playerName ? (playerName + "، ") : "") +
         "این مرحله رو ترکوندی! آماده‌ای بریم سراغ بعدی؟ 🏅"
       );
+      playSafe(voiceLevelDone);
       updateRecord();
       saveGameState();
     }
@@ -1876,7 +1910,6 @@
       return;
     }
 
-    // کم کردن امتیاز فقط وقتی راهنما داریم
     score = Math.max(0, score - 5);
     scoreTextEl.textContent = score.toString();
 
@@ -1894,7 +1927,9 @@
   });
 
   nextBtn.addEventListener("click", () => {
+    // صدای «مرحله بعد» + ویس مربوطه
     playSafe(soundLevelUp);
+    playSafe(voiceNextLevel);
     clearTimer();
     if (currentLevelIndex < levels.length - 1) {
       currentLevelIndex++;
@@ -1931,7 +1966,9 @@
   });
 
   resetBtn.addEventListener("click", () => {
+    // فقط صدای کلیک + ویس «بازی از اول شروع شد»
     playSafe(soundClick);
+    playSafe(voiceRestart);
     clearTimer();
     currentLevelIndex = 0;
     score = 0;
@@ -1944,9 +1981,13 @@
     clearGameState();
     initLevel(true);
     if (modeHint) modeHint.classList.remove("hidden");
-    showPopup("intro",
+
+    // پاپ‌آپ شروع از اول بدون صدای خوش‌آمدگویی
+    showPopup(
+      "intro",
       (playerName ? (playerName + "، ") : "") +
-      "بازی از اول شروع شد؛ بیا این بار رکورد قبلی‌ات رو هم بترکونی 💪"
+      "بازی از اول شروع شد؛ بیا این بار رکورد قبلی‌ات رو هم بترکونی 💪",
+      { skipVoice: true }
     );
   });
 
@@ -1964,6 +2005,7 @@
       modeToggleBtn.textContent = "⏱️ مود زمان‌دار";
       if (modeHint) modeHint.classList.add("hidden");
       startLevelTimer();
+      playSafe(voiceModeOn);
     } else {
       gameMode = "normal";
       modeToggleBtn.textContent = "🎮 مود عادی";
@@ -2007,6 +2049,18 @@
   helpCloseBtn.addEventListener("click", () => {
     playSafe(soundClick);
     helpOverlay.style.display = "none";
+  });
+
+  saveNameBtn.addEventListener("click", () => {
+    const name = playerNameInput.value.trim();
+    if (name) {
+      playerName = name;
+      savePlayerName();
+    }
+    nameOverlay.style.display = "none";
+    showPopup("intro",
+      `به بازی خوش اومدی ${playerName || ""} 💜 الان شاگرد کلمات طاویتا هستی. این مرحله رو رد کنی، استاد کلمات طاویتا می‌شی!`
+    );
   });
 
   window.onload = function () {
