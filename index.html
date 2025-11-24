@@ -476,6 +476,48 @@
   box-shadow:0 20px 40px rgba(0,0,0,.9);
 }
 
+
+.intro-loader{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:150;
+}
+
+.intro-loader-bar{
+  width:60%;
+  max-width:260px;
+  height:6px;
+  border-radius:999px;
+  background:#111827;
+  overflow:hidden;
+  box-shadow:0 0 18px rgba(59,130,246,0.9);
+  margin-bottom:10px;
+}
+
+.intro-loader-fill{
+  width:40%;
+  height:100%;
+  border-radius:999px;
+  background:linear-gradient(90deg,#3b82f6,#a855f7,#f97316);
+  animation:introLoading 1.1s linear infinite;
+}
+
+.intro-loader-text{
+  font-size:13px;
+  color:#e5e7eb;
+  opacity:0.9;
+}
+
+@keyframes introLoading{
+  0%{ transform:translateX(-120%); }
+  100%{ transform:translateX(220%); }
+}
+    
 .intro-controls{
   margin-top:12px;
   display:flex;
@@ -512,6 +554,14 @@
   </style>
 </head>
 <body>
+
+<div id="introLoader" class="intro-loader">
+  <div class="intro-loader-bar">
+    <div class="intro-loader-fill"></div>
+  </div>
+  <div class="intro-loader-text">در حال آماده‌سازی نبرد...</div>
+</div>
+  
 <!-- صفحه اینتروی ویدئویی -->
   <div id="introScreen" class="intro-screen">
     <video
@@ -733,9 +783,19 @@
 const introScreen = document.getElementById("introScreen");
 const gameWrapper = document.getElementById("gameWrapper");
 const introVideo   = document.getElementById("introVideo");
-const introMuteBtn = document.getElementById("introMuteBtn");
+const introLoader  = document.getElementById("introLoader");
+    const introMuteBtn = document.getElementById("introMuteBtn");
 const introSkipBtn = document.getElementById("introSkipBtn");
 
+introVideo.addEventListener("loadeddata", () => {
+  introLoader.style.transition = "opacity 0.3s ease";
+  introLoader.style.opacity = "0";
+  setTimeout(() => {
+    introLoader.style.display = "none";
+  }, 300);
+});
+
+    
 function finishIntro(){
   const startSfx = document.getElementById("startSfx");
 
@@ -747,6 +807,15 @@ function finishIntro(){
     introScreen.style.display = "none";
     gameWrapper.classList.remove("hidden-game");
 
+
+// بعد از ظاهر شدن بازی، اسکرول به سمت دکمه‌ها
+    setTimeout(()=>{
+      try{
+        fireBtn.scrollIntoView({ behavior:"smooth", block:"end" });
+      }catch(e){}
+    }, 100);
+
+    
     // پخش صدای شروع (اگر مرورگر اجازه بده)
     if (startSfx) {
       startSfx.currentTime = 0;
@@ -878,8 +947,54 @@ introMuteBtn.addEventListener("click", ()=>{
     const tankImg = new Image();
     tankImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp";
 
-    const bossImages = Array(20).fill("https://cdnfa.com/irangiah/a9be/uploads/tank/ghool1.webp");
-    const bossImg = new Image();
+    const bossImages = [
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-1.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-2.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-3.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-4.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-5.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-6.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-7.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-8.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-9.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-10.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-11.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-12.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-13.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-14.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-15.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-16.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-17.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-18.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-19.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-20.webp"
+];
+
+// مینی‌باس‌ها (به ترتیب ۱ تا ۲۰)
+const miniBossImages = [
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss1.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss2.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss3.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss4.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss5.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss6.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss7.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss8.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss9.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss10.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss11.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss12.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss13.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss14.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss15.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss16.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss17.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss18.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss19.webp",
+  "https://cdnfa.com/irangiah/a9be/uploads/tank/mini-boss20.webp"
+];
+    
+const bossImg = new Image();
 
     // ======== وضعیت بازی ========
     let tank = { x:0,y:0,w:60,h:36,speed:4 };
@@ -936,7 +1051,8 @@ introMuteBtn.addEventListener("click", ()=>{
 
     let bossSpawned = false;
     let bossAlive = false;
-
+let miniBossSpawned = false;
+    
     const POWER_TYPES = ["shield","triple","slow","rocket"];
 
     let activePowerUps = { shield:false, triple:false, slow:false };
@@ -1110,6 +1226,30 @@ introMuteBtn.addEventListener("click", ()=>{
           return;
         }
 
+
+        else if(e.isMiniBoss){
+      const {x,y,w,h} = e;
+      if(e.img && e.img.complete && e.img.naturalWidth>0){
+        const scale = 0.7;
+        const iw = w * scale;
+        const ih = h * scale;
+        const ix = x + (w - iw)/2;
+        const iy = y + (h - ih)/2;
+        ctx.drawImage(e.img, ix, iy, iw, ih);
+      }else{
+        ctx.fillStyle = "#a855f7";
+        ctx.fillRect(x,y,w,h);
+      }
+
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 12px Vazir, Vazirmatn, system-ui";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "top";
+      ctx.fillText("مینی‌غول", x + w/2, y + 4);
+
+      return;
+    }
+    
         const grad = ctx.createLinearGradient(e.x,e.y,e.x+e.w,e.y+e.h);
         grad.addColorStop(0,e.colorStart);
         grad.addColorStop(1,e.colorEnd);
@@ -1183,6 +1323,27 @@ introMuteBtn.addEventListener("click", ()=>{
       });
     }
 
+function spawnMiniBoss(){
+  const lvl = LEVELS[currentLevelIndex];
+  const w = canvas.width * 0.45;
+  const h = canvas.height * 0.32;
+  const x = (canvas.width - w) / 2;
+  const y = -h - 20;
+
+  const img = new Image();
+  const src = miniBossImages[lvl.bossImgIndex] || miniBossImages[0];
+  img.src = src;
+
+  enemies.push({
+    x, y, w, h,
+    speed: enemyBaseSpeed,
+    isBoss: false,
+    isMiniBoss: true,
+    img
+  });
+}
+
+    
     function spawnEnemy(isBoss=false){
       if(isBoss){
         const lvl = LEVELS[currentLevelIndex];
@@ -1325,6 +1486,11 @@ introMuteBtn.addEventListener("click", ()=>{
       const now = performance.now();
       const lvl = LEVELS[currentLevelIndex];
 
+if(!miniBossSpawned && score >= lvl.goal * 0.35){
+        spawnMiniBoss();
+        miniBossSpawned = true;
+      }
+      
       if(!bossSpawned && score >= lvl.goal*0.65){
         spawnEnemy(true);
         bossSpawned=true;
@@ -1467,6 +1633,7 @@ introMuteBtn.addEventListener("click", ()=>{
       bullets=[]; enemies=[]; powerUps=[]; particles=[];
       score=0; lives=3;
       bossSpawned=false; bossAlive=false;
+      miniBossSpawned=false;
       hitFlash=0; shakeTime=0; bgOffset=0;
       rocketArmed=false;
 
@@ -1640,12 +1807,7 @@ introMuteBtn.addEventListener("click", ()=>{
     updateMotivation();
     setInterval(updateMotivation, 10000);
 
-    // اسکرول خودکار برای دیدن دکمه‌ها در موبایل
-    setTimeout(()=>{
-      try{
-        fireBtn.scrollIntoView({ behavior:"smooth", block:"end" });
-      }catch(e){}
-    }, 600);
+    
   </script>
 
 </body>
