@@ -1071,6 +1071,20 @@ let lives = 3;
 
 const MAX_LIVES = 9;
 const MAX_SLOW_ITEMS = 7;
+const SHOP_PRICES = {
+    triple: 300,  // شلیک سه‌تایی
+    rocket: 200,  // موشک
+    shield: 150,  // سپر
+    life:   750,  // جان
+    slow:   550   // زمان/کند کردن
+};
+
+// محدودیت خرید داخل هر اجرا
+let lifeBuys = 0;
+let slowBuys = 0;
+const MAX_LIFE_BUYS = 7;
+const MAX_SLOW_BUYS = 7;
+    
 
 // انبار آیتم‌ها
 let inventory = { shield:0, triple:0, rocket:0, slow:0 };
@@ -1483,7 +1497,7 @@ const h = canvas.height * 0.22;
       if(powerTimers[type]) clearTimeout(powerTimers[type]);
       powerTimers[type]=setTimeout(()=>{
         activePowerUps[type]=false;
-      }, type==="shield"?12000:type==="triple"?10000:8000);
+      }, type==="shield"?16000:type==="triple"?10000:8000);
     }
 
     function fireBullet(){
@@ -1874,29 +1888,75 @@ pauseBtn.addEventListener("click", ()=>{
 }
 
     // خرید آیتم‌ها -> فقط به انبار اضافه می‌شوند
-    buyTripleBtn.addEventListener("click", ()=>{
-      if(coins<60) return;
-      coins-=60; coinsEl.textContent=coins;
-      inventory.triple = (inventory.triple||0)+1;
-      updateInventoryUI();
-      saveState(); refreshShopUI();
-    });
+    // خرید شلیک سه‌تایی
+buyTripleBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.triple) return;
+  coins -= SHOP_PRICES.triple;
+  coinsEl.textContent = coins;
+  inventory.triple = (inventory.triple || 0) + 1;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
 
-    buyShieldBtn.addEventListener("click", ()=>{
-      if(coins<50) return;
-      coins-=50; coinsEl.textContent=coins;
-      inventory.shield = (inventory.shield||0)+1;
-      updateInventoryUI();
-      saveState(); refreshShopUI();
-    });
+// خرید موشک
+buyRocketBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.rocket) return;
+  coins -= SHOP_PRICES.rocket;
+  coinsEl.textContent = coins;
+  inventory.rocket = (inventory.rocket || 0) + 1;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
 
-    buyRocketBtn.addEventListener("click", ()=>{
-      if(coins<70) return;
-      coins-=70; coinsEl.textContent=coins;
-      inventory.rocket = (inventory.rocket||0)+1;
-      updateInventoryUI();
-      saveState(); refreshShopUI();
-    });
+// خرید سپر
+buyShieldBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.shield) return;
+  coins -= SHOP_PRICES.shield;
+  coinsEl.textContent = coins;
+  inventory.shield = (inventory.shield || 0) + 1;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
+
+// خرید جان
+buyLifeBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.life) return;
+  if(lifeBuys >= MAX_LIFE_BUYS) return;
+  if(lives >= MAX_LIVES) return;
+
+  coins -= SHOP_PRICES.life;
+  coinsEl.textContent = coins;
+
+  lives = Math.min(MAX_LIVES, lives + 1);
+  livesEl.textContent = lives;
+
+  lifeBuys++;
+  saveState();
+  refreshShopUI();
+});
+
+// خرید پاورآپ زمان (slow)
+buySlowBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.slow) return;
+  if(slowBuys >= MAX_SLOW_BUYS) return;
+  if(inventory.slow >= MAX_SLOW_ITEMS) return;
+
+  coins -= SHOP_PRICES.slow;
+  coinsEl.textContent = coins;
+
+  inventory.slow = Math.min(
+    MAX_SLOW_ITEMS,
+    (inventory.slow || 0) + 1
+  );
+
+  slowBuys++;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
 
     // استفاده انتخابی از آیتم‌ها
     shieldUseBtn.addEventListener("click", ()=>{
