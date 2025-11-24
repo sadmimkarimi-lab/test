@@ -1853,11 +1853,25 @@ pauseBtn.addEventListener("click", ()=>{
     shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
 
     function refreshShopUI(){
-      shopCoinsEl.textContent = coins;
-      buyTripleBtn.disabled = coins < 60;
-      buyShieldBtn.disabled = coins < 50;
-      buyRocketBtn.disabled = coins < 70;
-    }
+  shopCoinsEl.textContent = coins;
+
+  // قیمت‌ها بر اساس SHOP_PRICES
+  buyTripleBtn.disabled = coins < SHOP_PRICES.triple;
+  buyRocketBtn.disabled = coins < SHOP_PRICES.rocket;
+  buyShieldBtn.disabled = coins < SHOP_PRICES.shield;
+
+  // جان: تا وقتی هم سکه کافی داری، هم جان به سقف نرسیده و هم کمتر از ۷ بار خرید کردی
+  buyLifeBtn.disabled =
+    coins < SHOP_PRICES.life ||
+    lifeBuys >= MAX_LIFE_BUYS ||
+    lives >= MAX_LIVES;
+
+  // زمان: هم سکه، هم سقف آیتم انباری، هم سقف خرید
+  buySlowBtn.disabled =
+    coins < SHOP_PRICES.slow ||
+    slowBuys >= MAX_SLOW_BUYS ||
+    inventory.slow >= MAX_SLOW_ITEMS;
+}
 
     // خرید آیتم‌ها -> فقط به انبار اضافه می‌شوند
     buyTripleBtn.addEventListener("click", ()=>{
