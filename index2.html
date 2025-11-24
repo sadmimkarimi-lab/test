@@ -1607,19 +1607,28 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
       // پاورآپ‌ها: به انبار اضافه شوند (انتخابی)
       powerUps.forEach((p,pi)=>{
-        if(rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)){
-          if(p.type === "shield" || p.type === "triple" || p.type==="rocket"){
-            inventory[p.type] = (inventory[p.type] || 0) + 1;
-            updateInventoryUI();
-            sfxPower();
-            saveState();
-          }else if(p.type==="slow"){
-            activatePowerUp("slow");
-          }
-          powerUps.splice(pi,1);
-          if(navigator.vibrate) navigator.vibrate(25);
-        }
-      });
+  if(rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)){
+
+    // ذخیره‌ای‌ها: سپر، سه‌تایی، موشک
+    if(
+      p.type === "shield" ||
+      p.type === "triple" ||
+      p.type === "rocket"
+    ){
+      inventory[p.type] = (inventory[p.type] || 0) + 1;
+      updateInventoryUI();
+      sfxPower();
+      saveState();
+      powerUps.splice(pi,1);
+    }
+
+    // اسلو — فعال‌شدنی فوری
+    else if(p.type === "slow"){
+      activatePowerUp("slow");
+      powerUps.splice(pi,1);
+    }
+  }
+});
 
       enemies.forEach((e,ei)=>{
         const collideWithTank =
@@ -1654,7 +1663,7 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
       if(levelCleared){
-        lives += 2;
+        lives = Math.min(MAX_LIVES, lives + 2);
         livesEl.textContent = lives;
         gameRunning=false;
         saveState();
@@ -1886,6 +1895,16 @@ pauseBtn.addEventListener("click", ()=>{
       }
     });
 
+slowUseBtn.addEventListener("click", ()=>{
+    if(!gameRunning) return;
+    if(inventory.slow > 0 && !activePowerUps.slow){
+        inventory.slow--;
+        updateInventoryUI();
+        activatePowerUp("slow");
+        saveState();
+    }
+});
+    
     // شروع اولیه
     resetGameState(0);
     drawBackground(); drawTank();
