@@ -1231,7 +1231,7 @@ let miniBossSpawned = false;
         else if(e.isMiniBoss){
       const {x,y,w,h} = e;
       if(e.img && e.img.complete && e.img.naturalWidth>0){
-        const scale = 0.7;
+        const scale = 0.5;
         const iw = w * scale;
         const ih = h * scale;
         const ix = x + (w - iw)/2;
