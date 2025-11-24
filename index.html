@@ -454,10 +454,83 @@
       .subtitle{font-size:11px;}
       .logo-badge{width:56px;height:56px;}
     }
+
+
+/* ===== اینتروی ویدئویی ===== */
+.intro-screen{
+  position:fixed;
+  inset:0;
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+}
+
+.intro-video{
+  width:100%;
+  max-width:420px;
+  border-radius:18px;
+  background:#000;
+  box-shadow:0 20px 40px rgba(0,0,0,.9);
+}
+
+.intro-controls{
+  margin-top:12px;
+  display:flex;
+  gap:10px;
+}
+
+.intro-btn{
+  border:none;
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  white-space:nowrap;
+}
+
+.intro-btn.mute{
+  background:#111827;
+  color:#e5e7eb;
+  border:1px solid rgba(148,163,184,.7);
+}
+
+.intro-btn.skip{
+  background:linear-gradient(135deg,#f97316,#ec4899);
+  color:#fff;
+  box-shadow:0 10px 24px rgba(248,113,113,.8);
+}
+
+.hidden-game{
+  display:none;
+}
+
+    
   </style>
 </head>
 <body>
-  <div class="game-wrapper">
+<!-- صفحه اینتروی ویدئویی -->
+  <div id="introScreen" class="intro-screen">
+    <video
+      id="introVideo"
+      class="intro-video"
+      src="https://cdnfa.com/irangiah/a9be/uploads/tank/tankk.mp4"
+      autoplay
+      playsinline
+      muted
+    ></video>
+
+    <div class="intro-controls">
+      <button id="introMuteBtn" class="intro-btn mute">🔇 صدا</button>
+      <button id="introSkipBtn" class="intro-btn skip">رد کردن ⏭️</button>
+    </div>
+  </div>
+
+  <!-- شروع محیط بازی (فعلاً مخفی) -->
+  <div class="game-wrapper hidden-game" id="gameWrapper">
 
     <!-- هدر -->
     <header class="header">
@@ -653,6 +726,31 @@
     const canvas = document.getElementById("gameCanvas");
     const ctx = canvas.getContext("2d");
 
+
+// ======== Intro Video ========
+const introScreen = document.getElementById("introScreen");
+const gameWrapper = document.getElementById("gameWrapper");
+const introVideo   = document.getElementById("introVideo");
+const introMuteBtn = document.getElementById("introMuteBtn");
+const introSkipBtn = document.getElementById("introSkipBtn");
+
+function finishIntro(){
+  introScreen.style.display = "none";
+  gameWrapper.classList.remove("hidden-game");
+  introVideo.pause();
+  introVideo.currentTime = 0;
+}
+
+introVideo.addEventListener("ended", finishIntro);
+
+introSkipBtn.addEventListener("click", finishIntro);
+
+introMuteBtn.addEventListener("click", ()=>{
+  introVideo.muted = !introVideo.muted;
+  introMuteBtn.textContent = introVideo.muted ? "🔇 صدا" : "🔊 صدا";
+});
+
+    
     function resizeCanvas(){
       const maxWidth = 420, ratio = 9/16;
       const width = Math.min(maxWidth, window.innerWidth - 32);
