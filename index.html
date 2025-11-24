@@ -1334,11 +1334,17 @@ function spawnMiniBoss(){
   const src = miniBossImages[lvl.bossImgIndex] || miniBossImages[0];
   img.src = src;
 
+  // جان مینی‌باس: نه خیلی آسون، نه خیلی سخت (۵–۷ تیر)
+  const miniHp = 15 + currentLevelIndex * 1; 
+
   enemies.push({
     x, y, w, h,
-    speed: enemyBaseSpeed,
+    speed: enemyBaseSpeed * 0.95,
     isBoss: false,
     isMiniBoss: true,
+    hp: miniHp,                 // 👈 مهم
+    colorStart: "#a855f7",      // برای انفجار قشنگ
+    colorEnd: "#6366f1",
     img
   });
 }
@@ -1509,28 +1515,45 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       bullets.forEach((b,bi)=>{
         enemies.forEach((e,ei)=>{
           if(rectCircleCollide(b.x,b.y,b.r, e.x,e.y,e.w,e.h)){
+            // گلوله مصرف شود
             bullets.splice(bi,1);
-            const cx=e.x+e.w/2, cy=e.y+e.h/2;
-            createExplosion(cx,cy,e.colorStart||"#f97316");
+
+            const cx = e.x + e.w/2;
+            const cy = e.y + e.h/2;
+            createExplosion(cx, cy, e.colorStart || "#f97316");
             sfxHit();
 
             if(e.isBoss){
+              // باس بزرگ
               e.hp -= b.damage;
-              if(e.hp<=0){
+              if(e.hp <= 0){
                 enemies.splice(ei,1);
-                bossAlive=false;
+                bossAlive = false;
                 score += 80;
                 coins += 40;
-                scoreEl.textContent=score;
-                coinsEl.textContent=coins;
+                scoreEl.textContent = score;
+                coinsEl.textContent = coins;
                 saveState();
               }
-            }else{
+
+            } else if(e.isMiniBoss){
+              // مینی‌باس
+              e.hp -= b.damage;
+              if(e.hp <= 0){
+                enemies.splice(ei,1);
+                score += 30;   // پاداش بیشتر از دشمن ساده
+                coins += 15;
+                scoreEl.textContent = score;
+                coinsEl.textContent = coins;
+              }
+
+            } else {
+              // دشمن معمولی
               enemies.splice(ei,1);
               score += 7;
               coins += 2;
-              scoreEl.textContent=score;
-              coinsEl.textContent=coins;
+              scoreEl.textContent = score;
+              coinsEl.textContent = coins;
             }
           }
         });
