@@ -177,11 +177,11 @@
       background:rgba(234,179,8,.12);
       border-color:rgba(234,179,8,.6);
     }
-    .stat-pill.danger{
-      background:rgba(248,113,113,0.2);
-      border-color:#ef4444;
-      animation:dangerPulse 0.6s ease-in-out 0s 2;
-    }
+  .danger{
+  background:rgba(248,113,113,0.2) !important;
+  border-color:#ef4444 !important;
+  animation:dangerPulse 0.6s ease-in-out 0s 2;
+}
     @keyframes dangerPulse{
       0%{transform:scale(1);}
       50%{transform:scale(1.08);}
@@ -266,6 +266,13 @@
       -webkit-user-select:none;
       font-size:11px;
     }
+
+  .shop-item.passive{
+  cursor: default;
+  background: rgba(15,23,42,0.8);
+  border-style: dashed;
+}
+  
     .shop-item.disabled{
       opacity:.4;
       cursor:not-allowed;
@@ -883,7 +890,7 @@ introMuteBtn.addEventListener("click", ()=>{
     const coinsEl = document.getElementById("coins");
     const levelLabel = document.getElementById("levelLabel");
     const resetRunBtn = document.getElementById("resetRunBtn");
-    const livesPill = document.getElementById("livesPill");
+    const lifeDisplay = document.getElementById("lifeDisplay");
 
     const startOverlay = document.getElementById("startOverlay");
     const levelOverlay = document.getElementById("levelOverlay");
@@ -916,11 +923,14 @@ introMuteBtn.addEventListener("click", ()=>{
 
     // آیکن‌های استفاده انتخابی
     const shieldUseBtn = document.getElementById("shieldUseBtn");
-    const rocketUseBtn = document.getElementById("rocketUseBtn");
-    const tripleUseBtn = document.getElementById("tripleUseBtn");
-    const shieldCountEl = document.getElementById("shieldCount");
-    const rocketCountEl = document.getElementById("rocketCount");
-    const tripleCountEl = document.getElementById("tripleCount");
+const rocketUseBtn = document.getElementById("rocketUseBtn");
+const tripleUseBtn = document.getElementById("tripleUseBtn");
+const slowUseBtn   = document.getElementById("slowUseBtn");
+
+const shieldCountEl = document.getElementById("shieldCount");
+const rocketCountEl = document.getElementById("rocketCount");
+const tripleCountEl = document.getElementById("tripleCount");
+const slowCountEl   = document.getElementById("slowCount");
 
     const motivationTextEl = document.getElementById("motivationText");
     const MOTIVATIONS = [
@@ -1029,17 +1039,20 @@ const bossImg = new Image();
 
     // ======== وضعیت بازی ========
     let tank = { x:0,y:0,w:60,h:36,speed:4 };
-    let bullets = [];
-    let enemies = [];
-    let powerUps = [];
-    let particles = [];
+let bullets = [];
+let enemies = [];
+let powerUps = [];
+let particles = [];
 
-    let score = 0;
-    let coins = 0;
-    let lives = 3;
+let score = 0;
+let coins = 0;
+let lives = 3;
 
-    // انبار آیتم‌ها
-    let inventory = { shield:0, triple:0, rocket:0 };
+const MAX_LIVES = 9;
+const MAX_SLOW_ITEMS = 7;
+
+// انبار آیتم‌ها
+let inventory = { shield:0, triple:0, rocket:0, slow:0 };
     let rocketArmed = false;   // شلیک بعدی موشکی باشد یا نه
 
     let gameRunning = false;
@@ -1056,7 +1069,7 @@ const bossImg = new Image();
     const badLabels = [
       "دروغ","تهمت","غیبت","مردم‌آزاری","گرانفروشی","بی‌ادبی","دشنام","تنبلی",
       "حسادت","بی‌حیایی","بی‌حجابی","ترک نماز","قضاوت","خودکم‌بینی","خودخواهی",
-      "لجاجت","چشم و هم‌چشمی","حق‌الناس","حیوان‌آزاری","قهر",
+      "لجاجت","خساست","حق‌الناس","حیوان‌آزاری","قهر",
       "ریا","ناامیدی","ترس","کینه","پرخاشگری","تعلل","بدبینی"
     ];
 
@@ -1129,14 +1142,16 @@ let miniBossSpawned = false;
     };
 
     function updateInventoryUI(){
-      shieldCountEl.textContent = inventory.shield || 0;
-      rocketCountEl.textContent = inventory.rocket || 0;
-      tripleCountEl.textContent = inventory.triple || 0;
+  shieldCountEl.textContent = inventory.shield || 0;
+  rocketCountEl.textContent = inventory.rocket || 0;
+  tripleCountEl.textContent = inventory.triple || 0;
+  slowCountEl.textContent   = inventory.slow   || 0;
 
-      shieldUseBtn.classList.toggle("disabled", !inventory.shield);
-      rocketUseBtn.classList.toggle("disabled", !inventory.rocket);
-      tripleUseBtn.classList.toggle("disabled", !inventory.triple);
-    }
+  shieldUseBtn.classList.toggle("disabled", !inventory.shield);
+  rocketUseBtn.classList.toggle("disabled", !inventory.rocket);
+  tripleUseBtn.classList.toggle("disabled", !inventory.triple);
+  slowUseBtn.classList.toggle("disabled",   !inventory.slow);
+}
 
     function createBlobPoints(w,h){
       const pts=[];
@@ -1489,10 +1504,10 @@ const h = canvas.height * 0.22;
     }
 
     function flashLifeDanger(){
-      if(!livesPill) return;
-      livesPill.classList.add("danger");
-      setTimeout(()=>livesPill.classList.remove("danger"),700);
-    }
+  if(!lifeDisplay) return;
+  lifeDisplay.classList.add("danger");
+  setTimeout(()=>lifeDisplay.classList.remove("danger"),700);
+}
 
     let frameId = null;
 
