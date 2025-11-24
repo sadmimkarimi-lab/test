@@ -688,7 +688,7 @@
           <!-- ۴. صدا + شروع دوباره -->
           <div class="top-actions">
             <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
-            <button class="top-icon-btn" id="resetRunBtn" title="شروع دوباره">⟲</button>
+          <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
           </div>
         </div>
 
@@ -1730,14 +1730,21 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       startGame(currentLevelIndex);
     });
 
+
+let isPaused = false;
+
+pauseBtn.addEventListener("click", ()=>{
+  isPaused = !isPaused;
+  pauseBtn.textContent = isPaused ? "▶️" : "⏸️";
+});
+          
     restartBtn.addEventListener("click", ()=>{
   if(currentLevelIndex > 2){
     currentLevelIndex--;  // از مرحله ۳ به بعد یکی برگرده عقب
   }
   startGame(currentLevelIndex);
 });
-    resetRunBtn.addEventListener("click", ()=> startGame(0));
-
+    
     document.addEventListener("keydown",(e)=>{
       if(e.code==="ArrowLeft") moveLeft=true;
       else if(e.code==="ArrowRight") moveRight=true;
