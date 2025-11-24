@@ -12,17 +12,15 @@
 
  
 <style>
-
-* {
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-
-
-  
-    *{box-sizing:border-box;margin:0;padding:0}
 
     body{
       font-family: Vazir, Vazirmatn, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -649,7 +647,7 @@
             امتیاز این دور: <span id="finalScore">0</span><br>
             بهترین امتیاز: <span id="bestScore">0</span>
           </p>
-          <button id="restartBtn">شروع مجدد از مرحله ۱</button>
+          <button id="restartBtn">شروع مجدد از مرحله قبل</button>
         </div>
       </div>
 
@@ -1337,8 +1335,8 @@ let miniBossSpawned = false;
 
 function spawnMiniBoss(){
   const lvl = LEVELS[currentLevelIndex];
-  const w = canvas.width * 0.45;
-  const h = canvas.height * 0.32;
+  const w = canvas.width * 0.30;
+const h = canvas.height * 0.22;
   const x = (canvas.width - w) / 2;
   const y = -h - 20;
 
