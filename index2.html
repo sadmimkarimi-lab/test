@@ -234,72 +234,70 @@
     }
 
     /* کادر فروشگاه (هم‌قد با جون) */
-    .shop-bar{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:4px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.8);
-      background:rgba(15,23,42,0.95);
-      box-shadow:0 4px 14px rgba(15,23,42,0.9);
-    }
-    .shop-items{
-      display:flex;
-      align-items:center;
-      gap:4px;
-      flex:1;
-      justify-content:flex-start;
-    }
-    .shop-item{
-      display:flex;
-      align-items:center;
-      gap:3px;
-      padding:2px 5px;
-      border-radius:999px;
-      background:rgba(30,64,175,0.8);
-      border:1px solid rgba(129,140,248,0.9);
-      cursor:pointer;
-      user-select:none;
-      -webkit-user-select:none;
-      font-size:11px;
-    }
-
-  .shop-item.passive{
-  cursor: default;
-  background: rgba(15,23,42,0.8);
-  border-style: dashed;
+  .shop-bar{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:4px;
+  padding:2px 6px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,0.8);
+  background:rgba(15,23,42,0.95);
+  box-shadow:0 4px 12px rgba(15,23,42,0.9);
 }
-  
-    .shop-item.disabled{
-      opacity:.4;
-      cursor:not-allowed;
-    }
-    .shop-icon{
-      font-size:13px;
-    }
-    .shop-count{
-      min-width:12px;
-      text-align:center;
-      font-weight:700;
-    }
-    .shop-cart{
-      width:30px;
-      height:30px;
-      border-radius:999px;
-      border:1px solid rgba(248,113,113,0.9);
-      background:radial-gradient(circle at center,#fecaca,#f97373);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:16px;
-      cursor:pointer;
-      box-shadow:0 6px 18px rgba(248,113,113,0.8);
-      user-select:none;
-      -webkit-user-select:none;
-    }
+
+.shop-items{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  flex:1;
+  justify-content:flex-start;
+}
+
+.shop-item{
+  display:flex;
+  align-items:center;
+  gap:2px;
+  padding:1px 4px;
+  border-radius:999px;
+  background:rgba(30,64,175,0.9);
+  border:1px solid rgba(129,140,248,0.9);
+  cursor:pointer;
+  font-size:10px;
+}
+
+.shop-item.passive{
+  cursor:default;
+  background:rgba(15,23,42,0.8);
+  border-style:dashed;
+}
+
+.shop-icon{
+  font-size:12px;
+}
+
+.shop-count{
+  min-width:10px;
+  text-align:center;
+  font-weight:700;
+  font-size:10px;
+}
+
+.shop-cart{
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  border:1px solid rgba(248,113,113,0.9);
+  background:radial-gradient(circle at center,#fecaca,#f97373);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 5px 14px rgba(248,113,113,0.8);
+  user-select:none;
+}
     .shop-cart:active{
       transform:scale(.95) translateY(1px);
       box-shadow:0 4px 12px rgba(15,23,42,.9);
@@ -713,12 +711,7 @@
   </div>
 </div>
 
-          <!-- ۴. صدا + شروع دوباره -->
-          <div class="top-actions">
-            <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
-          <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
-          </div>
-        </div>
+          
 
         <!-- امتیاز / مرحله + پیام الهام‌بخش -->
         <div class="hud-sub">
@@ -920,7 +913,8 @@ introMuteBtn.addEventListener("click", ()=>{
     const shopCoinsEl = document.getElementById("shopCoins");
 
     const soundToggleBtn = document.getElementById("soundToggle");
-
+const pauseBtn = document.getElementById("pauseBtn");
+    
     // آیکن‌های استفاده انتخابی
     const shieldUseBtn = document.getElementById("shieldUseBtn");
 const rocketUseBtn = document.getElementById("rocketUseBtn");
