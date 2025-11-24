@@ -1601,26 +1601,23 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
       // پاورآپ‌ها: به انبار اضافه شوند (انتخابی)
       powerUps.forEach((p,pi)=>{
-  if(rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)){
+  if (rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)) {
 
-    // ذخیره‌ای‌ها: سپر، سه‌تایی، موشک
-    if(
-      p.type === "shield" ||
-      p.type === "triple" ||
-      p.type === "rocket"
-    ){
+    // اگر slow بود ⇒ با سقف ۷ تا انباری بشه
+    if (p.type === "slow") {
+      inventory.slow = Math.min(
+        MAX_SLOW_ITEMS,
+        (inventory.slow || 0) + 1
+      );
+    } else {
+      // shield / triple / rocket
       inventory[p.type] = (inventory[p.type] || 0) + 1;
-      updateInventoryUI();
-      sfxPower();
-      saveState();
-      powerUps.splice(pi,1);
     }
 
-    // اسلو — فعال‌شدنی فوری
-    else if(p.type === "slow"){
-      activatePowerUp("slow");
-      powerUps.splice(pi,1);
-    }
+    updateInventoryUI();
+    sfxPower();
+    saveState();
+    powerUps.splice(pi,1);
   }
 });
 
