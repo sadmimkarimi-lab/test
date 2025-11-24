@@ -737,8 +737,23 @@ const introMuteBtn = document.getElementById("introMuteBtn");
 const introSkipBtn = document.getElementById("introSkipBtn");
 
 function finishIntro(){
-  introScreen.style.display = "none";
-  gameWrapper.classList.remove("hidden-game");
+  const startSfx = document.getElementById("startSfx");
+
+  // فید اوت قشنگ
+  introScreen.style.transition = "opacity 0.7s ease";
+  introScreen.style.opacity = "0";
+
+  setTimeout(() => {
+    introScreen.style.display = "none";
+    gameWrapper.classList.remove("hidden-game");
+
+    // پخش صدای شروع (اگر مرورگر اجازه بده)
+    if (startSfx) {
+      startSfx.currentTime = 0;
+      startSfx.play().catch(()=>{});
+    }
+  }, 700);
+
   introVideo.pause();
   introVideo.currentTime = 0;
 }
@@ -1633,26 +1648,5 @@ introMuteBtn.addEventListener("click", ()=>{
     }, 600);
   </script>
 
-<script>
-  const intro = document.getElementById("introContainer");
-  const introVideo = document.getElementById("introVideo");
-
-  introVideo.addEventListener("ended", () => {
-    intro.style.transition = "opacity 0.8s ease";
-    intro.style.opacity = "0";
-    setTimeout(() => {
-      intro.style.display = "none";
-    }, 800);
-  });
-</script>
-
-  <script>
-  const startSfx = document.getElementById("startSfx");
-
-  introVideo.addEventListener("ended", () => {
-    startSfx.play().catch(()=>{});
-  });
-</script>
-  
 </body>
 </html>
