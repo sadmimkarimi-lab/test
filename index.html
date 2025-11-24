@@ -1721,7 +1721,12 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       startGame(currentLevelIndex);
     });
 
-    restartBtn.addEventListener("click", ()=> startGame(0));
+    restartBtn.addEventListener("click", ()=>{
+  if(currentLevelIndex > 2){
+    currentLevelIndex--;  // از مرحله ۳ به بعد یکی برگرده عقب
+  }
+  startGame(currentLevelIndex);
+});
     resetRunBtn.addEventListener("click", ()=> startGame(0));
 
     document.addEventListener("keydown",(e)=>{
