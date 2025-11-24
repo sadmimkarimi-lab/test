@@ -1601,24 +1601,24 @@
       }catch(e){}
     }, 600);
  
-  const introOverlay = document.getElementById("introOverlay");
-const introVideo = document.getElementById("introVideo");
-const skipIntro = document.getElementById("skipIntro");
+  // اینترو ویدیو + رد کردن + قطع/وصل صدا
+const introOverlay = document.getElementById("introOverlay");
+const introVideo  = document.getElementById("introVideo");
+const skipIntro   = document.getElementById("skipIntro");
+const muteBtn     = document.getElementById("introMuteBtn");
 
-// وقتی ویدئو تموم شد
+// وقتی ویدیو تموم شد خودش بره
 introVideo.addEventListener("ended", () => {
   introOverlay.classList.add("hidden");
 });
 
-// اگر کاربر زد روی رد کردن
+// اگر کاربر زد روی «رد کردن»
 skipIntro.addEventListener("click", () => {
   introOverlay.classList.add("hidden");
   introVideo.pause();
 });
 
-const introVideo = document.getElementById("introVideo");
-const muteBtn = document.getElementById("introMuteBtn");
-
+// قطع و وصل صدا
 muteBtn.addEventListener("click", () => {
   introVideo.muted = !introVideo.muted;
   muteBtn.textContent = introVideo.muted ? "🔇" : "🔊";
