@@ -1627,40 +1627,46 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
     }
 
     function gameLoop(){
-      if(!gameRunning) return;
+  if(!gameRunning) return;
 
-      ctx.clearRect(0,0,canvas.width,canvas.height);
+  // ✅ اگر بازی روی توقف است، فقط حلقه رو زنده نگه دار و هیچی نکش
+  if (isPaused) {
+    frameId = requestAnimationFrame(gameLoop);
+    return;
+  }
 
-      ctx.save();
-      if(shakeTime>0){
-        const intensity=4;
-        ctx.translate((Math.random()*2-1)*intensity, (Math.random()*2-1)*intensity);
-        shakeTime--;
-      }
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
-      drawBackground();
-      update();
-      drawEnemies();
-      drawPowerUps();
-      drawParticles();
-      drawBullets();
-      drawTank();
+  ctx.save();
+  if(shakeTime>0){
+    const intensity=4;
+    ctx.translate((Math.random()*2-1)*intensity,(Math.random()*2-1)*intensity);
+    shakeTime--;
+  }
 
-      ctx.restore();
+  drawBackground();
+  update();
+  drawEnemies();
+  drawPowerUps();
+  drawParticles();
+  drawBullets();
+  drawTank();
 
-      if(hitFlash>0){
-        const alpha = hitFlash*0.45;
-        const cx=tank.x+tank.w/2, cy=tank.y+tank.h/2;
-        const grad=ctx.createRadialGradient(cx,cy,10,cx,cy,tank.w*2.2);
-        grad.addColorStop(0,`rgba(248,113,113,${alpha})`);
-        grad.addColorStop(1,"rgba(248,113,113,0)");
-        ctx.fillStyle=grad;
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        hitFlash-=0.05;
-      }
+  ctx.restore();
 
-      frameId = requestAnimationFrame(gameLoop);
-    }
+  if(hitFlash>0){
+    const alpha = hitFlash*0.45;
+    const cx=tank.x+tank.w/2, cy=tank.y+tank.h/2;
+    const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,canvas.width);
+    grad.addColorStop(0,`rgba(248,113,113,${alpha})`);
+    grad.addColorStop(1,"rgba(248,113,113,0)");
+    ctx.fillStyle=grad;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    hitFlash-=0.05;
+  }
+
+  frameId = requestAnimationFrame(gameLoop);
+}
 
     function resetGameState(startFromLevelIndex = 0){
       bullets=[]; enemies=[]; powerUps=[]; particles=[];
