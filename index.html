@@ -454,6 +454,41 @@
       .subtitle{font-size:11px;}
       .logo-badge{width:56px;height:56px;}
     }
+
+
+.intro-overlay {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro-overlay.hidden {
+  display: none;
+}
+
+#introVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.skip-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #fff;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  backdrop-filter: blur(6px);
+}
+    
   </style>
 </head>
 <body>
@@ -483,6 +518,17 @@
       <div class="canvas-wrap">
         <canvas id="gameCanvas"></canvas>
 
+
+<!-- INTRO VIDEO -->
+<div id="introOverlay" class="intro-overlay">
+  <video id="introVideo" playsinline webkit-playsinline autoplay muted>
+    <source src="https://cdnfa.com/irangiah/a9be/uploads/tank/tankk.mp4" type="video/mp4">
+  </video>
+
+  <!-- دکمه رد کردن -->
+  <button id="skipIntro" class="skip-btn">⏭ رد کردن</button>
+</div>
+        
         <!-- شروع -->
         <div id="startOverlay" class="overlay">
           <h2>تانکیتا آماده‌ست 🚀</h2>
@@ -1531,6 +1577,22 @@
         fireBtn.scrollIntoView({ behavior:"smooth", block:"end" });
       }catch(e){}
     }, 600);
+ 
+  const introOverlay = document.getElementById("introOverlay");
+const introVideo = document.getElementById("introVideo");
+const skipIntro = document.getElementById("skipIntro");
+
+// وقتی ویدئو تموم شد
+introVideo.addEventListener("ended", () => {
+  introOverlay.classList.add("hidden");
+});
+
+// اگر کاربر زد روی رد کردن
+skipIntro.addEventListener("click", () => {
+  introOverlay.classList.add("hidden");
+  introVideo.pause();
+});
+  
   </script>
 </body>
 </html>
