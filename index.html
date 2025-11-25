@@ -1835,81 +1835,86 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
         lastPowerUpTime=now;
       }
 
-      bullets.forEach((b,bi)=>{
-        enemies.forEach((e,ei)=>{
-          if(rectCircleCollide(b.x,b.y,b.r, e.x,e.y,e.w,e.h)){
-            // گلوله مصرف شود
-            bullets.splice(bi,1);
+      bullets.forEach((b, bi) => {
+  enemies.forEach((e, ei) => {
+    if (rectCircleCollide(b.x, b.y, b.r, e.x, e.y, e.w, e.h)) {
 
-            const cx = e.x + e.w/2;
-            const cy = e.y + e.h/2;
-            createExplosion(cx, cy, e.colorStart || "#f97316");
-            sfxHit();
+      // 🔸 گلوله مصرف شود
+      bullets.splice(bi, 1);
 
-          if (e.isBoss) {
-    // باس بزرگ
-    e.hp -= b.damage;
+      // ✨ انفجار معمولی روی دشمن
+      const cx = e.x + e.w / 2;
+      const cy = e.y + e.h / 2;
+      createExplosion(cx, cy, e.colorStart || "#f97316");
+      sfxHit();
 
-    // آپدیت نوار HP باس
-    const bossHpBar  = document.getElementById("bossHpBar");
-    const bossHpFill = document.getElementById("bossHpFill");
-    bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
+      // 🧟‍♂️ اگر باس بزرگ است
+      if (e.isBoss) {
+        // کم کردن HP باس
+        e.hp -= b.damage;
 
-    if (e.hp <= 0) {
-        // 💥 افکت انفجار قوی‌تر برای غول
-        const cx = e.x + e.w / 2;
-        const cy = e.y + e.h / 2;
+        const bossHpBar  = document.getElementById("bossHpBar");
+        const bossHpFill = document.getElementById("bossHpFill");
 
-        for (let i = 0; i < 5; i++) {
-            const ex = cx + (Math.random() * 40 - 20);
-            const ey = cy + (Math.random() * 40 - 20);
+        // اگر به هر دلیل maxHp نبود، همین الان تنظیمش کن
+        if (e.maxHp === undefined) e.maxHp = e.hp;
+
+        // آپدیت عرض نوار
+        bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
+
+        // مرگ باس
+        if (e.hp <= 0) {
+          // 💥 چند انفجار خفن دور باس
+          const baseX = e.x + e.w / 2;
+          const baseY = e.y + e.h / 2;
+          for (let i = 0; i < 5; i++) {
+            const ex = baseX + (Math.random() * 40 - 20);
+            const ey = baseY + (Math.random() * 40 - 20);
             createExplosion(ex, ey, "#facc15");
+          }
+
+          // 🟢 مخفی کردن نوار جون باس
+          bossHpBar.classList.add("hidden");
+
+          // لرزش و فلش جذاب
+          hitFlash = 1;
+          shakeTime = 18;
+
+          // حذف باس و پایان باس‌فایت
+          enemies.splice(ei, 1);
+          bossAlive   = false;
+          inBossFight = false;
+
+          // امتیاز و سکه
+          score += 80;
+          coins += 40;
+          scoreEl.textContent  = score;
+          coinsEl.textContent  = coins;
+          saveState();
         }
 
-        // مخفی شدن نوار جون باس
-        bossHpBar.classList.add("hidden");
+      // 🧿 مینی‌باس
+      } else if (e.isMiniBoss) {
+        e.hp -= b.damage;
+        if (e.hp <= 0) {
+          enemies.splice(ei, 1);
+          score += 30;
+          coins += 15;
+          scoreEl.textContent = score;
+          coinsEl.textContent = coins;
+        }
 
-        // لرزش و فلش
-        hitFlash  = 1;
-        shakeTime = 18;
-
-        // پایان باس‌فایت
-        inBossFight = false;
+      // 🧱 دشمن معمولی
+      } else {
         enemies.splice(ei, 1);
-        bossAlive = false;
-
-        // امتیاز و سکه باس
-        score  += 80;
-        coins  += 40;
-        scoreEl.textContent  = score;
-        coinsEl.textContent  = coins;
-        saveState();
+        score += 7;
+        coins += 3;
+        scoreEl.textContent = score;
+        coinsEl.textContent = coins;
+      }
     }
-
-
-
-            } else if(e.isMiniBoss){
-              // مینی‌باس
-              e.hp -= b.damage;
-              if(e.hp <= 0){
-                enemies.splice(ei,1);
-                score += 30;   // پاداش بیشتر از دشمن ساده
-                coins += 15;
-                scoreEl.textContent = score;
-                coinsEl.textContent = coins;
-              }
-
-            } else {
-              // دشمن معمولی
-              enemies.splice(ei,1);
-              score += 7;
-              coins += 2;
-              scoreEl.textContent = score;
-              coinsEl.textContent = coins;
-            }
-          }
-        });
-      });
+  });
+});
 
       // پاورآپ‌ها: به انبار اضافه شوند (انتخابی)
       powerUps.forEach((p,pi)=>{
