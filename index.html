@@ -1841,41 +1841,47 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
             createExplosion(cx, cy, e.colorStart || "#f97316");
             sfxHit();
 
-            if(e.isBoss){
-              // باس بزرگ
-              e.hp -= b.damage;
+          if (e.isBoss) {
+    // باس بزرگ
+    e.hp -= b.damage;
 
-              const bossHpFill = document.getElementById("bossHpFill");
-bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
-              if(e.hp <= 0){
+    // آپدیت نوار HP باس
+    const bossHpBar  = document.getElementById("bossHpBar");
+    const bossHpFill = document.getElementById("bossHpFill");
+    bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
 
-                // افکت انفجار قوی‌تر برای غول
-const cx = e.x + e.w/2;
-const cy = e.y + e.h/2;
+    if (e.hp <= 0) {
+        // 💥 افکت انفجار قوی‌تر برای غول
+        const cx = e.x + e.w / 2;
+        const cy = e.y + e.h / 2;
 
-for(let i = 0; i < 5; i++){
-    const ex = cx + (Math.random()*40 - 20);
-    const ey = cy + (Math.random()*40 - 20);
-    createExplosion(ex, ey, "#facc15");
-}
+        for (let i = 0; i < 5; i++) {
+            const ex = cx + (Math.random() * 40 - 20);
+            const ey = cy + (Math.random() * 40 - 20);
+            createExplosion(ex, ey, "#facc15");
+        }
 
-// لرزش و فلش
-hitFlash = 1;
-shakeTime = 18;
+        // مخفی شدن نوار جون باس
+        bossHpBar.classList.add("hidden");
 
-// پایان باس‌فایت
-inBossFight = false;
+        // لرزش و فلش
+        hitFlash  = 1;
+        shakeTime = 18;
 
-                enemies.splice(ei,1);
-                bossAlive = false;
-                inBossFight = false;
+        // پایان باس‌فایت
+        inBossFight = false;
+        enemies.splice(ei, 1);
+        bossAlive = false;
 
-                score += 80;
-                coins += 40;
-                scoreEl.textContent = score;
-                coinsEl.textContent = coins;
-                saveState();
-              }
+        // امتیاز و سکه باس
+        score  += 80;
+        coins  += 40;
+        scoreEl.textContent  = score;
+        coinsEl.textContent  = coins;
+        saveState();
+    }
+
+
 
             } else if(e.isMiniBoss){
               // مینی‌باس
