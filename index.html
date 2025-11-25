@@ -1639,6 +1639,12 @@ const h = canvas.height * 0.22;
         });
         bossAlive = true;
 
+const bossHpBar = document.getElementById("bossHpBar");
+const bossHpFill = document.getElementById("bossHpFill");
+
+bossHpBar.classList.remove("hidden");
+bossHpFill.style.width = "100%";
+        
         const bossImgSrc = bossImages[lvl.bossImgIndex] || bossImages[0];
         bossImg.src = bossImgSrc;
 
