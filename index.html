@@ -1624,59 +1624,64 @@ const h = canvas.height * 0.22;
 
     
     function spawnEnemy(isBoss=false){
-      if(isBoss){
-        const lvl = LEVELS[currentLevelIndex];
-        const w = canvas.width*0.65;
-        const h = canvas.height*0.52;
-        const x = (canvas.width-w)/2;
-        const y = -h-20;
-        enemies.push({
+  if (isBoss) {
+    const lvl = LEVELS[currentLevelIndex];
+    const w = canvas.width * 0.65;
+    const h = canvas.height * 0.52;
+    const x = (canvas.width - w) / 2;
+    const y = -h - 20;
+
+    enemies.push({
+      x, y, w, h,
+      speed: enemyBaseSpeed * 0.7,
+      isBoss: true,
+      bossName: lvl.bossName,
+      hp: lvl.bossHP,
+      maxHp: lvl.bossHP,          // 👈 خیلی مهم برای نوار
+      colorStart: "#f97316"       // واسه رنگ انفجار باس
+    });
+
+    bossAlive   = true;
+    inBossFight = true;
+
+    // 🔥 روشن کردن نوار جون باس
+    const bossHpBar  = document.getElementById("bossHpBar");
+    const bossHpFill = document.getElementById("bossHpFill");
+    bossHpBar.classList.remove("hidden");
+    bossHpFill.style.width = "100%";
+
+    const bossImgSrc = bossImages[lvl.bossImgIndex] || bossImages[0];
+    bossImg.src = bossImgSrc;
+
+    sfxBoss();
+    return;
+  }
+
+  // 👇 از این‌جا به بعد همون دشمن‌های معمولی‌ات بمونن، دست نزن
+  const laneCount=5, laneWidth=canvas.width/laneCount;
+  const laneIndex=Math.floor(Math.random()*laneCount);
+  const w=laneWidth*0.72, h=34;
+  const x=laneIndex*laneWidth+(laneWidth-w)/2;
+  const y=-h-8;
+
+  const colors=[
+    ["#f97316","#fb923c"],
+    ["#22c55e","#4ade80"],
+    ["#3b82f6","#6366f1"],
+    ["#e11d48","#f97316"],
+    ["#a855f7","#6366f1"]
+  ];
+  const pair=colors[Math.floor(Math.random()*colors.length)];
+  const label=badLabels[Math.floor(Math.random()*badLabels.length)];
+
+  enemies.push({
     x,y,w,h,
-    speed: enemyBaseSpeed*0.7,
-    isBoss:true,
-    bossName:lvl.bossName,
-    hp:lvl.bossHP,
-    maxHp:lvl.bossHP   // 👈⭐ این خط مهمه ⭐
-});
-        bossAlive = true;
-
-const bossHpBar = document.getElementById("bossHpBar");
-const bossHpFill = document.getElementById("bossHpFill");
-
-bossHpBar.classList.remove("hidden");
-bossHpFill.style.width = "100%";
-        
-        const bossImgSrc = bossImages[lvl.bossImgIndex] || bossImages[0];
-        bossImg.src = bossImgSrc;
-
-        sfxBoss();
-        return;
-      }
-
-      const laneCount=5, laneWidth=canvas.width/laneCount;
-      const laneIndex=Math.floor(Math.random()*laneCount);
-      const w=laneWidth*0.72, h=34;
-      const x=laneIndex*laneWidth+(laneWidth-w)/2;
-      const y=-h-8;
-
-      const colors=[
-        ["#f97316","#fb923c"],
-        ["#22c55e","#4ade80"],
-        ["#3b82f6","#6366f1"],
-        ["#e11d48","#f97316"],
-        ["#a855f7","#6366f1"]
-      ];
-      const pair=colors[Math.floor(Math.random()*colors.length)];
-      const label=badLabels[Math.floor(Math.random()*badLabels.length)];
-
-      enemies.push({
-        x,y,w,h,
-        speed: enemyBaseSpeed + Math.random()*0.8,
-        colorStart:pair[0], colorEnd:pair[1],
-        label, isBoss:false,
-        points:createBlobPoints(w,h)
-      });
-    }
+    speed: enemyBaseSpeed + Math.random()*0.8,
+    colorStart:pair[0], colorEnd:pair[1],
+    label, isBoss:false,
+    points:createBlobPoints(w,h)
+  });
+}
 
     function spawnPowerUp(){
       const laneCount=5, laneWidth=canvas.width/laneCount;
