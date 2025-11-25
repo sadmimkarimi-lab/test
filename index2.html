@@ -1497,7 +1497,7 @@ const h = canvas.height * 0.22;
       if(powerTimers[type]) clearTimeout(powerTimers[type]);
       powerTimers[type]=setTimeout(()=>{
         activePowerUps[type]=false;
-      }, type==="shield"?35000:type==="triple"?10000:8000);
+      }, type==="shield"?16000:type==="triple"?10000:8000);
     }
 
     function fireBullet(){
@@ -1669,42 +1669,29 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
           e.y < tank.y+tank.h &&
           e.y+e.h > tank.y;
 
-        const outBottom = e.y + e.h >= canvas.height - 5;
+        const outBottom = e.y+e.h >= canvas.height-5;
 
-if (collideWithTank || outBottom) {
+        if(collideWithTank || outBottom){
+          enemies.splice(ei,1);
 
-    enemies.splice(ei,1);
-
-    if (collideWithTank && activePowerUps.shield) {
-
-        // سپر فعال است → ضربه نمی‌خوریم
-        shakeTime = e.isBoss ? 10 : 6;
-        sfxHit();
-        if (navigator.vibrate) navigator.vibrate(80);
-
-    } else {
-        // سپر نداریم → جان کم می‌شود
-        lives--;
-        livesEl.textContent = lives;
-        hitFlash = 1;
-        shakeTime = e.isBoss ? 12 : 10;
-
-        flashLifeDanger();
-        sfxHit();
-        if (navigator.vibrate) navigator.vibrate(e.isBoss ? 300 : 180);
-
-        if (lives <= 0){
-            endGame();
-            return;
+          if(activePowerUps.shield){
+            activePowerUps.shield=false;
+          }else{
+            lives--;
+            livesEl.textContent=lives;
+            hitFlash=1; shakeTime= e.isBoss ? 12 : 10;
+            flashLifeDanger();
+            sfxHit();
+            if(navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+            if(lives<=0){
+              endGame(); return;
+            }else if(e.isBoss){
+              bossAlive=false;
+              bossSpawned=false;
+            }
+          }
         }
-
-        if (e.isBoss){
-            bossAlive = false;
-            bossSpawned = false;
-        }
-    }
-
-}
+      });
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
       if(levelCleared){
