@@ -1851,6 +1851,7 @@ const h = canvas.height * 0.22;
 }
 
     let frameId = null;
+let levelClearTimer = null;   // 👈 تایمر تاخیر پیام مرحله بعد
 
     function update(){
       // حرکت آزاد تانک (همیشه، حتی زمان باس‌فایت)
@@ -2108,14 +2109,20 @@ bullets.forEach((b, bi) => {
 });
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
-      if(levelCleared){
-        lives = Math.min(MAX_LIVES, lives + 2);
-        livesEl.textContent = lives;
-        gameRunning=false;
-        saveState();
-        levelOverlay.classList.remove("hidden");
-      }
-    }
+
+// 👇 وقتی باس مرد، فقط یک بار تایمر ۲.۳ ثانیه‌ای بزار
+if (levelCleared && !levelClearTimer) {
+  levelClearTimer = setTimeout(() => {
+    lives = Math.min(MAX_LIVES, lives + 2);
+    livesEl.textContent = lives;
+
+    gameRunning = false;           // حالا بازی رو متوقف کن
+    saveState();
+    levelOverlay.classList.remove("hidden"); // پیام مرحله بعد
+
+    levelClearTimer = null;        // ریست برای مرحله‌های بعد
+  }, 2300); // ≈ ۲.۳ ثانیه
+}
 
     function gameLoop(){
   if(!gameRunning) return;
