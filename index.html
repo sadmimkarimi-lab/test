@@ -2049,15 +2049,19 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 });
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
-      if(levelCleared){
-        lives = Math.min(MAX_LIVES, lives + 2);
-        livesEl.textContent = lives;
-        gameRunning=false;
-        saveState();
-        levelOverlay.classList.remove("hidden");
-      }
-    }
 
+if (levelCleared) {
+
+  lives = Math.min(MAX_LIVES, lives + 2);
+  livesEl.textContent = lives;
+  gameRunning = false;
+  saveState();
+
+  // ⏳ مکث ۲ ثانیه بعد از انفجار باس
+  setTimeout(() => {
+    levelOverlay.classList.remove("hidden");
+  }, 2000);
+}
     function gameLoop(){
   if(!gameRunning) return;
 
@@ -2146,20 +2150,40 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 }
 
 function endGame() {
-  gameRunning = false;
-  if (frameId) cancelAnimationFrame(frameId);
 
-  // ⛔ وقتی می‌بازی، نوار جون باس رو مخفی کن که زیر پیام «پایان این دور» دیده نشه
-  const bossHpBar = document.getElementById("bossHpBar");
-  if (bossHpBar) bossHpBar.classList.add("hidden");
+    // ❌ نوار جون باس را کامل مخفی کن
+    const bossHpBar  = document.getElementById("bossHpBar");
+    const bossHpFill = document.getElementById("bossHpFill");
+    const bossHpText = document.getElementById("bossHpText");
 
-  finalScoreEl.textContent = score;
-  const saved = loadState();
-  const best = Math.max(score, saved?.bestScore || 0);
-  bestScoreEl.textContent = best;
-  saveState();
-  sfxGameOver();
-  gameOverOverlay.classList.remove("hidden");
+    if (bossHpBar) {
+        bossHpBar.classList.add("hidden");
+        bossHpBar.style.display = "none"; 
+    }
+    if (bossHpFill) bossHpFill.style.width = "100%";
+    if (bossHpText) bossHpText.textContent = "";
+
+    // ❌ باس را کامل خاموش کن
+    inBossFight = false;
+    bossAlive = false;
+
+    // ❌ بازی را متوقف کن
+    gameRunning = false;
+    if (frameId) cancelAnimationFrame(frameId);
+
+    // ⭐ امتیازها
+    finalScoreEl.textContent = score;
+    const saved = loadState();
+    const best = Math.max(score, saved.bestScore || 0);
+    bestScoreEl.textContent = best;
+
+    saveState();
+
+    // 🎵 صدای خفن گیم‌اور
+    sfxGameOver();
+
+    // 📌 نمایش صفحه پایان دور
+    gameOverOverlay.classList.remove("hidden");
 }
 
     // رویدادهای اصلی
