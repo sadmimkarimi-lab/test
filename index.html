@@ -1931,14 +1931,22 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
         // مرگ باس
         if (e.hp <= 0) {
-          // 💥 چند انفجار خفن دور باس
-          const baseX = e.x + e.w / 2;
-          const baseY = e.y + e.h / 2;
-          for (let i = 0; i < 5; i++) {
-            const ex = baseX + (Math.random() * 40 - 20);
-            const ey = baseY + (Math.random() * 40 - 20);
-            createExplosion(ex, ey, "#facc15");
-          }
+          if (e.hp <= 0) {
+
+    // افکت صوتی مرگ
+    sfxBossDie();
+
+    // انفجار بنفش
+    const boom = document.createElement("div");
+    boom.classList.add("boss-death-flash");
+    document.body.appendChild(boom);
+    setTimeout(() => boom.remove(), 600);
+
+    // لرزش صفحه
+    document.body.classList.add("screen-shake");
+    setTimeout(() => document.body.classList.remove("screen-shake"), 500);
+
+    
 
           // 🟢 مخفی کردن نوار جون باس
           bossHpBar.classList.add("hidden");
