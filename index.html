@@ -608,27 +608,25 @@
 .hidden-game{
   display:none;
 }
-
-#bossHpBar{
-  position:absolute;
-  top:10px;
-  left:50%;
-  transform:translateX(-50%);
-  width:70%;
-  height:14px;
-  border-radius:10px;
-  background:rgba(255,255,255,0.12);
-  box-shadow:0 0 10px rgba(255,0,0,.5);
-  overflow:hidden;
-  z-index:9999;
-  transition:opacity .25s;
+#bossHpBar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 18px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    z-index: 9999;
+    transition: opacity .3s, top .1s;
 }
-#bossHpFill{
-  height:100%;
-  width:100%;
-  background:linear-gradient(90deg,#22c55e,#facc15,#ef4444);
-  box-shadow:0 0 12px rgba(248,250,252,.9);
-  transition:width .25s ease-out;
+
+#bossHpFill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #ff0044, #ffaa00, #00ff44);
+    border-radius: 12px;
+    transition: width .3s ease-out;
 }
 .hidden{
   opacity:0;
