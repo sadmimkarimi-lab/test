@@ -1914,11 +1914,11 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       }
 
       if(now-lastPowerUpTime>8000){
-        spawnPowerUp();
-        lastPowerUpTime=now;
-      }
+  spawnPowerUp();
+  lastPowerUpTime=now;
+}
 
-      bullets.forEach((b, bi) => {
+bullets.forEach((b, bi) => {
   enemies.forEach((e, ei) => {
     if (rectCircleCollide(b.x, b.y, b.r, e.x, e.y, e.w, e.h)) {
 
@@ -1943,23 +1943,30 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
         if (e.maxHp === undefined) e.maxHp = e.hp;
 
         // آپدیت عرض نوار
-        bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
+        if (bossHpFill) {
+          bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
+        }
 
         // مرگ باس
         if (e.hp <= 0) {
-          // 💥 چند انفجار خفن دور باس
-          const baseX = e.x + e.w / 2;
-          const baseY = e.y + e.h / 2;
-          for (let i = 0; i < 5; i++) {
-            const ex = baseX + (Math.random() * 40 - 20);
-            const ey = baseY + (Math.random() * 40 - 20);
-            createExplosion(ex, ey, "#facc15");
-          }
+
+          // افکت صوتی مرگ
+          sfxBossDie();
+
+          // انفجار / دود بنفش
+          const boom = document.createElement("div");
+          boom.classList.add("boss-death-flash");
+          document.body.appendChild(boom);
+          setTimeout(() => boom.remove(), 600);
+
+          // لرزش صفحه
+          document.body.classList.add("screen-shake");
+          setTimeout(() => document.body.classList.remove("screen-shake"), 500);
 
           // 🟢 مخفی کردن نوار جون باس
-          bossHpBar.classList.add("hidden");
+          if (bossHpBar) bossHpBar.classList.add("hidden");
 
-          // لرزش و فلش جذاب
+          // موج ضربه روی کل صفحه
           hitFlash = 1;
           shakeTime = 18;
 
