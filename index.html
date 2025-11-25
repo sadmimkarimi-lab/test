@@ -1727,16 +1727,10 @@ const h = canvas.height * 0.22;
     let frameId = null;
 
     function update(){
-      if(!inBossFight){
-        if(moveLeft) tank.x -= tank.speed;
-        if(moveRight) tank.x += tank.speed;
-        tank.x = Math.max(4, Math.min(canvas.width - tank.w - 4, tank.x));
-      } else {
-        // در نبرد با غول، تانک وسط ثابت می‌ماند
-        moveLeft = false;
-        moveRight = false;
-        tank.x = (canvas.width - tank.w)/2;
-      }
+      // حرکت آزاد تانک (همیشه، حتی زمان باس‌فایت)
+if (moveLeft)  tank.x -= tank.speed;
+if (moveRight) tank.x += tank.speed;
+tank.x = Math.max(4, Math.min(canvas.width - tank.w - 4, tank.x));
 
       const enemySpeedFactor = activePowerUps.slow?0.5:1;
       const enemySpawnFactor = activePowerUps.slow?1.5:1;
