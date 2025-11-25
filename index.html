@@ -2146,18 +2146,34 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 }
 
 function endGame() {
+  // ۱) نوار جون باس را کامل پنهان کن
+  const bossHpBar  = document.getElementById("bossHpBar");
+  const bossHpFill = document.getElementById("bossHpFill");
+  const bossHpText = document.getElementById("bossHpText");
+
+  if (bossHpBar) {
+    bossHpBar.classList.add("hidden");
+    bossHpBar.style.display = "none";   // ⬅ مهم: دیگه کامل ناپدید میشه
+  }
+  if (bossHpFill) bossHpFill.style.width = "100%";
+  if (bossHpText) bossHpText.textContent = "";
+
+  // ۲) وضعیت باس را خاموش کن
+  bossAlive   = false;
+  inBossFight = false;
+
+  // ۳) توقف بازی
   gameRunning = false;
   if (frameId) cancelAnimationFrame(frameId);
 
-  // ⛔ وقتی می‌بازی، نوار جون باس رو مخفی کن که زیر پیام «پایان این دور» دیده نشه
-  const bossHpBar = document.getElementById("bossHpBar");
-  if (bossHpBar) bossHpBar.classList.add("hidden");
-
+  // ۴) امتیاز نهایی و بهترین امتیاز
   finalScoreEl.textContent = score;
   const saved = loadState();
-  const best = Math.max(score, saved?.bestScore || 0);
+  const best = Math.max(score, (saved && saved.bestScore) || 0);
   bestScoreEl.textContent = best;
   saveState();
+
+  // ۵) صدای گیم‌اور و نمایش صفحه
   sfxGameOver();
   gameOverOverlay.classList.remove("hidden");
 }
