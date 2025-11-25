@@ -1497,7 +1497,7 @@ const h = canvas.height * 0.22;
       if(powerTimers[type]) clearTimeout(powerTimers[type]);
       powerTimers[type]=setTimeout(()=>{
         activePowerUps[type]=false;
-      }, type==="shield"?16000:type==="triple"?10000:8000);
+      }, type==="shield"?35000:type==="triple"?10000:8000);
     }
 
     function fireBullet(){
