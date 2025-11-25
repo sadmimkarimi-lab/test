@@ -1214,6 +1214,43 @@ let miniBossSpawned = false;
     let activePowerUps = { shield:false, triple:false, slow:false };
     let powerTimers = {};
 
+// حداکثر مرحله‌ای که باز شده
+function getMaxUnlockedLevelId(){
+  const saved = loadState();
+  if(!saved) return 1;
+  return saved.lastLevel || 1;
+}
+
+// ساخت دکمه‌های مراحل
+function buildLevelGrid(){
+  if(!levelGrid) return;
+  levelGrid.innerHTML = "";
+
+  const maxId = getMaxUnlockedLevelId();
+
+  LEVELS.forEach((lvl, index)=>{
+    const btn = document.createElement("button");
+    btn.className = "level-btn";
+    btn.textContent = lvl.label;
+
+    if(lvl.id > maxId){
+      btn.classList.add("locked");
+      btn.disabled = true;
+    }else{
+      if(index === currentLevelIndex){
+        btn.classList.add("current");
+      }
+      btn.addEventListener("click", ()=>{
+        levelModal.classList.add("hidden");
+        startGame(index);
+      });
+    }
+
+    levelGrid.appendChild(btn);
+  });
+}
+
+    
     const STORAGE_KEY = "tavita_tank_state_v4";
 
     function loadState(){
