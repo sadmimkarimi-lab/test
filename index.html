@@ -660,17 +660,17 @@
 /* لرزش صفحه هنگام مرگ باس */
 @keyframes bossDieShake {
   0%   { transform: translate(0,0); }
-  20%  { transform: translate(-6px, 4px); }
-  40%  { transform: translate(5px, -5px); }
-  60%  { transform: translate(-4px, 3px); }
-  80%  { transform: translate(4px,-4px); }
+  15%  { transform: translate(-12px, 10px); }
+  30%  { transform: translate(10px, -12px); }
+  45%  { transform: translate(-14px, 8px); }
+  60%  { transform: translate(12px, -10px); }
+  75%  { transform: translate(-10px, 12px); }
   100% { transform: translate(0,0); }
 }
 
 .screen-shake {
-  animation: bossDieShake 0.45s ease-out;
+  animation: bossDieShake 0.75s ease-out; /* مدت بیشتر */
 }
-
 /* انفجار / دود بنفش */
 @keyframes bossExplosion {
   0%   { opacity: 1; transform: scale(0.4); filter: blur(0px); }
@@ -1172,18 +1172,18 @@ const sfxShieldBreak = () => {
 
 // صدای مرگ غول
 const sfxBossDie = () => {
-    // ضربه تیز
-    playTone(520, 0.16, "sawtooth", 0.26);
+    // انفجار اول (تیز)
+    playTone(620, 0.18, "sawtooth", 0.35);
 
-    // بم‌تر
+    // انفجار دوم (بم‌تر)
     setTimeout(() => {
-        playTone(260, 0.22, "square", 0.24);
-    }, 140);
+        playTone(280, 0.28, "square", 0.32);
+    }, 150);
 
-    // سقوط عمیق
+    // انفجار سوم (سقوط بم و شدید)
     setTimeout(() => {
-        playTone(120, 0.32, "square", 0.2);
-    }, 260);
+        playTone(90, 0.45, "square", 0.4);
+    }, 300);
 };
     
     soundToggleBtn.addEventListener("click", ()=>{
@@ -1989,7 +1989,7 @@ bullets.forEach((b, bi) => {
 
           // موج ضربه روی کل صفحه
           hitFlash = 1;
-          shakeTime = 18;
+          shakeTime = 45;
 
           // حذف باس و پایان باس‌فایت
           enemies.splice(ei, 1);
