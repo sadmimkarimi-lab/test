@@ -1208,6 +1208,7 @@ let inventory = { shield:0, triple:0, rocket:0, slow:0 };
     let bossSpawned = false;
     let bossAlive = false;
 let miniBossSpawned = false;
+  let inBossFight = false;
     
     const POWER_TYPES = ["shield","triple","slow","rocket"];
 
@@ -1726,9 +1727,16 @@ const h = canvas.height * 0.22;
     let frameId = null;
 
     function update(){
-      if(moveLeft) tank.x -= tank.speed;
-      if(moveRight) tank.x += tank.speed;
-      tank.x = Math.max(4, Math.min(canvas.width-tank.w-4, tank.x));
+      if(!inBossFight){
+        if(moveLeft) tank.x -= tank.speed;
+        if(moveRight) tank.x += tank.speed;
+        tank.x = Math.max(4, Math.min(canvas.width - tank.w - 4, tank.x));
+      } else {
+        // در نبرد با غول، تانک وسط ثابت می‌ماند
+        moveLeft = false;
+        moveRight = false;
+        tank.x = (canvas.width - tank.w)/2;
+      }
 
       const enemySpeedFactor = activePowerUps.slow?0.5:1;
       const enemySpawnFactor = activePowerUps.slow?1.5:1;
@@ -1739,7 +1747,21 @@ const h = canvas.height * 0.22;
       bullets.forEach(b=> b.y -= b.speed);
       bullets = bullets.filter(b=> b.y+b.r>0);
 
-      enemies.forEach(e=> e.y += e.speed*enemySpeedFactor);
+      enemies.forEach(e=>{
+        if(e.isBoss && inBossFight){
+          const targetY = canvas.height * 0.16; // جای ایستادن غول
+
+          if(e.y < targetY){
+            e.y += e.speed * enemySpeedFactor;
+            if(e.y > targetY) e.y = targetY;
+          } else {
+            e.y = targetY;
+          }
+
+        } else {
+          e.y += e.speed * enemySpeedFactor;
+        }
+      });
 
       powerUps.forEach(p=> p.y += p.speed);
       powerUps = powerUps.filter(p=> p.y-p.r < canvas.height+10);
@@ -1759,7 +1781,11 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       
       if(!bossSpawned && score >= lvl.goal*0.65){
         spawnEnemy(true);
-        bossSpawned=true;
+        bossSpawned = true;
+        inBossFight = true;
+
+        // تانک رو وسط صفحه قرار بده
+        tank.x = (canvas.width - tank.w)/2;
       }
 
       if(now-lastEnemyTime > spawnInterval*enemySpawnFactor){
@@ -1787,8 +1813,19 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
               // باس بزرگ
               e.hp -= b.damage;
               if(e.hp <= 0){
+
+                // 💥 افکت انفجار غول
+                const cx = e.x + e.w / 2;
+                const cy = e.y + e.h / 2;
+                for(let i = 0; i < 8; i++){
+                  const color = (i % 2 === 0) ? "#f97316" : "#fde047";
+                  createExplosion(cx, cy, color);
+                }
+
                 enemies.splice(ei,1);
                 bossAlive = false;
+                inBossFight = false;
+
                 score += 80;
                 coins += 40;
                 scoreEl.textContent = score;
