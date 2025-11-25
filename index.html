@@ -1158,6 +1158,22 @@ const sfxShieldBreak = () => {
   playTone(950, 0.08, "triangle", 0.24);
   setTimeout(() => playTone(420, 0.14, "sawtooth", 0.26), 70);
 };
+
+// صدای مرگ غول
+const sfxBossDie = () => {
+    // ضربه تیز
+    playTone(520, 0.16, "sawtooth", 0.26);
+
+    // بم‌تر
+    setTimeout(() => {
+        playTone(260, 0.22, "square", 0.24);
+    }, 140);
+
+    // سقوط عمیق
+    setTimeout(() => {
+        playTone(120, 0.32, "square", 0.2);
+    }, 260);
+};
     
     soundToggleBtn.addEventListener("click", ()=>{
       soundEnabled = !soundEnabled;
