@@ -1669,29 +1669,35 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
           e.y < tank.y+tank.h &&
           e.y+e.h > tank.y;
 
-        const outBottom = e.y+e.h >= canvas.height-5;
+        const outBottom = e.y + e.h >= canvas.height - 5;
 
-        if(collideWithTank || outBottom){
-          enemies.splice(ei,1);
+if (collideWithTank || outBottom) {
+  enemies.splice(ei, 1);
 
-          if(activePowerUps.shield){
-            activePowerUps.shield=false;
-          }else{
-            lives--;
-            livesEl.textContent=lives;
-            hitFlash=1; shakeTime= e.isBoss ? 12 : 10;
-            flashLifeDanger();
-            sfxHit();
-            if(navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
-            if(lives<=0){
-              endGame(); return;
-            }else if(e.isBoss){
-              bossAlive=false;
-              bossSpawned=false;
-            }
-          }
-        }
-      });
+  if (collideWithTank && activePowerUps.shield) {
+    // تانک به دشمن خورد ولی سپر فعاله → جون کم نمیشه، سپر هم خاموش نمیشه
+    shakeTime = e.isBoss ? 10 : 6;
+    sfxHit();
+    if (navigator.vibrate) navigator.vibrate(80);
+  } else {
+    // یا سپر نداریم، یا دشمن از پایین رد شده
+    lives--;
+    livesEl.textContent = lives;
+    hitFlash = 1;
+    shakeTime = e.isBoss ? 12 : 10;
+    flashLifeDanger();
+    sfxHit();
+    if (navigator.vibrate) navigator.vibrate(e.isBoss ? 300 : 180);
+
+    if (lives <= 0) {
+      endGame();
+      return;
+    } else if (e.isBoss) {
+      bossAlive = false;
+      bossSpawned = false;
+    }
+  }
+}
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
       if(levelCleared){
