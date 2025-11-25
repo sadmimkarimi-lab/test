@@ -1808,13 +1808,22 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
               e.hp -= b.damage;
               if(e.hp <= 0){
 
-                // 💥 افکت انفجار غول
-                const cx = e.x + e.w / 2;
-                const cy = e.y + e.h / 2;
-                for(let i = 0; i < 8; i++){
-                  const color = (i % 2 === 0) ? "#f97316" : "#fde047";
-                  createExplosion(cx, cy, color);
-                }
+                // افکت انفجار قوی‌تر برای غول
+const cx = e.x + e.w/2;
+const cy = e.y + e.h/2;
+
+for(let i = 0; i < 5; i++){
+    const ex = cx + (Math.random()*40 - 20);
+    const ey = cy + (Math.random()*40 - 20);
+    createExplosion(ex, ey, "#facc15");
+}
+
+// لرزش و فلش
+hitFlash = 1;
+shakeTime = 18;
+
+// پایان باس‌فایت
+inBossFight = false;
 
                 enemies.splice(ei,1);
                 bossAlive = false;
