@@ -997,6 +997,13 @@ const slowCountEl   = document.getElementById("slowCount");
     const sfxShoot   = () => playTone(520, 0.09, "square", 0.2);
     const sfxHit     = () => playTone(200, 0.15, "sawtooth", 0.25);
     const sfxPower   = () => playTone(800, 0.2, "triangle", 0.22);
+   const sfxShieldBreak = () => {
+      // سه تیک تند مثل ترک خوردن شیشه
+      playTone(900, 0.08, "triangle", 0.18);
+      setTimeout(() => playTone(650, 0.12, "square", 0.18), 70);
+      setTimeout(() => playTone(400, 0.16, "sawtooth", 0.16), 140);
+    };
+    
     const sfxBoss    = () => playTone(140, 0.4, "sawtooth", 0.28);
     const sfxGameOver= () => { playTone(260,0.25,"square",0.22); setTimeout(()=>playTone(180,0.3,"square",0.2),180); };
 
@@ -1479,26 +1486,32 @@ const h = canvas.height * 0.22;
       });
     }
 
-    function spawnPowerUp(){
-      const laneCount=5, laneWidth=canvas.width/laneCount;
-      const laneIndex=Math.floor(Math.random()*laneCount);
-      const x=laneIndex*laneWidth+laneWidth/2;
-      powerUps.push({
-        x, y:-15, r:13, speed:1.1,
-        type: POWER_TYPES[Math.floor(Math.random()*POWER_TYPES.length)]
-      });
-    }
-
     function activatePowerUp(type){
-      if(type === "rocket") return; // موشک زمان‌دار نیست
+    if(type === "rocket") return; // موشک تایم ندارد
 
-      activePowerUps[type]=true;
-      sfxPower();
-      if(powerTimers[type]) clearTimeout(powerTimers[type]);
-      powerTimers[type]=setTimeout(()=>{
-        activePowerUps[type]=false;
-      }, type==="shield"?16000:type==="triple"?10000:8000);
-    }
+    activePowerUps[type] = true;
+    sfxPower();  // صدای گرفتن پاورآپ
+
+    if(powerTimers[type]) clearTimeout(powerTimers[type]);
+
+    // مدت زمان هر پاورآپ
+    const duration =
+        type === "shield" ? 22000 :
+        type === "triple" ? 12000 :
+        8000;
+
+    powerTimers[type] = setTimeout(()=>{
+
+        // اگر شیلد بود → افکت پایان شیلد
+        if(type === "shield"){
+            sfxShieldBreak();     // صدا: شیشه می‌شکنه
+            shieldBreakEffect();  // لرزش + پارتیکل شیشه
+        }
+
+        activePowerUps[type] = false;
+
+    }, duration);
+}
 
     function fireBullet(){
       if(!gameRunning) return;
