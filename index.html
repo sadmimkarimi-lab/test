@@ -2007,7 +2007,8 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       bullets=[]; enemies=[]; powerUps=[]; particles=[];
       score=0; lives=3;
       bossSpawned=false; bossAlive=false;
-      miniBossSpawned=false;
+  miniBossSpawned=false;
+  inBossFight = false;   // ⭐ هر بار بازی از نو، باس‌فایت خاموش شود
       hitFlash=0; shakeTime=0; bgOffset=0;
       rocketArmed=false;
 
