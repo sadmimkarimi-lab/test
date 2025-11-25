@@ -2195,33 +2195,35 @@ if (levelCleared) {
 }
 
 function endGame() {
-    // 🔥 1) نوار HP باس رو کامل پنهان کن
+
+    // 1) نوار باس را کامل پنهان کن (قطعی!)
     const bossHpBar  = document.getElementById("bossHpBar");
     const bossHpFill = document.getElementById("bossHpFill");
     const bossHpText = document.getElementById("bossHpText");
 
-    if (bossHpBar)  bossHpBar.classList.add("hidden");
+    if (bossHpBar) {
+        bossHpBar.classList.add("hidden");
+        bossHpBar.style.display = "none";   // ⬅⬅ مهم‌ترین قسمت
+    }
     if (bossHpFill) bossHpFill.style.width = "100%";
     if (bossHpText) bossHpText.textContent = "";
 
-    // 🔥 2) وضعیت باس رو ریست کن
+    // 2) وضعیت باس را خاموش کن
     bossAlive   = false;
     inBossFight = false;
 
-    // 🔥 3) توقف بازی
+    // 3) توقف بازی
     gameRunning = false;
     if (frameId) cancelAnimationFrame(frameId);
 
-    // 🔥 4) امتیاز نهایی
+    // 4) امتیاز نهایی
     finalScoreEl.textContent = score;
-
     const saved = loadState();
     const best = Math.max(score, saved.bestScore || 0);
     bestScoreEl.textContent = best;
-
     saveState();
 
-    // 🔥 5) نمایش صفحهٔ پایان
+    // 5) نمایش صفحه پایان دور
     gameOverOverlay.classList.remove("hidden");
 }
 
