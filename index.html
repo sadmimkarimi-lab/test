@@ -1631,12 +1631,13 @@ const h = canvas.height * 0.22;
         const x = (canvas.width-w)/2;
         const y = -h-20;
         enemies.push({
-          x,y,w,h,
-          speed: enemyBaseSpeed*0.7,
-          isBoss:true,
-          bossName:lvl.bossName,
-          hp:lvl.bossHP
-        });
+    x,y,w,h,
+    speed: enemyBaseSpeed*0.7,
+    isBoss:true,
+    bossName:lvl.bossName,
+    hp:lvl.bossHP,
+    maxHp:lvl.bossHP   // 👈⭐ این خط مهمه ⭐
+});
         bossAlive = true;
 
 const bossHpBar = document.getElementById("bossHpBar");
@@ -1843,6 +1844,9 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
             if(e.isBoss){
               // باس بزرگ
               e.hp -= b.damage;
+
+              const bossHpFill = document.getElementById("bossHpFill");
+bossHpFill.style.width = Math.max(0, (e.hp / e.maxHp) * 100) + "%";
               if(e.hp <= 0){
 
                 // افکت انفجار قوی‌تر برای غول
