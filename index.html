@@ -1488,30 +1488,46 @@ function openLevelModal(){
 
     function drawEnemies(){
       enemies.forEach(e=>{
-        if(e.isBoss){
-          const {x,y,w,h} = e;
+        if (e.isBoss) {
+      const { x, y, w, h } = e;
 
-          if(bossImg.complete && bossImg.naturalWidth>0){
-            const scale = 0.75;
-            const iw = w * scale;
-            const ih = h * scale;
-            const ix = x + (w - iw)/2;
-            const iy = y + (h - ih)/2;
-            ctx.drawImage(bossImg, ix, iy, iw, ih);
-          }
+      // تصویر غول
+      if (bossImg.complete && bossImg.naturalWidth > 0) {
+        const scale = 0.75;
+        const iw = w * scale;
+        const ih = h * scale;
+        const ix = x + (w - iw) / 2;
+        const iy = y + (h - ih) / 2;
+        ctx.drawImage(bossImg, ix, iy, iw, ih);
+      }
 
-          ctx.fillStyle = "#ffffff";
-          ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "top";
-          ctx.fillText("HP: "+e.hp, x+w/2, y+4);
+      // 🎯 نوار جون + عدد، دقیقا زیر خود باس
+      const bossHpBar  = document.getElementById("bossHpBar");
+      const bossHpFill = document.getElementById("bossHpFill");
+      const bossHpText = document.getElementById("bossHpText");
 
-          ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
-          ctx.textBaseline = "bottom";
-          ctx.fillText(e.bossName, x+w/2, y+h-4);
+      // نسبت جون فعلی به حداکثر
+      const ratio = Math.max(0, e.hp) / e.maxHp;
+      bossHpFill.style.width = (ratio * 100) + "%";
 
-          return;
-        }
+      // متن وسط نوار (مثلا 75 / 120)
+      const currentHp = Math.max(0, Math.round(e.hp));
+      bossHpText.textContent = `${currentHp} / ${e.maxHp}`;
+
+      // جای نوار: کمی زیر غول
+      const barTop = y + h + 10;
+      bossHpBar.style.top = barTop + "px";
+      bossHpBar.classList.remove("hidden");
+
+      // فقط اسم غول را پایینش بنویسیم
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 13px Vazir, Vazirmatn, system-ui";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "bottom";
+      ctx.fillText(e.bossName, x + w / 2, y + h - 4);
+
+      return;
+    }
 
 
         else if(e.isMiniBoss){
