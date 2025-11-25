@@ -1371,7 +1371,7 @@ function getMaxUnlockedLevelId(){
   return saved.lastLevel || 1;
 }
 
-// ساخت دکمه‌های مراحل
+// ساخت دکمه‌های مراحل (با تصویر غول هر مرحله)
 function buildLevelGrid(){
   if(!levelGrid) return;
   levelGrid.innerHTML = "";
@@ -1381,8 +1381,24 @@ function buildLevelGrid(){
   LEVELS.forEach((lvl, index)=>{
     const btn = document.createElement("button");
     btn.className = "level-btn";
-    btn.textContent = lvl.label;
 
+    // تصویر غول هر مرحله
+    const img = document.createElement("img");
+    img.className = "level-boss-thumb";
+    const bossUrl = bossImages[lvl.bossImgIndex] || bossImages[0];
+    img.src = bossUrl;
+    img.alt = lvl.bossName || lvl.label;
+
+    // عنوان مرحله
+    const label = document.createElement("span");
+    label.className = "level-label";
+    label.textContent = lvl.label;
+
+    // چسباندن به دکمه
+    btn.appendChild(img);
+    btn.appendChild(label);
+
+    // وضعیت قفل / فعلی
     if(lvl.id > maxId){
       btn.classList.add("locked");
       btn.disabled = true;
