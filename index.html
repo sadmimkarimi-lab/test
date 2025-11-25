@@ -2127,36 +2127,40 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       tank.y = canvas.height - tank.h - 18;
     }
 
-    function startGame(fromLevelIndex=0){
-      if(frameId) cancelAnimationFrame(frameId);
-document.getElementById("bossHpBar").classList.add("hidden");
-      resetGameState(fromLevelIndex);
-      startOverlay.classList.add("hidden");
-      levelOverlay.classList.add("hidden");
-      gameOverOverlay.classList.add("hidden");
-      gameRunning=true;
-      lastEnemyTime=performance.now();
-      lastPowerUpTime=performance.now();
-      gameLoop();
-    }
+    function startGame(fromLevelIndex = 0) {
+  if (frameId) cancelAnimationFrame(frameId);
 
-    function endGame() {
+  // ⛔ در شروع هر بازی، نوار جون باس رو کامل مخفی کن
+  const bossHpBar = document.getElementById("bossHpBar");
+  if (bossHpBar) bossHpBar.classList.add("hidden");
 
-    // ⛔ نوار باس رو پنهان کن
-    const bossHpBar = document.getElementById("bossHpBar");
-    bossHpBar.classList.add("hidden");
+  resetGameState(fromLevelIndex);
+  startOverlay.classList.add("hidden");
+  levelOverlay.classList.add("hidden");
+  gameOverOverlay.classList.add("hidden");
 
-    gameRunning = false;
-      if(frameId) cancelAnimationFrame(frameId);
+  gameRunning = true;
+  lastEnemyTime = performance.now();
+  lastPowerUpTime = performance.now();
+  gameLoop();
+}
 
-      finalScoreEl.textContent=score;
-      const saved=loadState();
-      const best=Math.max(score, saved?.bestScore || 0);
-      bestScoreEl.textContent=best;
-      saveState();
-      sfxGameOver();
-      gameOverOverlay.classList.remove("hidden");
-    }
+function endGame() {
+  gameRunning = false;
+  if (frameId) cancelAnimationFrame(frameId);
+
+  // ⛔ وقتی می‌بازی، نوار جون باس رو مخفی کن که زیر پیام «پایان این دور» دیده نشه
+  const bossHpBar = document.getElementById("bossHpBar");
+  if (bossHpBar) bossHpBar.classList.add("hidden");
+
+  finalScoreEl.textContent = score;
+  const saved = loadState();
+  const best = Math.max(score, saved?.bestScore || 0);
+  bestScoreEl.textContent = best;
+  saveState();
+  sfxGameOver();
+  gameOverOverlay.classList.remove("hidden");
+}
 
     // رویدادهای اصلی
     startBtn.addEventListener("click", ()=> startGame(0));
