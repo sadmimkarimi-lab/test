@@ -471,6 +471,50 @@
     }
 
 
+
+/* دکمه‌ی مرحله توی HUD کلیک‌خور باشد */
+.badge-level{
+  cursor:pointer;
+}
+
+/* گرید مراحل */
+.level-grid{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap:8px;
+}
+
+/* دکمه‌های هر مرحله */
+.level-btn{
+  border:none;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:11px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#1d4ed8,#06b6d4);
+  color:#f9fafb;
+  box-shadow:0 6px 14px rgba(37,99,235,.65);
+  text-align:center;
+}
+
+/* مرحله فعلی */
+.level-btn.current{
+  background:linear-gradient(135deg,#22c55e,#16a34a);
+}
+
+/* مراحل قفل شده */
+.level-btn.locked{
+  background:#020617;
+  color:#9ca3af;
+  border:1px dashed rgba(148,163,184,.7);
+  box-shadow:none;
+  cursor:not-allowed;
+}
+
+
+  
+
 /* ===== اینتروی ویدئویی ===== */
 .intro-screen{
   position:fixed;
@@ -625,15 +669,18 @@
 
         <!-- شروع -->
         <div id="startOverlay" class="overlay">
-          <h2>تانکیتا آماده‌ست 🚀</h2>
-          <p>
-            با تانک اراده‌ات، عادت‌های بد رو نابود کن و مرحله به مرحله<br/>
-            غول‌های قلمرو ذهنت رو شکست بده. <br>
-            برای شروع روی دکمه «شروع از مرحله ۱» بزن.
-          </p>
-          <button id="startBtn">شروع از مرحله ۱</button>
-          <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
-        </div>
+  <h2>تانکیتا آماده‌ست 🚀</h2>
+  <p>
+    با تانک اراده‌ات، عادت‌های بد رو نابود کن و مرحله به مرحله<br/>
+    غول‌های قلمرو ذهنت رو شکست بده. <br>
+    برای شروع روی دکمه «شروع از مرحله ۱» بزن.
+  </p>
+
+  <button id="startBtn">شروع از مرحله ۱</button>
+  <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
+  <!-- 👇 دکمه جدید -->
+  <button id="levelsBtn" class="secondary">مراحل بازی</button>
+</div>
 
         <!-- پایان مرحله -->
         <div id="levelOverlay" class="overlay hidden">
@@ -829,6 +876,25 @@
     </div>
   </div>
 
+
+<!-- مودال مراحل -->
+<div class="modal hidden" id="levelModal">
+  <div class="modal-box">
+    <h2>مراحل بازی</h2>
+    <p style="font-size:11px;opacity:.85;margin-top:4px;">
+      مراحل باز شده را می‌تونی انتخاب کنی. بقیه قفل هستند.
+    </p>
+
+    <div class="level-grid" id="levelGrid"></div>
+
+    <div class="modal-actions">
+      <button class="secondary" id="levelCloseBtn">بستن</button>
+    </div>
+  </div>
+</div>
+
+
+  
   <script>
     // ======== Canvas & اندازه ========
     const canvas = document.getElementById("gameCanvas");
