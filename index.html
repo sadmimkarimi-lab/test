@@ -177,11 +177,11 @@
       background:rgba(234,179,8,.12);
       border-color:rgba(234,179,8,.6);
     }
-    .stat-pill.danger{
-      background:rgba(248,113,113,0.2);
-      border-color:#ef4444;
-      animation:dangerPulse 0.6s ease-in-out 0s 2;
-    }
+  .danger{
+  background:rgba(248,113,113,0.2) !important;
+  border-color:#ef4444 !important;
+  animation:dangerPulse 0.6s ease-in-out 0s 2;
+}
     @keyframes dangerPulse{
       0%{transform:scale(1);}
       50%{transform:scale(1.08);}
@@ -234,65 +234,70 @@
     }
 
     /* کادر فروشگاه (هم‌قد با جون) */
-    .shop-bar{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:4px;
-      padding:3px 8px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,0.8);
-      background:rgba(15,23,42,0.95);
-      box-shadow:0 4px 14px rgba(15,23,42,0.9);
-    }
-    .shop-items{
-      display:flex;
-      align-items:center;
-      gap:4px;
-      flex:1;
-      justify-content:flex-start;
-    }
-    .shop-item{
-      display:flex;
-      align-items:center;
-      gap:3px;
-      padding:2px 5px;
-      border-radius:999px;
-      background:rgba(30,64,175,0.8);
-      border:1px solid rgba(129,140,248,0.9);
-      cursor:pointer;
-      user-select:none;
-      -webkit-user-select:none;
-      font-size:11px;
-    }
-    .shop-item.disabled{
-      opacity:.4;
-      cursor:not-allowed;
-    }
-    .shop-icon{
-      font-size:13px;
-    }
-    .shop-count{
-      min-width:12px;
-      text-align:center;
-      font-weight:700;
-    }
-    .shop-cart{
-      width:30px;
-      height:30px;
-      border-radius:999px;
-      border:1px solid rgba(248,113,113,0.9);
-      background:radial-gradient(circle at center,#fecaca,#f97373);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:16px;
-      cursor:pointer;
-      box-shadow:0 6px 18px rgba(248,113,113,0.8);
-      user-select:none;
-      -webkit-user-select:none;
-    }
+  .shop-bar{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:4px;
+  padding:2px 6px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,0.8);
+  background:rgba(15,23,42,0.95);
+  box-shadow:0 4px 12px rgba(15,23,42,0.9);
+}
+
+.shop-items{
+  display:flex;
+  align-items:center;
+  gap:4px;
+  flex:1;
+  justify-content:flex-start;
+}
+
+.shop-item{
+  display:flex;
+  align-items:center;
+  gap:2px;
+  padding:1px 4px;
+  border-radius:999px;
+  background:rgba(30,64,175,0.9);
+  border:1px solid rgba(129,140,248,0.9);
+  cursor:pointer;
+  font-size:10px;
+}
+
+.shop-item.passive{
+  cursor:default;
+  background:rgba(15,23,42,0.8);
+  border-style:dashed;
+}
+
+.shop-icon{
+  font-size:12px;
+}
+
+.shop-count{
+  min-width:10px;
+  text-align:center;
+  font-weight:700;
+  font-size:10px;
+}
+
+.shop-cart{
+  width:26px;
+  height:26px;
+  border-radius:999px;
+  border:1px solid rgba(248,113,113,0.9);
+  background:radial-gradient(circle at center,#fecaca,#f97373);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  cursor:pointer;
+  box-shadow:0 5px 14px rgba(248,113,113,0.8);
+  user-select:none;
+}
     .shop-cart:active{
       transform:scale(.95) translateY(1px);
       box-shadow:0 4px 12px rgba(15,23,42,.9);
@@ -653,44 +658,60 @@
 
       <!-- HUD پایین: جان / سکه / فروشگاه / صدا / ری‌استارت -->
       <div class="hud">
-        <div class="hud-main">
-          <!-- ۱. جان -->
-          <span class="stat-pill" id="livesPill">
-            ❤️ <span id="lives">3</span>
-          </span>
+      <div class="hud-main">
+  <!-- ۱. سکه -->
+  <span class="stat-pill badge-coins">
+    🪙 <span id="coins">0</span>
+  </span>
 
-          <!-- ۲. سکه -->
-          <span class="stat-pill badge-coins">
-            🪙 <span id="coins">0</span>
-          </span>
+  <!-- ۲. کادر فروشگاه (جان + زمان + سپر + موشک + سه‌تایی) -->
+  <div class="shop-bar">
+    <div class="shop-items">
+      <!-- جان - فقط نمایش، کلیک‌خور نیست -->
+      <div class="shop-item passive" id="lifeDisplay">
+        <span class="shop-icon">❤️</span>
+        <span class="shop-count" id="lives">3</span>
+      </div>
 
-          <!-- ۳. کادر فروشگاه -->
-          <div class="shop-bar">
-            <div class="shop-items">
-              <div class="shop-item" id="shieldUseBtn">
-                <span class="shop-icon">🛡</span>
-                <span class="shop-count" id="shieldCount">0</span>
-              </div>
-              <div class="shop-item" id="rocketUseBtn">
-                <span class="shop-icon">🚀</span>
-                <span class="shop-count" id="rocketCount">0</span>
-              </div>
-              <div class="shop-item" id="tripleUseBtn">
-                <span class="shop-icon">✖️3</span>
-                <span class="shop-count" id="tripleCount">0</span>
-              </div>
-            </div>
-            <button class="shop-cart" id="shopBtn" title="شاپ">
-              🛒
-            </button>
-          </div>
+      <!-- زمان کندکننده -->
+      <div class="shop-item" id="slowUseBtn">
+        <span class="shop-icon">⏳</span>
+        <span class="shop-count" id="slowCount">0</span>
+      </div>
 
-          <!-- ۴. صدا + شروع دوباره -->
-          <div class="top-actions">
-            <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
-          <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
-          </div>
-        </div>
+      <!-- سپر -->
+      <div class="shop-item" id="shieldUseBtn">
+        <span class="shop-icon">🛡</span>
+        <span class="shop-count" id="shieldCount">0</span>
+      </div>
+
+      <!-- موشک -->
+      <div class="shop-item" id="rocketUseBtn">
+        <span class="shop-icon">🚀</span>
+        <span class="shop-count" id="rocketCount">0</span>
+      </div>
+
+      <!-- شلیک سه‌تایی -->
+      <div class="shop-item" id="tripleUseBtn">
+        <span class="shop-icon">✖️3</span>
+        <span class="shop-count" id="tripleCount">0</span>
+      </div>
+    </div>
+
+    <!-- دکمه باز کردن پاپ‌آپ فروشگاه -->
+    <button class="shop-cart" id="shopBtn" title="شاپ">
+      🛒
+    </button>
+  </div>
+
+  <!-- ۳. صدا + توقف/ادامه -->
+  <div class="top-actions">
+    <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
+    <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
+  </div>
+</div>
+
+          
 
         <!-- امتیاز / مرحله + پیام الهام‌بخش -->
         <div class="hud-sub">
@@ -749,33 +770,58 @@
       </div>
 
       <div class="shop-grid">
-        <div class="shop-card">
-          <div class="shop-info">
-            <div class="shop-title">شلیک سه‌تایی ×3</div>
-            <div class="shop-desc">قدرت شلیک سه‌تایی برای چند ثانیه؛ وقتی لازم داشتی فعالش کن.</div>
-            <div class="shop-desc">قیمت: ۶۰ 🪙</div>
-          </div>
-          <button class="shop-buy" id="buyTripleBtn">خرید</button>
-        </div>
 
-        <div class="shop-card">
-          <div class="shop-info">
-            <div class="shop-title">حفاظ انرژی 🛡</div>
-            <div class="shop-desc">سپر محافظ در برابر ضربه‌ها؛ هر وقت خطر رو حس کردی فعالش کن.</div>
-            <div class="shop-desc">قیمت: ۵۰ 🪙</div>
-          </div>
-          <button class="shop-buy" id="buyShieldBtn">خرید</button>
-        </div>
+  <!-- شلیک سه‌تایی -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">شلیک سه‌تایی ×3</div>
+      <div class="shop-desc">قدرت شلیک سه‌تایی برای چند ثانیه.</div>
+      <div class="shop-desc">قیمت: ۳۰۰ 🪙</div>
+    </div>
+    <button class="shop-buy" id="buyTripleBtn">خرید</button>
+  </div>
 
-        <div class="shop-card">
-          <div class="shop-info">
-            <div class="shop-title">موشک ویژه 🚀</div>
-            <div class="shop-desc">موشک‌های خیلی قوی؛ شلیک انتخابی از طریق آیکن 🚀 پایین صفحه.</div>
-            <div class="shop-desc">قیمت: ۷۰ 🪙</div>
-          </div>
-          <button class="shop-buy" id="buyRocketBtn">خرید</button>
-        </div>
-      </div>
+  <!-- حفاظ انرژی -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">حفاظ انرژی 🛡</div>
+      <div class="shop-desc">سپر محافظ در برابر ضربه‌ها.</div>
+      <div class="shop-desc">قیمت: ۱۵۰ 🪙</div>
+    </div>
+    <button class="shop-buy" id="buyShieldBtn">خرید</button>
+  </div>
+
+  <!-- موشک ویژه -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">موشک ویژه 🚀</div>
+      <div class="shop-desc">موشک خیلی قوی غول کش.</div>
+      <div class="shop-desc">قیمت: ۲۰۰ 🪙</div>
+    </div>
+    <button class="shop-buy" id="buyRocketBtn">خرید</button>
+  </div>
+
+  <!-- جان اضافه -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">جان اضافه ❤️</div>
+      <div class="shop-desc">یک جان اضافه؛ حداکثر ۷ بار.</div>
+      <div class="shop-desc">قیمت: ۷۵۰ 🪙</div>
+    </div>
+    <button class="shop-buy" id="buyLifeBtn">خرید</button>
+  </div>
+
+  <!-- کند کردن زمان -->
+  <div class="shop-card">
+    <div class="shop-info">
+      <div class="shop-title">کند کردن زمان ⏳</div>
+      <div class="shop-desc">دشمن‌ها چند ثانیه آهسته می‌شن.</div>
+      <div class="shop-desc">قیمت: ۵۵۰ 🪙</div>
+    </div>
+    <button class="shop-buy" id="buySlowBtn">خرید</button>
+  </div>
+
+</div>
 
       <div class="modal-actions">
         <button class="secondary" id="shopCloseBtn">بستن</button>
@@ -862,7 +908,7 @@ introMuteBtn.addEventListener("click", ()=>{
     const coinsEl = document.getElementById("coins");
     const levelLabel = document.getElementById("levelLabel");
     const resetRunBtn = document.getElementById("resetRunBtn");
-    const livesPill = document.getElementById("livesPill");
+    const lifeDisplay = document.getElementById("lifeDisplay");
 
     const startOverlay = document.getElementById("startOverlay");
     const levelOverlay = document.getElementById("levelOverlay");
@@ -887,19 +933,25 @@ introMuteBtn.addEventListener("click", ()=>{
     const shopCloseBtn = document.getElementById("shopCloseBtn");
 
     const buyTripleBtn = document.getElementById("buyTripleBtn");
-    const buyShieldBtn = document.getElementById("buyShieldBtn");
-    const buyRocketBtn = document.getElementById("buyRocketBtn");
-    const shopCoinsEl = document.getElementById("shopCoins");
+const buyShieldBtn = document.getElementById("buyShieldBtn");
+const buyRocketBtn = document.getElementById("buyRocketBtn");
+const buyLifeBtn   = document.getElementById("buyLifeBtn");
+const buySlowBtn   = document.getElementById("buySlowBtn");
+const shopCoinsEl  = document.getElementById("shopCoins");
 
     const soundToggleBtn = document.getElementById("soundToggle");
-
+const pauseBtn = document.getElementById("pauseBtn");
+    
     // آیکن‌های استفاده انتخابی
     const shieldUseBtn = document.getElementById("shieldUseBtn");
-    const rocketUseBtn = document.getElementById("rocketUseBtn");
-    const tripleUseBtn = document.getElementById("tripleUseBtn");
-    const shieldCountEl = document.getElementById("shieldCount");
-    const rocketCountEl = document.getElementById("rocketCount");
-    const tripleCountEl = document.getElementById("tripleCount");
+const rocketUseBtn = document.getElementById("rocketUseBtn");
+const tripleUseBtn = document.getElementById("tripleUseBtn");
+const slowUseBtn   = document.getElementById("slowUseBtn");
+
+const shieldCountEl = document.getElementById("shieldCount");
+const rocketCountEl = document.getElementById("rocketCount");
+const tripleCountEl = document.getElementById("tripleCount");
+const slowCountEl   = document.getElementById("slowCount");
 
     const motivationTextEl = document.getElementById("motivationText");
     const MOTIVATIONS = [
@@ -1008,17 +1060,34 @@ const bossImg = new Image();
 
     // ======== وضعیت بازی ========
     let tank = { x:0,y:0,w:60,h:36,speed:4 };
-    let bullets = [];
-    let enemies = [];
-    let powerUps = [];
-    let particles = [];
+let bullets = [];
+let enemies = [];
+let powerUps = [];
+let particles = [];
 
-    let score = 0;
-    let coins = 0;
-    let lives = 3;
+let score = 0;
+let coins = 0;
+let lives = 3;
 
-    // انبار آیتم‌ها
-    let inventory = { shield:0, triple:0, rocket:0 };
+const MAX_LIVES = 9;
+const MAX_SLOW_ITEMS = 7;
+const SHOP_PRICES = {
+    triple: 300,  // شلیک سه‌تایی
+    rocket: 200,  // موشک
+    shield: 150,  // سپر
+    life:   750,  // جان
+    slow:   550   // زمان/کند کردن
+};
+
+// محدودیت خرید داخل هر اجرا
+let lifeBuys = 0;
+let slowBuys = 0;
+const MAX_LIFE_BUYS = 7;
+const MAX_SLOW_BUYS = 7;
+    
+
+// انبار آیتم‌ها
+let inventory = { shield:0, triple:0, rocket:0, slow:0 };
     let rocketArmed = false;   // شلیک بعدی موشکی باشد یا نه
 
     let gameRunning = false;
@@ -1035,7 +1104,7 @@ const bossImg = new Image();
     const badLabels = [
       "دروغ","تهمت","غیبت","مردم‌آزاری","گرانفروشی","بی‌ادبی","دشنام","تنبلی",
       "حسادت","بی‌حیایی","بی‌حجابی","ترک نماز","قضاوت","خودکم‌بینی","خودخواهی",
-      "لجاجت","چشم و هم‌چشمی","حق‌الناس","حیوان‌آزاری","قهر",
+      "لجاجت","خساست","حق‌الناس","حیوان‌آزاری","قهر",
       "ریا","ناامیدی","ترس","کینه","پرخاشگری","تعلل","بدبینی"
     ];
 
@@ -1108,14 +1177,16 @@ let miniBossSpawned = false;
     };
 
     function updateInventoryUI(){
-      shieldCountEl.textContent = inventory.shield || 0;
-      rocketCountEl.textContent = inventory.rocket || 0;
-      tripleCountEl.textContent = inventory.triple || 0;
+  shieldCountEl.textContent = inventory.shield || 0;
+  rocketCountEl.textContent = inventory.rocket || 0;
+  tripleCountEl.textContent = inventory.triple || 0;
+  slowCountEl.textContent   = inventory.slow   || 0;
 
-      shieldUseBtn.classList.toggle("disabled", !inventory.shield);
-      rocketUseBtn.classList.toggle("disabled", !inventory.rocket);
-      tripleUseBtn.classList.toggle("disabled", !inventory.triple);
-    }
+  shieldUseBtn.classList.toggle("disabled", !inventory.shield);
+  rocketUseBtn.classList.toggle("disabled", !inventory.rocket);
+  tripleUseBtn.classList.toggle("disabled", !inventory.triple);
+  slowUseBtn.classList.toggle("disabled",   !inventory.slow);
+}
 
     function createBlobPoints(w,h){
       const pts=[];
@@ -1426,7 +1497,7 @@ const h = canvas.height * 0.22;
       if(powerTimers[type]) clearTimeout(powerTimers[type]);
       powerTimers[type]=setTimeout(()=>{
         activePowerUps[type]=false;
-      }, type==="shield"?12000:type==="triple"?10000:8000);
+      }, type==="shield"?16000:type==="triple"?10000:8000);
     }
 
     function fireBullet(){
@@ -1468,10 +1539,10 @@ const h = canvas.height * 0.22;
     }
 
     function flashLifeDanger(){
-      if(!livesPill) return;
-      livesPill.classList.add("danger");
-      setTimeout(()=>livesPill.classList.remove("danger"),700);
-    }
+  if(!lifeDisplay) return;
+  lifeDisplay.classList.add("danger");
+  setTimeout(()=>lifeDisplay.classList.remove("danger"),700);
+}
 
     let frameId = null;
 
@@ -1571,19 +1642,25 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
       // پاورآپ‌ها: به انبار اضافه شوند (انتخابی)
       powerUps.forEach((p,pi)=>{
-        if(rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)){
-          if(p.type === "shield" || p.type === "triple" || p.type==="rocket"){
-            inventory[p.type] = (inventory[p.type] || 0) + 1;
-            updateInventoryUI();
-            sfxPower();
-            saveState();
-          }else if(p.type==="slow"){
-            activatePowerUp("slow");
-          }
-          powerUps.splice(pi,1);
-          if(navigator.vibrate) navigator.vibrate(25);
-        }
-      });
+  if (rectCircleCollide(p.x,p.y,p.r, tank.x,tank.y,tank.w,tank.h)) {
+
+    // اگر slow بود ⇒ با سقف ۷ تا انباری بشه
+    if (p.type === "slow") {
+      inventory.slow = Math.min(
+        MAX_SLOW_ITEMS,
+        (inventory.slow || 0) + 1
+      );
+    } else {
+      // shield / triple / rocket
+      inventory[p.type] = (inventory[p.type] || 0) + 1;
+    }
+
+    updateInventoryUI();
+    sfxPower();
+    saveState();
+    powerUps.splice(pi,1);
+  }
+});
 
       enemies.forEach((e,ei)=>{
         const collideWithTank =
@@ -1618,7 +1695,7 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
       if(levelCleared){
-        lives += 2;
+        lives = Math.min(MAX_LIVES, lives + 2);
         livesEl.textContent = lives;
         gameRunning=false;
         saveState();
@@ -1790,36 +1867,96 @@ pauseBtn.addEventListener("click", ()=>{
     shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
 
     function refreshShopUI(){
-      shopCoinsEl.textContent = coins;
-      buyTripleBtn.disabled = coins < 60;
-      buyShieldBtn.disabled = coins < 50;
-      buyRocketBtn.disabled = coins < 70;
-    }
+  shopCoinsEl.textContent = coins;
+
+  // قیمت‌ها بر اساس SHOP_PRICES
+  buyTripleBtn.disabled = coins < SHOP_PRICES.triple;
+  buyRocketBtn.disabled = coins < SHOP_PRICES.rocket;
+  buyShieldBtn.disabled = coins < SHOP_PRICES.shield;
+
+  // جان: تا وقتی هم سکه کافی داری، هم جان به سقف نرسیده و هم کمتر از ۷ بار خرید کردی
+  buyLifeBtn.disabled =
+    coins < SHOP_PRICES.life ||
+    lifeBuys >= MAX_LIFE_BUYS ||
+    lives >= MAX_LIVES;
+
+  // زمان: هم سکه، هم سقف آیتم انباری، هم سقف خرید
+  buySlowBtn.disabled =
+    coins < SHOP_PRICES.slow ||
+    slowBuys >= MAX_SLOW_BUYS ||
+    inventory.slow >= MAX_SLOW_ITEMS;
+}
 
     // خرید آیتم‌ها -> فقط به انبار اضافه می‌شوند
-    buyTripleBtn.addEventListener("click", ()=>{
-      if(coins<60) return;
-      coins-=60; coinsEl.textContent=coins;
-      inventory.triple = (inventory.triple||0)+1;
-      updateInventoryUI();
-      saveState(); refreshShopUI();
-    });
+    // خرید شلیک سه‌تایی
+buyTripleBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.triple) return;
+  coins -= SHOP_PRICES.triple;
+  coinsEl.textContent = coins;
+  inventory.triple = (inventory.triple || 0) + 1;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
 
-    buyShieldBtn.addEventListener("click", ()=>{
-      if(coins<50) return;
-      coins-=50; coinsEl.textContent=coins;
-      inventory.shield = (inventory.shield||0)+1;
-      updateInventoryUI();
-      saveState(); refreshShopUI();
-    });
+// خرید موشک
+buyRocketBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.rocket) return;
+  coins -= SHOP_PRICES.rocket;
+  coinsEl.textContent = coins;
+  inventory.rocket = (inventory.rocket || 0) + 1;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
 
-    buyRocketBtn.addEventListener("click", ()=>{
-      if(coins<70) return;
-      coins-=70; coinsEl.textContent=coins;
-      inventory.rocket = (inventory.rocket||0)+1;
-      updateInventoryUI();
-      saveState(); refreshShopUI();
-    });
+// خرید سپر
+buyShieldBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.shield) return;
+  coins -= SHOP_PRICES.shield;
+  coinsEl.textContent = coins;
+  inventory.shield = (inventory.shield || 0) + 1;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
+
+// خرید جان
+buyLifeBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.life) return;
+  if(lifeBuys >= MAX_LIFE_BUYS) return;
+  if(lives >= MAX_LIVES) return;
+
+  coins -= SHOP_PRICES.life;
+  coinsEl.textContent = coins;
+
+  lives = Math.min(MAX_LIVES, lives + 1);
+  livesEl.textContent = lives;
+
+  lifeBuys++;
+  saveState();
+  refreshShopUI();
+});
+
+// خرید پاورآپ زمان (slow)
+buySlowBtn.addEventListener("click", ()=>{
+  if(coins < SHOP_PRICES.slow) return;
+  if(slowBuys >= MAX_SLOW_BUYS) return;
+  if(inventory.slow >= MAX_SLOW_ITEMS) return;
+
+  coins -= SHOP_PRICES.slow;
+  coinsEl.textContent = coins;
+
+  inventory.slow = Math.min(
+    MAX_SLOW_ITEMS,
+    (inventory.slow || 0) + 1
+  );
+
+  slowBuys++;
+  updateInventoryUI();
+  saveState();
+  refreshShopUI();
+});
 
     // استفاده انتخابی از آیتم‌ها
     shieldUseBtn.addEventListener("click", ()=>{
@@ -1850,6 +1987,16 @@ pauseBtn.addEventListener("click", ()=>{
       }
     });
 
+slowUseBtn.addEventListener("click", ()=>{
+    if(!gameRunning) return;
+    if(inventory.slow > 0 && !activePowerUps.slow){
+        inventory.slow--;
+        updateInventoryUI();
+        activatePowerUp("slow");
+        saveState();
+    }
+});
+    
     // شروع اولیه
     resetGameState(0);
     drawBackground(); drawTank();
