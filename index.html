@@ -2045,6 +2045,24 @@ pauseBtn.addEventListener("click", ()=>{
     });
     shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
 
+
+// دکمه «مراحل بازی» در صفحه شروع
+if(levelsBtn){
+  levelsBtn.addEventListener("click", openLevelModal);
+}
+
+// کلیک روی کادر «مرحله: ...» در HUD
+if(levelBadge){
+  levelBadge.addEventListener("click", openLevelModal);
+}
+
+// بستن مودال مراحل
+if(levelCloseBtn){
+  levelCloseBtn.addEventListener("click", ()=>{
+    levelModal.classList.add("hidden");
+  });
+}
+    
     function refreshShopUI(){
   shopCoinsEl.textContent = coins;
 
