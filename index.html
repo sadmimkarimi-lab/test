@@ -1841,41 +1841,73 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
   }
 });
 
-      enemies.forEach((e,ei)=>{
+      enemies.forEach((e, ei) => {
         const collideWithTank =
-          e.x < tank.x+tank.w &&
-          e.x+e.w > tank.x &&
-          e.y < tank.y+tank.h &&
-          e.y+e.h > tank.y;
+          e.x < tank.x + tank.w &&
+          e.x + e.w > tank.x &&
+          e.y < tank.y + tank.h &&
+          e.y + e.h > tank.y;
 
-        const outBottom = e.y+e.h >= canvas.height-5;
+        const outBottom = e.y + e.h >= canvas.height - 5;
 
-        if (collideWithTank || outBottom) {
-  enemies.splice(ei, 1);
+        // ۱) برخورد مستقیم با تانک
+        if (collideWithTank) {
 
-  if (activePowerUps.shield) {
-    // سپر فعاله ⇒ فقط دشمن نابود می‌شه، جان کم نمی‌شه
-    const cx = e.x + e.w / 2;
-    const cy = e.y + e.h / 2;
-    createExplosion(cx, cy, "#38bdf8"); // انفجار آبی برای برخورد با سپر
-    // عمداً سپر رو خاموش نمی‌کنیم؛ تا پایان زمانش روشن می‌مونه
-  } else {
-    lives--;
-    livesEl.textContent = lives;
-    hitFlash = 1;
-    shakeTime = e.isBoss ? 12 : 10;
-    flashLifeDanger();
-    sfxHit();
-    if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
-    if (lives <= 0) {
-      endGame();
-      return;
-    } else if (e.isBoss) {
-      bossAlive = false;
-      bossSpawned = false;
-    }
-  }
-}
+          // اگر سپر فعاله ⇒ فقط محافظت، نه نابود کردن دشمن
+          if (activePowerUps.shield) {
+            const cx = e.x + e.w / 2;
+            const cy = e.y + e.h / 2;
+
+            // افکت برخورد با سپر
+            createExplosion(cx, cy, "#38bdf8");
+
+            // کمی دشمن را به بالا برگردون، انگار از سپر برگشته عقب
+            e.y -= 18;
+
+            // ❗ نه جان کم میشه، نه غول/دشمن پاک میشه
+            return;
+          }
+
+          // بدون سپر ⇒ برخورد باعث از دست دادن جان می‌شود
+          enemies.splice(ei, 1);
+
+          lives--;
+          livesEl.textContent = lives;
+          hitFlash = 1;
+          shakeTime = e.isBoss ? 12 : 10;
+          flashLifeDanger();
+          sfxHit();
+          if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+
+          if (lives <= 0) {
+            endGame();
+            return;
+          } else if (e.isBoss) {
+            // غول با برخورد (بدون سپر) باعث باخت می‌شود
+            bossAlive = false;
+            bossSpawned = false;
+          }
+
+        // ۲) رسیدن دشمن به کف صفحه (خط پایین)
+        } else if (outBottom) {
+          enemies.splice(ei, 1);
+
+          lives--;
+          livesEl.textContent = lives;
+          hitFlash = 1;
+          shakeTime = e.isBoss ? 12 : 10;
+          flashLifeDanger();
+          sfxHit();
+          if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+
+          if (lives <= 0) {
+            endGame();
+            return;
+          } else if (e.isBoss) {
+            bossAlive = false;
+            bossSpawned = false;
+          }
+        }
       });
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
