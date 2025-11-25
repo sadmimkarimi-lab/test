@@ -1920,10 +1920,10 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
             endGame();
             return;
           } else if (e.isBoss) {
-            // غول با برخورد (بدون سپر) باعث باخت می‌شود
-            bossAlive = false;
-            bossSpawned = false;
-          }
+    bossAlive = false;
+    bossSpawned = false;
+    inBossFight = false;   // 👈 این خط جدیده
+}
 
         // ۲) رسیدن دشمن به کف صفحه (خط پایین)
         } else if (outBottom) {
@@ -1950,9 +1950,10 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       endGame();
       return;
     } else if (e.isBoss) {
-      bossAlive = false;
-      bossSpawned = false;
-    }
+    bossAlive = false;
+    bossSpawned = false;
+    inBossFight = false;   // 👈 این خط جدیده
+}
   }
 });
 
