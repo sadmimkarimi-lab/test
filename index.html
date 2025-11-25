@@ -1960,11 +1960,19 @@ bullets.forEach((b, bi) => {
           // افکت صوتی مرگ
           sfxBossDie();
 
-          // انفجار / دود بنفش
-          const boom = document.createElement("div");
-          boom.classList.add("boss-death-flash");
-          document.body.appendChild(boom);
-          setTimeout(() => boom.remove(), 600);
+          // انفجار / دود بنفش - دقیقا از جای خود غول
+  const boom = document.createElement("div");
+  boom.classList.add("boss-death-flash");
+
+  // مرکز غول رو حساب کن
+  const centerX = e.x + e.w / 2;
+  const centerY = e.y + e.h / 2;
+
+  boom.style.left = centerX + "px";
+  boom.style.top  = centerY + "px";
+
+  document.body.appendChild(boom);
+  setTimeout(() => boom.remove(), 900);
 
           // لرزش صفحه
           document.body.classList.add("screen-shake");
