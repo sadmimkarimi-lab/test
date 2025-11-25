@@ -608,25 +608,42 @@
 .hidden-game{
   display:none;
 }
+/* نوار جون باس */
 #bossHpBar {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50%;
-    height: 18px;
-    background: rgba(255,255,255,0.12);
-    border-radius: 12px;
-    overflow: hidden;
-    z-index: 9999;
-    transition: opacity .3s, top .1s;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 0 18px rgba(248, 113, 113, 0.7);
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 5;
 }
 
+/* پرشدگی نوار */
 #bossHpFill {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(90deg, #ff0044, #ffaa00, #00ff44);
-    border-radius: 12px;
-    transition: width .3s ease-out;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #22c55e, #eab308, #f97316, #ef4444);
+  box-shadow: 0 0 14px rgba(248, 113, 113, 0.9);
+  transition: width 0.18s ease-out;
+}
+
+/* عدد HP وسط نوار */
+#bossHpText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Vazir", Vazirmatn, system-ui;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e5f6ff;
+  text-shadow: 0 0 6px #020617;
 }
 .hidden{
   opacity:0;
