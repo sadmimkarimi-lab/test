@@ -1890,25 +1890,34 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
         // ۲) رسیدن دشمن به کف صفحه (خط پایین)
         } else if (outBottom) {
-          enemies.splice(ei, 1);
 
-          lives--;
-          livesEl.textContent = lives;
-          hitFlash = 1;
-          shakeTime = e.isBoss ? 12 : 10;
-          flashLifeDanger();
-          sfxHit();
-          if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+    // اگر سپر روشنه: دشمن هیــچ اثری نداره
+    if (activePowerUps.shield) {
+      // فقط از صفحه حذفش کن، بدون کم شدن جون
+      enemies.splice(ei, 1);
+      return;
+    }
 
-          if (lives <= 0) {
-            endGame();
-            return;
-          } else if (e.isBoss) {
-            bossAlive = false;
-            bossSpawned = false;
-          }
-        }
-      });
+    // بدون سپر → مثل قبل، برخورد با خط پایین باعث کم شدن جان میشه
+    enemies.splice(ei, 1);
+
+    lives--;
+    livesEl.textContent = lives;
+    hitFlash = 1;
+    shakeTime = e.isBoss ? 12 : 10;
+    flashLifeDanger();
+    sfxHit();
+    if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+
+    if (lives <= 0) {
+      endGame();
+      return;
+    } else if (e.isBoss) {
+      bossAlive = false;
+      bossSpawned = false;
+    }
+  }
+});
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
       if(levelCleared){
