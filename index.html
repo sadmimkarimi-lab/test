@@ -1164,6 +1164,24 @@ const sfxShieldBreak = () => {
       soundToggleBtn.textContent = soundEnabled ? "🔊" : "🔇";
     });
 
+
+// صدای مرگ غول (سه نت پشت‌سر‌هم)
+const sfxBossDie = () => {
+    // ضربه‌ی اول – تیزتر
+    playTone(520, 0.16, "sawtooth", 0.26);
+
+    // ضربه دوم – بم‌تر
+    setTimeout(() => {
+        playTone(260, 0.22, "square", 0.24);
+    }, 140);
+
+    // ضربه سوم – بمِ عمیق
+    setTimeout(() => {
+        playTone(120, 0.32, "square", 0.2);
+    }, 260);
+};
+
+    
     // ======== تصاویر تانک و غول ========
     const tankImg = new Image();
     tankImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp";
