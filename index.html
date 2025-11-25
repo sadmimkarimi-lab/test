@@ -999,7 +999,12 @@ const slowCountEl   = document.getElementById("slowCount");
     const sfxPower   = () => playTone(800, 0.2, "triangle", 0.22);
     const sfxBoss    = () => playTone(140, 0.4, "sawtooth", 0.28);
     const sfxGameOver= () => { playTone(260,0.25,"square",0.22); setTimeout(()=>playTone(180,0.3,"square",0.2),180); };
-
+const sfxShieldBreak = () => {
+  // یه افکت ریز مثل ترک شیشه: یه تیز، بعدش یه بم‌تر
+  playTone(950, 0.08, "triangle", 0.24);
+  setTimeout(() => playTone(420, 0.14, "sawtooth", 0.26), 70);
+};
+    
     soundToggleBtn.addEventListener("click", ()=>{
       soundEnabled = !soundEnabled;
       soundToggleBtn.textContent = soundEnabled ? "🔊" : "🔇";
@@ -1247,26 +1252,36 @@ let miniBossSpawned = false;
     }
 
     function drawTank(){
-      const {x,y,w,h} = tank;
+  const {x,y,w,h} = tank;
 
-      if(tankImg.complete && tankImg.naturalWidth>0){
-        ctx.drawImage(tankImg, x, y, w, h);
-      }else{
-        const grad = ctx.createLinearGradient(x,y,x+w,y+h);
-        grad.addColorStop(0,"#38bdf8");
-        grad.addColorStop(1,"#0f172a");
-        ctx.fillStyle = grad;
-        ctx.fillRect(x,y,w,h);
-      }
+  // خود تانک
+  if (tankImg.complete && tankImg.naturalWidth > 0) {
+    ctx.drawImage(tankImg, x, y, w, h);
+  } else {
+    const grad = ctx.createLinearGradient(x, y, x + w, y + h);
+    grad.addColorStop(0, "#38bdf8");
+    grad.addColorStop(1, "#0f172a");
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, y, w, h);
+  }
 
-      if(activePowerUps.shield){
-        ctx.strokeStyle = "rgba(56,189,248,0.7)";
-        ctx.lineWidth = 3;
-        ctx.beginPath();
-        ctx.arc(x+w/2, y+h/2, w*0.8, 0, Math.PI*2);
-        ctx.stroke();
-      }
-    }
+  // سپر پالس‌دار
+  if (activePowerUps.shield) {
+    const t = performance.now() / 280;
+    const pulse = 0.9 + 0.15 * Math.sin(t);
+    const r = w * 0.8 * pulse;
+
+    ctx.save();
+    ctx.strokeStyle = "rgba(56,189,248,0.9)";
+    ctx.lineWidth = 3;
+    ctx.shadowColor = "rgba(56,189,248,0.9)";
+    ctx.shadowBlur = 14;
+    ctx.beginPath();
+    ctx.arc(x + w / 2, y + h / 2, r, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+}
 
     function drawBullets(){
       bullets.forEach(b=>{
@@ -1489,16 +1504,35 @@ const h = canvas.height * 0.22;
       });
     }
 
-    function activatePowerUp(type){
-      if(type === "rocket") return; // موشک زمان‌دار نیست
+    function activatePowerUp(type) {
+  if (type === "rocket") return; // موشک زمان‌دار نیست
 
-      activePowerUps[type]=true;
-      sfxPower();
-      if(powerTimers[type]) clearTimeout(powerTimers[type]);
-      powerTimers[type]=setTimeout(()=>{
-        activePowerUps[type]=false;
-      }, type==="shield"?16000:type==="triple"?10000:8000);
+  activePowerUps[type] = true;
+  sfxPower();
+
+  if (powerTimers[type]) clearTimeout(powerTimers[type]);
+
+  let duration;
+  if (type === "shield") {
+    // ⏱ زمان سپر رو اینجا تنظیم کن (الان 22000ms ≈ 22 ثانیه)
+    duration = 22000;
+  } else if (type === "triple") {
+    duration = 10000;
+  } else {
+    duration = 8000;
+  }
+
+  powerTimers[type] = setTimeout(() => {
+    activePowerUps[type] = false;
+
+    if (type === "shield") {
+      // ⛔ وقتی سپر تموم می‌شه: شوک تصویری + صدای ترک شیشه
+      hitFlash = 0.9;
+      shakeTime = 16;
+      sfxShieldBreak();
     }
+  }, duration);
+}
 
     function fireBullet(){
       if(!gameRunning) return;
@@ -1671,26 +1705,32 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
         const outBottom = e.y+e.h >= canvas.height-5;
 
-        if(collideWithTank || outBottom){
-          enemies.splice(ei,1);
+        if (collideWithTank || outBottom) {
+  enemies.splice(ei, 1);
 
-          if(activePowerUps.shield){
-            activePowerUps.shield=false;
-          }else{
-            lives--;
-            livesEl.textContent=lives;
-            hitFlash=1; shakeTime= e.isBoss ? 12 : 10;
-            flashLifeDanger();
-            sfxHit();
-            if(navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
-            if(lives<=0){
-              endGame(); return;
-            }else if(e.isBoss){
-              bossAlive=false;
-              bossSpawned=false;
-            }
-          }
-        }
+  if (activePowerUps.shield) {
+    // سپر فعاله ⇒ فقط دشمن نابود می‌شه، جان کم نمی‌شه
+    const cx = e.x + e.w / 2;
+    const cy = e.y + e.h / 2;
+    createExplosion(cx, cy, "#38bdf8"); // انفجار آبی برای برخورد با سپر
+    // عمداً سپر رو خاموش نمی‌کنیم؛ تا پایان زمانش روشن می‌مونه
+  } else {
+    lives--;
+    livesEl.textContent = lives;
+    hitFlash = 1;
+    shakeTime = e.isBoss ? 12 : 10;
+    flashLifeDanger();
+    sfxHit();
+    if (navigator.vibrate) navigator.vibrate(e.isBoss ? 100 : 80);
+    if (lives <= 0) {
+      endGame();
+      return;
+    } else if (e.isBoss) {
+      bossAlive = false;
+      bossSpawned = false;
+    }
+  }
+}
       });
 
       const levelCleared = score >= lvl.goal && bossSpawned && !bossAlive;
