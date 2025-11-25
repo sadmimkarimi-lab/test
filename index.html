@@ -2129,7 +2129,7 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
 
     function startGame(fromLevelIndex=0){
       if(frameId) cancelAnimationFrame(frameId);
-
+document.getElementById("bossHpBar").classList.add("hidden");
       resetGameState(fromLevelIndex);
       startOverlay.classList.add("hidden");
       levelOverlay.classList.add("hidden");
@@ -2140,8 +2140,13 @@ if(!miniBossSpawned && score >= lvl.goal * 0.35){
       gameLoop();
     }
 
-    function endGame(){
-      gameRunning=false;
+    function endGame() {
+
+    // ⛔ نوار باس رو پنهان کن
+    const bossHpBar = document.getElementById("bossHpBar");
+    bossHpBar.classList.add("hidden");
+
+    gameRunning = false;
       if(frameId) cancelAnimationFrame(frameId);
 
       finalScoreEl.textContent=score;
