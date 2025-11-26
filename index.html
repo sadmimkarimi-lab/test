@@ -1289,6 +1289,22 @@ const rocketCountEl = document.getElementById("rocketCount");
 const tripleCountEl = document.getElementById("tripleCount");
 const slowCountEl   = document.getElementById("slowCount");
 
+// دابل‌تپ روی دکمه شلیک -> استفاده از موشک
+let lastTap = 0;
+function handleDoubleTap(){
+  const now = Date.now();
+
+  // اگر دو تا ضربه پشت سر هم (کمتر از ۲۵۰ میلی‌ثانیه)
+  if(now - lastTap < 250){
+    // دقیقا مثل اینه که روی دکمه موشک بزنی
+    if (rocketUseBtn) {
+      rocketUseBtn.click();
+    }
+  }
+
+  lastTap = now;
+}
+    
     const motivationTextEl = document.getElementById("motivationText");
     const MOTIVATIONS = [
       "یاد خدا به قلب آرامش می‌بخشه.",
