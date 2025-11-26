@@ -1270,8 +1270,60 @@ const sfxBossDie = () => {
     });
 
     // ======== تصاویر تانک و غول ========
-    const tankImg = new Image();
-    tankImg.src = "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp";
+    // ======== اسکین‌های تانک + تصویر فعلی ========
+const TANK_SKINS = {
+  default: {
+    id: "default",
+    name: "تانک آبی",
+    price: 0,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-abi-nama.webp"
+  },
+  jangal: {
+    id: "jangal",
+    name: "تانک جنگلی",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-jangal-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-jangal-nama.webp"
+  },
+  kavir: {
+    id: "kavir",
+    name: "تانک کویری",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-kavir-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-kavir-nama.webp"
+  },
+  pari: {
+    id: "pari",
+    name: "تانک پری",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-pari-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-pari-nama.webp"
+  },
+  papi: {
+    id: "papi",
+    name: "تانک پاپیونی",
+    price: 2500,
+    gameSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-papi-game.webp",
+    thumbSrc: "https://cdnfa.com/irangiah/a9be/uploads/tank/tank-papi-nama.webp"
+  }
+};
+
+let selectedTankSkinId = "default";
+let unlockedTankSkins = ["default"];
+
+const tankImg = new Image();
+
+function applyTankSkin(skinId){
+  const skin = TANK_SKINS[skinId] || TANK_SKINS.default;
+  selectedTankSkinId = skin.id;
+  tankImg.src = skin.gameSrc;
+}
+
+// اسکین پیش‌فرض
+applyTankSkin("default");
+
+const bossImages = [
 
     const bossImages = [
   "https://cdnfa.com/irangiah/a9be/uploads/tank/boss-1.webp",
