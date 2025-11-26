@@ -777,7 +777,124 @@
   z-index: 30;
   animation: bossExplosion 0.9s forwards;
 }
-    
+
+
+
+
+/* --- About Tavita Modal --- */
+
+.about-modal {
+  max-width: 520px;
+  padding: 24px 22px 18px;
+  background: radial-gradient(circle at top, #18243a 0%, #050814 60%, #040712 100%);
+  border-radius: 24px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(120, 180, 255, 0.25);
+}
+
+.about-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.about-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 0, #ff7dd4, #803bff);
+  box-shadow: 0 0 18px rgba(168, 120, 255, 0.7);
+  font-size: 22px;
+}
+
+.about-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.about-tagline {
+  margin: 2px 0 0;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.about-body {
+  margin-top: 10px;
+  font-size: 13px;
+  line-height: 2.1;
+  text-align: right;
+}
+
+.about-body p {
+  margin: 6px 0 8px;
+}
+
+.about-highlight {
+  margin: 10px 0 8px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  background: rgba(74, 144, 226, 0.08);
+  border: 1px solid rgba(74, 144, 226, 0.25);
+}
+
+.about-highlight strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.about-highlight ul {
+  margin: 0;
+  padding-right: 18px;
+  list-style: "•  ";
+}
+
+.about-highlight li {
+  margin: 2px 0;
+}
+
+.about-channel {
+  margin-top: 10px;
+  font-size: 12px;
+}
+
+.about-channel-box {
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(13, 194, 138, 0.1);
+  border: 1px solid rgba(13, 194, 138, 0.4);
+}
+
+.about-id {
+  font-weight: 700;
+  color: #0dc28a;
+  direction: ltr;
+}
+
+/* اطمینان از خوانایی روی موبایل */
+@media (max-width: 480px) {
+  .about-modal {
+    margin: 0 12px;
+    padding: 20px 18px 16px;
+  }
+
+  .about-title {
+    font-size: 16px;
+  }
+}
+  
+
+
+  
   </style>
 </head>
 <body>
