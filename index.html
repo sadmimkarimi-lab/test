@@ -3066,32 +3066,33 @@ slowUseBtn.addEventListener("click", ()=>{
 let isTouching = false;
 
 canvas.addEventListener("touchstart", (e) => {
-    isTouching = true;
-    handleTouchMove(e);
+  if (!gameRunning) return;
+  isTouching = true;
+  handleTouchMove(e);
 });
 
 canvas.addEventListener("touchmove", (e) => {
-    if(isTouching){
-        e.preventDefault();
-        handleTouchMove(e);
-    }
+  if (!isTouching || !gameRunning) return;
+  e.preventDefault();
+  handleTouchMove(e);
 }, { passive: false });
 
 canvas.addEventListener("touchend", () => {
-    isTouching = false;
+  isTouching = false;
 });
 
-function handleTouchMove(e){
-    const rect = canvas.getBoundingClientRect();
-    const touchX = e.touches[0].clientX - rect.left;
+function handleTouchMove(e) {
+  const rect = canvas.getBoundingClientRect();
+  const touchX = e.touches[0].clientX - rect.left;
 
-    // مرکز تانک را به انگشت برسان
-    player.x = touchX - player.width / 2;
+  // مرکز تانک را به موقعیت انگشت ببر
+  tank.x = touchX - tank.w / 2;
 
-    // جلوگیری از خروج از صفحه
-    if(player.x < 0) player.x = 0;
-    if(player.x + player.width > canvas.width)
-        player.x = canvas.width - player.width;
+  // جلوگیری از خروج تانک از لبه‌ها
+  if (tank.x < 4) tank.x = 4;
+  if (tank.x + tank.w > canvas.width - 4) {
+    tank.x = canvas.width - tank.w - 4;
+  }
 }
     
   </script>
