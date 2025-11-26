@@ -1616,11 +1616,13 @@ function openLevelModal(){
       const prev = loadState() || {};
       const bestScore = Math.max(score, prev.bestScore || 0);
       const data = {
-        bestScore,
-        lastLevel: LEVELS[currentLevelIndex].id,
-        coins,
-        inventory
-      };
+    bestScore,
+    lastLevel: LEVELS[currentLevelIndex].id,
+    coins,
+    inventory,
+    selectedTankSkinId,
+    unlockedTankSkins
+  };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
     function applyLoadedState(){
@@ -1632,6 +1634,15 @@ function openLevelModal(){
       continueBtn.style.display = "inline-block";
       coins = saved.coins || 0;
       inventory = saved.inventory || {shield:0,triple:0,rocket:0};
+   
+      selectedTankSkinId = saved.selectedTankSkinId || "default";
+  unlockedTankSkins = saved.unlockedTankSkins || ["default"];
+  applyTankSkin(selectedTankSkinId);
+
+  // اگر دکمه‌های شاپ لود شده باشند، UI رو آپدیت کن
+  if (typeof refreshShopUI === "function") {
+    refreshShopUI();
+  }
       coinsEl.textContent = coins;
       updateInventoryUI();
     }
