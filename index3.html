@@ -221,68 +221,80 @@
       box-shadow:0 3px 10px rgba(15,23,42,.9);
     }
 
-    /* HUD کناری صفحه (چپ/راست کنار بازی) */
+    /* HUD داخل بازی: نوار بالا + ستون راست */
     .hud{
       position:absolute;
-      top:50%;
-      left:0;
-      right:0;
-      padding:0 8px;
-      transform:translateY(-50%);
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      pointer-events:none; /* تا کشیدن انگشت روی بازی کار کنه */
+      inset:0;
+      padding:8px 8px 10px;
+      pointer-events:none;
       font-size:11px;
     }
 
-    .hud-left,
-    .hud-right{
+    /* نوار بالا: امتیاز، مرحله، متن الهام‌بخش */
+    .hud-top{
       display:flex;
-      flex-direction:column;
-      gap:8px;
-      pointer-events:auto; /* کلیک روی خود HUD فعال بمونه */
-    }
-
-    .hud-left{
-      align-items:flex-start;
-    }
-    .hud-right{
-      align-items:flex-end;
-    }
-
-    /* بلوک‌های شیشه‌ای */
-    .hud-glass{
-      background:rgba(15,23,42,0.55);
-      border-radius:18px;
-      border:1px solid rgba(148,163,184,0.55);
-      backdrop-filter:blur(9px);
-      -webkit-backdrop-filter:blur(9px);
-      box-shadow:0 6px 18px rgba(15,23,42,.75);
-      padding:6px;
-    }
-
-    /* استپ + صدا به صورت ستونی */
-    .hud-side-buttons{
-      display:flex;
-      flex-direction:column;
+      align-items:center;
       gap:6px;
+      justify-content:flex-start;
+      padding-inline:4px;
+      pointer-events:auto;
     }
 
-    .hud-side-buttons .top-icon-btn{
-      width:40px;
-      height:40px;
+    .hud-top .hud-hint{
+      font-size:12px;
+      opacity:.95;
+      font-weight:500;
+      white-space:nowrap;
     }
 
-    /* فروشگاه وقتی در ستون چپ قرار می‌گیرد */
+    /* ستون راست: استپ، صدا، فروشگاه، سکه‌ها */
+    .hud-side{
+      position:absolute;
+      top:50%;
+      right:6px;
+      transform:translateY(-50%);
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:6px;
+      pointer-events:auto;
+    }
+
+    .hud-side .top-icon-btn{
+      width:38px;
+      height:38px;
+    }
+
+    /* کادر شیشه‌ای فروشگاه در ستون راست */
+    .hud-shop-wrap{
+      background:rgba(15,23,42,0.70);
+      border-radius:22px;
+      border:1px solid rgba(148,163,184,0.55);
+      padding:6px 6px 4px;
+      box-shadow:0 8px 20px rgba(15,23,42,.9);
+    }
+
     .hud-shop-wrap .shop-bar{
-      border-radius:999px;
-      background:rgba(15,23,42,0.75);
+      display:flex;
+      flex-direction:column;
+      align-items:stretch;
+      gap:4px;
+      background:transparent;
+      border:none;
+      box-shadow:none;
+      padding:0;
     }
 
-    /* سکه‌ها کمی شیشه‌ای */
+    .hud-shop-wrap .shop-items{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    /* سکه‌ها زیر فروشگاه */
     .hud-coins{
       display:inline-flex;
+      background:rgba(15,23,42,0.85);
     }
 
     .hud-sub{
@@ -1059,19 +1071,32 @@
         </div>
       </div>
 
-      <!-- HUD کناری: چپ = استپ/صدا/فروشگاه/سکه ، راست = امتیاز/مرحله -->
+      <!-- HUD: نوار بالا + ستون راست -->
       <div class="hud">
-        <!-- ستون چپ -->
-        <div class="hud-left">
 
-          <!-- ۱. استپ + صدا -->
-          <div class="hud-glass hud-side-buttons">
-            <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
-            <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
-          </div>
+        <!-- نوار بالا: امتیاز، مرحله، متن الهام‌بخش -->
+        <div class="hud-top">
+          <span class="stat-pill">
+            <span class="dot"></span>
+            امتیاز: <span id="score">0</span>
+          </span>
 
-          <!-- ۲. کادر فروشگاه -->
-          <div class="hud-glass hud-shop-wrap">
+          <span class="stat-pill badge-level">
+            مرحله: <span id="levelLabel">۱</span>
+          </span>
+
+          <span class="hud-hint" id="motivationText"></span>
+        </div>
+
+        <!-- ستون راست: استپ، صدا، فروشگاه، سکه‌ها -->
+        <div class="hud-side">
+
+          <!-- استپ و صدا -->
+          <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
+          <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
+
+          <!-- کادر فروشگاه (همون shop-bar قبلی، فقط اینجا آمده) -->
+          <div class="hud-shop-wrap">
             <div class="shop-bar">
               <div class="shop-items">
                 <!-- جان - فقط نمایش، کلیک‌خور نیست -->
@@ -1112,26 +1137,11 @@
             </div>
           </div>
 
-          <!-- ۳. سکه -->
-          <span class="stat-pill badge-coins hud-glass hud-coins">
+          <!-- سکه‌ها زیر فروشگاه -->
+          <span class="stat-pill badge-coins hud-coins">
             🪙 <span id="coins">0</span>
           </span>
 
-        </div>
-
-        <!-- ستون راست: امتیاز و مرحله و متن الهام‌بخش -->
-        <div class="hud-right">
-          <div class="hud-glass">
-            <div class="hud-sub">
-              <span class="stat-pill">
-                <span class="dot"></span> امتیاز: <span id="score">0</span>
-              </span>
-              <span class="stat-pill badge-level">
-                مرحله: <span id="levelLabel">۱</span>
-              </span>
-              <span class="hud-hint" id="motivationText"></span>
-            </div>
-          </div>
         </div>
       </div>
 
