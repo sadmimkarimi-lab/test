@@ -912,6 +912,23 @@
   object-fit: cover;
 }
 
+
+.help-modal h3{
+  font-size:14px;
+  margin:10px 0 4px;
+}
+
+.help-list{
+  margin:0;
+  padding-right:18px;
+  font-size:12px;
+  line-height:2;
+}
+
+.help-list li{
+  margin-bottom:2px;
+}
+  
   
   </style>
 </head>
@@ -1150,6 +1167,56 @@
   </div>
 </div>
 
+
+<!-- مودال راهنمای بازی -->
+  <div class="modal hidden" id="helpModal">
+    <div class="modal-box help-modal">
+      <h2>راهنمای بازی تانکیتا</h2>
+
+      <p>
+        تو «تانکیتا» با تانک اراده‌ات، عادت‌های بد رو نابود می‌کنی، غول‌های ذهن رو شکست می‌دی
+        و مرحله به مرحله قوی‌تر می‌شی. این راهنمای کوتاه بهت کمک می‌کنه راحت‌تر بازی کنی.
+      </p>
+
+      <h3>🎮 کنترل‌ها</h3>
+      <ul class="help-list">
+        <li>کشیدن انگشت زیر تانک → حرکت به چپ و راست</li>
+        <li>دکمه شلیک → تیر معمولی</li>
+        <li>دوبار پشت‌سرهم زدن روی شلیک → موشک 🚀</li>
+      </ul>
+
+      <h3>🧱 سنگ‌ها و مکعب‌ها</h3>
+      <ul class="help-list">
+        <li>غول‌ها سنگ‌ها و مکعب‌های «عادت‌های بد» رو به سمتت پرتاب می‌کنن.</li>
+        <li>قبل از رسیدن به تانک، با شلیک نابودشون کن.</li>
+      </ul>
+
+      <h3>💥 غول‌ها</h3>
+      <ul class="help-list">
+        <li>غول‌های کوچک و متوسط با چند ضربه از بین می‌رن.</li>
+        <li>غول اصلی مرحله (باس) نوار جان دارد و به چند موشک و شلیک پشت‌سرهم نیاز دارد.</li>
+      </ul>
+
+      <h3>🔋 قدرت‌های ویژه</h3>
+      <ul class="help-list">
+        <li>🛡 سپر: چند ثانیه از برخوردها محافظت می‌کند.</li>
+        <li>🚀 موشک: ضربه‌ی بسیار قوی به غول‌ها و سنگ‌ها.</li>
+        <li>❤️ جان اضافه: ادامه دادن بازی وقتی نزدیک باختی.</li>
+        <li>⏳ کندکننده: حرکت دشمن‌ها و سنگ‌ها را کند می‌کند.</li>
+      </ul>
+
+      <h3>💡 نکته‌ها</h3>
+      <ul class="help-list">
+        <li>با سکه‌ها می‌تونی از شاپ، قدرت‌های ویژه بخری.</li>
+        <li>هرچه مرحله بالاتر می‌ره، بازی سخت‌تر و هیجان‌انگیزتر می‌شه.</li>
+        <li>تمرکز، صبر و تکرار = کلید پیروزی در تانکیتاست! 🚀</li>
+      </ul>
+
+      <div class="modal-actions">
+        <button class="secondary" id="helpCloseBtn">متوجه شدم</button>
+      </div>
+    </div>
+  </div>
   
   <!-- مودال فروشگاه -->
   <div class="modal hidden" id="shopModal">
@@ -1436,11 +1503,16 @@ const levelBadge    = document.querySelector(".badge-level");
     const fireBtn = document.getElementById("fireBtn");
 
     const aboutBtn = document.getElementById("aboutBtn");
-    const shopBtn = document.getElementById("shopBtn");
-    const aboutModal = document.getElementById("aboutModal");
-    const shopModal = document.getElementById("shopModal");
-    const aboutCloseBtn = document.getElementById("aboutCloseBtn");
-    const shopCloseBtn = document.getElementById("shopCloseBtn");
+const helpBtn  = document.getElementById("helpBtn");
+const shopBtn  = document.getElementById("shopBtn");
+
+const aboutModal = document.getElementById("aboutModal");
+const helpModal  = document.getElementById("helpModal");
+const shopModal  = document.getElementById("shopModal");
+
+const aboutCloseBtn = document.getElementById("aboutCloseBtn");
+const helpCloseBtn  = document.getElementById("helpCloseBtn");
+const shopCloseBtn  = document.getElementById("shopCloseBtn");
 
     const buyTripleBtn = document.getElementById("buyTripleBtn");
 const buyShieldBtn = document.getElementById("buyShieldBtn");
@@ -2777,14 +2849,16 @@ fireBtn.addEventListener("touchstart", (e) => {
 }, { passive: false });
 
     aboutBtn.addEventListener("click", ()=> aboutModal.classList.remove("hidden"));
-    aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
+aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
 
-    shopBtn.addEventListener("click", ()=>{
-      shopModal.classList.remove("hidden");
-      refreshShopUI();
-    });
-    shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
+helpBtn.addEventListener("click", ()=> helpModal.classList.remove("hidden"));
+helpCloseBtn.addEventListener("click", ()=> helpModal.classList.add("hidden"));
 
+shopBtn.addEventListener("click", ()=>{
+  shopModal.classList.remove("hidden");
+  refreshShopUI();
+});
+shopCloseBtn.addEventListener("click", ()=> shopModal.classList.add("hidden"));
 
 // دکمه «مراحل بازی» در صفحه شروع
 if(levelsBtn){
