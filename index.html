@@ -1516,14 +1516,24 @@ introMuteBtn.addEventListener("click", ()=>{
 });
 
     
-    function resizeCanvas(){
-  const maxWidth = 420, ratio = 1.0;
-      const width = Math.min(maxWidth, window.innerWidth - 32);
-      const height = width / ratio;
-      canvas.width = width; canvas.height = height;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
+    function resizeCanvas() {
+    const screenH = window.innerHeight;
+    const screenW = window.innerWidth;
+
+    // نسبت صفحه گوشی
+    let ratio = screenH / screenW;
+
+    // محدودیت برای جلوگیری از خیلی بلند/کوتاه شدن
+    if (ratio > 1.8) ratio = 1.15;   // گوشی‌های خیلی بلند
+    if (ratio < 1.3) ratio = 0.85;   // گوشی‌های کوتاه
+
+    // حداکثر عرض برای کنترل بازی
+    const maxW = 430;
+    const canvasWidth = Math.min(maxW, screenW * 0.95);
+
+    canvas.width  = canvasWidth;
+    canvas.height = canvasWidth * ratio;
+}
 
     // ======== عناصر UI ========
     const scoreEl = document.getElementById("score");
