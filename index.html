@@ -2106,6 +2106,15 @@ const h = canvas.height * 0.22;
       sfxShoot();
     }
 
+function fireRocket(){
+    if(inventory.rocket > 0){
+        rocketArmed = true;
+        fireBullet();
+        rocketArmed = false;
+    }
+}
+
+    
     function flashLifeDanger(){
   if(!lifeDisplay) return;
   lifeDisplay.classList.add("danger");
