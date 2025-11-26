@@ -1531,27 +1531,17 @@ introMuteBtn.addEventListener("click", ()=>{
 
     
     function resizeCanvas() {
-    const MAX_WIDTH = 430;        // حداکثر عرض بازی
-    const ASPECT    = 1.0;        // نسبت ارتفاع به عرض (اگر خواستی بازی کمی بلندتر بشه 1.1 کن)
+  const MAX_WIDTH = 520;   // حداکثر عرض (برای تبلت هم کمی بزرگ‌تر شه)
+  const ASPECT    = 0.7;   // نسبت ارتفاع به عرض، همون حالتی که دوست داشتی
 
-    // عرض قابل استفاده داخل موبایل (یکم از دو طرف کم می‌کنیم که به لبه نچسبه)
-    const availableWidth = Math.min(window.innerWidth - 32, MAX_WIDTH);
-    let canvasWidth  = availableWidth;
-    let canvasHeight = canvasWidth * ASPECT;
+  // عرض قابل استفاده (یه کم از دو طرف کم می‌کنیم که نچسبه به لبه)
+  const availableWidth = Math.min(window.innerWidth - 32, MAX_WIDTH);
 
-    // محاسبه ارتفاعی که کل بازی باید توش جا بشه
-    // تقریبی: هدر بالا + متن + دکمه‌ها حدود 260px جا می‌گیرن
-    const reservedTopBottom = 260;
-    const maxCanvasHeight = window.innerHeight - reservedTopBottom;
+  const canvasWidth  = availableWidth;
+  const canvasHeight = canvasWidth * ASPECT;
 
-    // اگر ارتفاع بازی بیشتر از فضای قابل‌استفاده بود، ارتفاع رو محدود کن
-    if (canvasHeight > maxCanvasHeight) {
-        canvasHeight = maxCanvasHeight;
-        canvasWidth  = canvasHeight / ASPECT;
-    }
-
-    canvas.width  = canvasWidth;
-    canvas.height = canvasHeight;
+  canvas.width  = canvasWidth;
+  canvas.height = canvasHeight;
 }
 
     // ======== عناصر UI ========
@@ -3134,6 +3124,10 @@ slowUseBtn.addEventListener("click", ()=>{
         saveState();
     }
 });
+
+
+window.addEventListener("load", resizeCanvas);
+window.addEventListener("resize", resizeCanvas);
 
     
     // شروع اولیه
