@@ -134,7 +134,8 @@
       box-shadow:0 3px 10px rgba(15,23,42,.9);
     }
 
-    .game-panel{
+  .game-panel{
+      position:relative; /* اضافه شد که HUD رو روی بازی جا بدیم */
       background:radial-gradient(circle at top,#020617,#020617 60%,#000);
       border-radius:22px;
       padding:12px 12px 16px;
@@ -220,87 +221,68 @@
       box-shadow:0 3px 10px rgba(15,23,42,.9);
     }
 
-    /* HUD پایین صفحه */
+    /* HUD کناری صفحه (چپ/راست کنار بازی) */
     .hud{
-      margin-top:6px;
+      position:absolute;
+      top:50%;
+      left:0;
+      right:0;
+      padding:0 8px;
+      transform:translateY(-50%);
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      pointer-events:none; /* تا کشیدن انگشت روی بازی کار کنه */
       font-size:11px;
     }
-    .hud-main{
+
+    .hud-left,
+    .hud-right{
       display:flex;
-      align-items:center;
-      gap:6px;
-      flex-wrap:nowrap;
-      margin-bottom:6px;
+      flex-direction:column;
+      gap:8px;
+      pointer-events:auto; /* کلیک روی خود HUD فعال بمونه */
     }
 
-    /* کادر فروشگاه (هم‌قد با جون) */
-  .shop-bar{
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:4px;
-  padding:2px 6px;
-  border-radius:999px;
-  border:1px solid rgba(148,163,184,0.8);
-  background:rgba(15,23,42,0.95);
-  box-shadow:0 4px 12px rgba(15,23,42,0.9);
-}
+    .hud-left{
+      align-items:flex-start;
+    }
+    .hud-right{
+      align-items:flex-end;
+    }
 
-.shop-items{
-  display:flex;
-  align-items:center;
-  gap:4px;
-  flex:1;
-  justify-content:flex-start;
-}
+    /* بلوک‌های شیشه‌ای */
+    .hud-glass{
+      background:rgba(15,23,42,0.55);
+      border-radius:18px;
+      border:1px solid rgba(148,163,184,0.55);
+      backdrop-filter:blur(9px);
+      -webkit-backdrop-filter:blur(9px);
+      box-shadow:0 6px 18px rgba(15,23,42,.75);
+      padding:6px;
+    }
 
-.shop-item{
-  display:flex;
-  align-items:center;
-  gap:2px;
-  padding:1px 4px;
-  border-radius:999px;
-  background:rgba(30,64,175,0.9);
-  border:1px solid rgba(129,140,248,0.9);
-  cursor:pointer;
-  font-size:10px;
-}
+    /* استپ + صدا به صورت ستونی */
+    .hud-side-buttons{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
 
-.shop-item.passive{
-  cursor:default;
-  background:rgba(15,23,42,0.8);
-  border-style:dashed;
-}
+    .hud-side-buttons .top-icon-btn{
+      width:40px;
+      height:40px;
+    }
 
-.shop-icon{
-  font-size:12px;
-}
+    /* فروشگاه وقتی در ستون چپ قرار می‌گیرد */
+    .hud-shop-wrap .shop-bar{
+      border-radius:999px;
+      background:rgba(15,23,42,0.75);
+    }
 
-.shop-count{
-  min-width:10px;
-  text-align:center;
-  font-weight:700;
-  font-size:10px;
-}
-
-.shop-cart{
-  width:26px;
-  height:26px;
-  border-radius:999px;
-  border:1px solid rgba(248,113,113,0.9);
-  background:radial-gradient(circle at center,#fecaca,#f97373);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:14px;
-  cursor:pointer;
-  box-shadow:0 5px 14px rgba(248,113,113,0.8);
-  user-select:none;
-}
-    .shop-cart:active{
-      transform:scale(.95) translateY(1px);
-      box-shadow:0 4px 12px rgba(15,23,42,.9);
+    /* سکه‌ها کمی شیشه‌ای */
+    .hud-coins{
+      display:inline-flex;
     }
 
     .hud-sub{
@@ -1077,71 +1059,79 @@
         </div>
       </div>
 
-      <!-- HUD پایین: جان / سکه / فروشگاه / صدا / ری‌استارت -->
+      <!-- HUD کناری: چپ = استپ/صدا/فروشگاه/سکه ، راست = امتیاز/مرحله -->
       <div class="hud">
-      <div class="hud-main">
-  <!-- ۱. سکه -->
-  <span class="stat-pill badge-coins">
-    🪙 <span id="coins">0</span>
-  </span>
+        <!-- ستون چپ -->
+        <div class="hud-left">
 
-  <!-- ۲. کادر فروشگاه (جان + زمان + سپر + موشک + سه‌تایی) -->
-  <div class="shop-bar">
-    <div class="shop-items">
-      <!-- جان - فقط نمایش، کلیک‌خور نیست -->
-      <div class="shop-item passive" id="lifeDisplay">
-        <span class="shop-icon">❤️</span>
-        <span class="shop-count" id="lives">3</span>
-      </div>
+          <!-- ۱. استپ + صدا -->
+          <div class="hud-glass hud-side-buttons">
+            <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
+            <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
+          </div>
 
-      <!-- زمان کندکننده -->
-      <div class="shop-item" id="slowUseBtn">
-        <span class="shop-icon">⏳</span>
-        <span class="shop-count" id="slowCount">0</span>
-      </div>
+          <!-- ۲. کادر فروشگاه -->
+          <div class="hud-glass hud-shop-wrap">
+            <div class="shop-bar">
+              <div class="shop-items">
+                <!-- جان - فقط نمایش، کلیک‌خور نیست -->
+                <div class="shop-item passive" id="lifeDisplay">
+                  <span class="shop-icon">❤️</span>
+                  <span class="shop-count" id="lives">3</span>
+                </div>
 
-      <!-- سپر -->
-      <div class="shop-item" id="shieldUseBtn">
-        <span class="shop-icon">🛡</span>
-        <span class="shop-count" id="shieldCount">0</span>
-      </div>
+                <!-- زمان کندکننده -->
+                <div class="shop-item" id="slowUseBtn">
+                  <span class="shop-icon">⏳</span>
+                  <span class="shop-count" id="slowCount">0</span>
+                </div>
 
-      <!-- موشک -->
-      <div class="shop-item" id="rocketUseBtn">
-        <span class="shop-icon">🚀</span>
-        <span class="shop-count" id="rocketCount">0</span>
-      </div>
+                <!-- سپر -->
+                <div class="shop-item" id="shieldUseBtn">
+                  <span class="shop-icon">🛡</span>
+                  <span class="shop-count" id="shieldCount">0</span>
+                </div>
 
-      <!-- شلیک سه‌تایی -->
-      <div class="shop-item" id="tripleUseBtn">
-        <span class="shop-icon">✖️3</span>
-        <span class="shop-count" id="tripleCount">0</span>
-      </div>
-    </div>
+                <!-- موشک -->
+                <div class="shop-item" id="rocketUseBtn">
+                  <span class="shop-icon">🚀</span>
+                  <span class="shop-count" id="rocketCount">0</span>
+                </div>
 
-    <!-- دکمه باز کردن پاپ‌آپ فروشگاه -->
-    <button class="shop-cart" id="shopBtn" title="شاپ">
-      🛒
-    </button>
-  </div>
+                <!-- شلیک سه‌تایی -->
+                <div class="shop-item" id="tripleUseBtn">
+                  <span class="shop-icon">✖️3</span>
+                  <span class="shop-count" id="tripleCount">0</span>
+                </div>
+              </div>
 
-  <!-- ۳. صدا + توقف/ادامه -->
-  <div class="top-actions">
-    <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
-    <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
-  </div>
-</div>
+              <!-- دکمه باز کردن پاپ‌آپ فروشگاه -->
+              <button class="shop-cart" id="shopBtn" title="شاپ">
+                🛒
+              </button>
+            </div>
+          </div>
 
-          
-
-        <!-- امتیاز / مرحله (بدون متن الهام‌بخش اینجا) -->
-        <div class="hud-sub">
-          <span class="stat-pill">
-            <span class="dot"></span> امتیاز: <span id="score">0</span>
+          <!-- ۳. سکه -->
+          <span class="stat-pill badge-coins hud-glass hud-coins">
+            🪙 <span id="coins">0</span>
           </span>
-          <span class="stat-pill badge-level">
-            مرحله: <span id="levelLabel">۱</span>
-          </span>
+
+        </div>
+
+        <!-- ستون راست: امتیاز و مرحله و متن الهام‌بخش -->
+        <div class="hud-right">
+          <div class="hud-glass">
+            <div class="hud-sub">
+              <span class="stat-pill">
+                <span class="dot"></span> امتیاز: <span id="score">0</span>
+              </span>
+              <span class="stat-pill badge-level">
+                مرحله: <span id="levelLabel">۱</span>
+              </span>
+              <span class="hud-hint" id="motivationText"></span>
+            </div>
+          </div>
         </div>
       </div>
 
