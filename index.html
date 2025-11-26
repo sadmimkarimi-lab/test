@@ -3062,6 +3062,37 @@ slowUseBtn.addEventListener("click", ()=>{
     updateMotivation();
     setInterval(updateMotivation, 10000);
 
+// --- حرکت با انگشت (Touch Move) ---
+let isTouching = false;
+
+canvas.addEventListener("touchstart", (e) => {
+    isTouching = true;
+    handleTouchMove(e);
+});
+
+canvas.addEventListener("touchmove", (e) => {
+    if(isTouching){
+        e.preventDefault();
+        handleTouchMove(e);
+    }
+}, { passive: false });
+
+canvas.addEventListener("touchend", () => {
+    isTouching = false;
+});
+
+function handleTouchMove(e){
+    const rect = canvas.getBoundingClientRect();
+    const touchX = e.touches[0].clientX - rect.left;
+
+    // مرکز تانک را به انگشت برسان
+    player.x = touchX - player.width / 2;
+
+    // جلوگیری از خروج از صفحه
+    if(player.x < 0) player.x = 0;
+    if(player.x + player.width > canvas.width)
+        player.x = canvas.width - player.width;
+}
     
   </script>
 
