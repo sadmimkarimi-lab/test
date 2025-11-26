@@ -1134,7 +1134,7 @@
 
           
 
-        <!-- امتیاز / مرحله + پیام الهام‌بخش -->
+        <!-- امتیاز / مرحله (بدون متن الهام‌بخش اینجا) -->
         <div class="hud-sub">
           <span class="stat-pill">
             <span class="dot"></span> امتیاز: <span id="score">0</span>
@@ -1142,25 +1142,31 @@
           <span class="stat-pill badge-level">
             مرحله: <span id="levelLabel">۱</span>
           </span>
-          <span class="hud-hint" id="motivationText"></span>
         </div>
       </div>
 
-      <!-- کنترل‌ها -->
+      <!-- کنترل‌ها: دکمه آتش بزرگ + متن + دکمه‌های جهت -->
       <div class="controls">
-        <button class="ctrl-btn" id="leftBtn">◀️</button>
-        <button class="ctrl-btn fire" id="fireBtn">🔥</button>
-        <button class="ctrl-btn" id="rightBtn">▶️</button>
+        <!-- دکمه آتش بزرگ در سمت چپ -->
+        <button class="ctrl-btn big-fire" id="fireBtn">🔥</button>
+
+        <!-- سمت راست: متن الهام‌بخش + دکمه‌های چپ/راست -->
+        <div class="controls-right">
+          <div class="controls-message">
+            <span class="hud-hint" id="motivationText"></span>
+          </div>
+          <div class="controls-arrows">
+            <button class="ctrl-btn arrow" id="leftBtn">◀️</button>
+            <button class="ctrl-btn arrow" id="rightBtn">▶️</button>
+          </div>
+        </div>
       </div>
 
       <!-- توضیحات زیر دکمه‌های کنترل -->
       <div class="controls-hint">
-        <div>برای حرکت از دکمه‌های بالا استفاده کن.</div>
-        <div>کامپیوتر: ◀️▶️ برای حرکت، Space برای شلیک | موبایل: از دکمه‌ها استفاده کن.</div>
+        <div>کامپیوتر: ◀️▶️ برای حرکت، Space برای شلیک</div>
+        <div>موبایل: از دکمه‌های پایین برای حرکت و شلیک استفاده کن.</div>
       </div>
-
-    </div>
-  </div>
 
   <!-- مودال درباره طاویتا -->
 <div class="modal hidden" id="aboutModal">
