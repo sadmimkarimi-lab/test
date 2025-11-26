@@ -237,16 +237,6 @@ canvas{
     }
 
 
-
-/* HUD روی خود بازی (بالا روی کانواس) */
-.canvas-wrap{
-  position: relative; /* مهم: برای قرار گرفتن UI روی بازی */
-  border-radius:18px;
-  overflow:hidden;
-  border:1px solid rgba(148,163,184,.35);
-  margin-bottom:10px;
-}
-
 /* لایه‌ی UI روی کانواس */
 .canvas-ui{
   position:absolute;
@@ -1531,15 +1521,25 @@ introMuteBtn.addEventListener("click", ()=>{
 
     
     function resizeCanvas(){
-  const maxWidth = 420;   // حداکثر عرض روی موبایل و تبلت
-  const ratio    = 0.7;   // نسبت عرض به ارتفاع؛ هرچه کوچک‌تر، بازی قدبلندتر
+  const wrap = document.querySelector(".canvas-wrap");
+  if (!wrap) return;
 
-  const width  = Math.min(maxWidth, window.innerWidth - 32);
-  const height = width / ratio;   // چون ratio = width / height
+  // اندازه واقعی کادر روی صفحه (بر اساس CSS و aspect-ratio)
+  const width  = wrap.clientWidth;
+  const height = wrap.clientHeight || width * (7 / 10); // اگر هنوز height حساب نشده بود
 
-  canvas.width  = width;
-  canvas.height = height;
+  const dpr = window.devicePixelRatio || 1;
+
+  // رزولوشن واقعی کانواس (برای شفاف بودن روی همه گوشی‌ها)
+  canvas.width  = width  * dpr;
+  canvas.height = height * dpr;
+
+  // سیستم مختصات رو برگردونیم به واحدهای پیکسلی معمولی
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 }
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
