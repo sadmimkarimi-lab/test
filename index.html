@@ -1530,19 +1530,19 @@ introMuteBtn.addEventListener("click", ()=>{
 });
 
     
-    function resizeCanvas() {
-  const MAX_WIDTH = 520;   // حداکثر عرض (برای تبلت هم کمی بزرگ‌تر شه)
-  const ASPECT    = 0.7;   // نسبت ارتفاع به عرض، همون حالتی که دوست داشتی
+    function resizeCanvas(){
+  const maxWidth = 420;   // حداکثر عرض روی موبایل و تبلت
+  const ratio    = 0.7;   // نسبت عرض به ارتفاع؛ هرچه کوچک‌تر، بازی قدبلندتر
 
-  // عرض قابل استفاده (یه کم از دو طرف کم می‌کنیم که نچسبه به لبه)
-  const availableWidth = Math.min(window.innerWidth - 32, MAX_WIDTH);
+  const width  = Math.min(maxWidth, window.innerWidth - 32);
+  const height = width / ratio;   // چون ratio = width / height
 
-  const canvasWidth  = availableWidth;
-  const canvasHeight = canvasWidth * ASPECT;
-
-  canvas.width  = canvasWidth;
-  canvas.height = canvasHeight;
+  canvas.width  = width;
+  canvas.height = height;
 }
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
     // ======== عناصر UI ========
     const scoreEl = document.getElementById("score");
