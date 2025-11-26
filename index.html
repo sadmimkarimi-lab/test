@@ -349,16 +349,19 @@
 }
 
 /* === کنترل‌ها پایین خود کانواس === */
+/* کنترل‌ها پایین خود کانواس === */
 .controls{
   display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin-top:0;
+  justify-content:space-between;   /* آتیش سمت چپ، حرکت‌ها سمت راست */
+  align-items:center;
+  gap:16px;
+  margin-top:8px;
   direction:ltr;
 }
 
+/* استایل عمومی دکمه‌ها */
 .ctrl-btn{
-  flex:1;
+  min-width:72px;
   padding:14px 0;
   border-radius:22px;
   border:1px solid rgba(15,23,42,0.9);
@@ -366,17 +369,25 @@
   font-size:20px;
   font-weight:700;
   background:radial-gradient(circle at top,#1d4ed8,#0ea5e9);
-  color:#e0faff;
+  color:#e0f4ff;
   box-shadow:0 10px 32px rgba(59,130,246,.6);
   transition:transform .1s, box-shadow .15s;
   user-select:none;
   text-shadow:0 0 8px rgba(15,23,42,.9);
 }
 
+/* دکمه آتش – بزرگ‌تر و پررنگ‌تر */
 .ctrl-btn.fire{
-  flex:1.4;
+  flex:0 0 40%;                    /* پهن‌تر از بقیه */
+  max-width:230px;
   background:radial-gradient(circle at top,#f97316,#e11d48);
   box-shadow:0 12px 36px rgba(239,68,68,.7);
+}
+
+/* گروه دکمه‌های چپ/راست سمت راست */
+.move-group{
+  display:flex;
+  gap:12px;
 }
 
 /* توضیحاتِ زیر دکمه‌ها، نزدیک ته کانواس */
@@ -1143,22 +1154,17 @@
       </div> <!-- پایان canvas-wrap -->
 
 <!-- کنترل‌ها زیر کادر بازی -->
-      <div class="controls">
-        <!-- دکمه آتش سمت چپ -->
-        <button class="ctrl-btn fire" id="fireBtn">🔥</button>
+   <div class="controls">
+  <!-- دکمه آتش سمت چپ و بزرگ‌تر -->
+  <button class="ctrl-btn fire" id="fireBtn">🔥</button>
 
-        <!-- دکمه‌های حرکت سمت راست -->
-        <div class="move-group">
-          <button class="ctrl-btn" id="leftBtn">◀️</button>
-          <button class="ctrl-btn" id="rightBtn">▶️</button>
-        </div>
-      </div>
-
-      <!-- متن راهنما زیر دکمه‌ها -->
-      <div class="controls-hint">
-        <div>برای حرکت از دکمه‌های بالا استفاده کن.</div>
-        <div>کامپیوتر: ◀️▶️ برای حرکت، Space برای شلیک | موبایل: از دکمه‌ها استفاده کن.</div>
-      </div>
+  <!-- سمت راست، دکمه‌های حرکت داخل یک گروه -->
+  <div class="move-group">
+    <button class="ctrl-btn" id="leftBtn">◀️</button>
+    <button class="ctrl-btn" id="rightBtn">▶️</button>
+  </div>
+</div>
+  
       
   <!-- مودال درباره طاویتا -->
 <div class="modal hidden" id="aboutModal">
