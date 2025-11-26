@@ -2698,6 +2698,34 @@ buySlowBtn.addEventListener("click", ()=>{
   refreshShopUI();
 });
 
+// خرید / انتخاب اسکین‌های تانک
+tankSkinButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.skinId;
+    const skin = TANK_SKINS[id];
+    if (!skin) return;
+
+    // اگر قبلاً باز شده ⇒ فقط انتخاب
+    if (unlockedTankSkins.includes(id)) {
+      applyTankSkin(id);
+      saveState();
+      refreshShopUI();
+      return;
+    }
+
+    // خرید اسکین
+    if (coins < skin.price) return;
+    coins -= skin.price;
+    coinsEl.textContent = coins;
+
+    unlockedTankSkins.push(id);
+    applyTankSkin(id);
+    saveState();
+    refreshShopUI();
+  });
+});
+
+    
     // استفاده انتخابی از آیتم‌ها
     shieldUseBtn.addEventListener("click", ()=>{
       if(!gameRunning) return;
