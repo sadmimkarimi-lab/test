@@ -2588,8 +2588,18 @@ pauseBtn.addEventListener("click", ()=>{
     bindHold(leftBtn,(v)=> moveLeft=v);
     bindHold(rightBtn,(v)=> moveRight=v);
 
-    fireBtn.addEventListener("click",(e)=>{e.preventDefault();fireBullet();});
-    fireBtn.addEventListener("touchstart",(e)=>{e.preventDefault();fireBullet();},{passive:false});
+    // کلیک / تاچ روی «شلیک»
+fireBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    handleDoubleTap();  // چک دابل‌کلیک
+    fireBullet();       // شلیک معمولی
+});
+
+fireBtn.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    handleDoubleTap();  // روی موبایل هم دابل‌تاپ حساب میشه
+    fireBullet();       // شلیک معمولی
+}, { passive: false });
 
     aboutBtn.addEventListener("click", ()=> aboutModal.classList.remove("hidden"));
     aboutCloseBtn.addEventListener("click", ()=> aboutModal.classList.add("hidden"));
