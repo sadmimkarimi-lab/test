@@ -928,6 +928,155 @@
 .help-list li{
   margin-bottom:2px;
 }
+
+
+
+html, body{
+  height:100%;
+  overflow:hidden;
+}
+
+/* HUD */
+.hud{
+  margin-top:10px;
+  direction:rtl;
+  font-size:13px;
+}
+
+.hud-main{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+}
+
+/* ستون چپ */
+.hud-left-column{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  width:42%;
+}
+
+/* ستون راست */
+.hud-right-column{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:flex-end;
+  width:58%;
+}
+
+/* دکمه‌های بالا */
+.top-actions{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.top-icon-btn{
+  padding:7px 9px;
+  font-size:18px;
+  background:rgba(255,255,255,0.15);
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.3);
+}
+
+/* شاپ + پاورآپ‌ها */
+.shop-bar{
+  background:rgba(255,255,255,0.08);
+  border-radius:12px;
+  padding:6px 8px;
+  border:1px solid rgba(255,255,255,0.2);
+}
+
+.shop-items{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.shop-item{
+  display:flex;
+  justify-content:space-between;
+  padding:4px 6px;
+  border-radius:10px;
+  background:rgba(0,0,0,0.2);
+}
+
+.shop-cart{
+  margin-top:6px;
+  padding:5px 6px;
+  font-size:18px;
+  background:rgba(255,255,255,0.12);
+  border-radius:10px;
+}
+
+/* سکه */
+.coins-pill-side{
+  align-self:flex-start;
+}
+
+/* کنترل‌ها */
+.controls{
+  margin-top:12px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.controls-left{
+  flex:1;
+  display:flex;
+  justify-content:flex-start;
+}
+
+.controls-right{
+  flex:1.4;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:flex-end;
+}
+
+/* پیام‌ها */
+.motivation-block{
+  background:rgba(0,0,0,0.45);
+  border-radius:14px;
+  padding:8px 12px;
+  max-width:100%;
+  border:1px solid rgba(255,255,255,0.25);
+}
+
+.motivation-line{
+  font-size:11px;
+  line-height:1.8;
+  opacity:0.9;
+}
+
+/* حرکت راست/چپ */
+.move-buttons{
+  display:flex;
+  gap:10px;
+}
+
+/* شلیک */
+.ctrl-btn.fire{
+  min-width:90px;
+  padding:16px 0;
+  font-size:26px;
+  border-radius:16px;
+  background:linear-gradient(45deg,#ff4f4f,#ff8b00);
+  color:#fff;
+}
+
+/* ریسپانسیو */
+@media(max-width:480px){
+  .motivation-line{font-size:9.8px;}
+  .ctrl-btn.fire{min-width:80px;}
+}
+
+
   
   
   </style>
@@ -1032,90 +1181,100 @@
       </div>
 
       <!-- HUD پایین: جان / سکه / فروشگاه / صدا / ری‌استارت -->
-      <div class="hud">
-      <div class="hud-main">
-  <!-- ۱. سکه -->
-  <span class="stat-pill badge-coins">
-    🪙 <span id="coins">0</span>
-  </span>
+  <!-- HUD جدید -->
+<div class="hud">
 
-  <!-- ۲. کادر فروشگاه (جان + زمان + سپر + موشک + سه‌تایی) -->
-  <div class="shop-bar">
-    <div class="shop-items">
-      <!-- جان - فقط نمایش، کلیک‌خور نیست -->
-      <div class="shop-item passive" id="lifeDisplay">
-        <span class="shop-icon">❤️</span>
-        <span class="shop-count" id="lives">3</span>
+  <!-- ردیف بالا -->
+  <div class="hud-main">
+
+    <!-- ستون چپ -->
+    <div class="hud-left-column">
+
+      <!-- استپ + صدا -->
+      <div class="top-actions">
+        <button class="top-icon-btn" id="pauseBtn">⏸️</button>
+        <button class="top-icon-btn" id="soundToggle">🔊</button>
       </div>
 
-      <!-- زمان کندکننده -->
-      <div class="shop-item" id="slowUseBtn">
-        <span class="shop-icon">⏳</span>
-        <span class="shop-count" id="slowCount">0</span>
+      <!-- شاپ + پاورآپ‌ها -->
+      <div class="shop-bar">
+
+        <div class="shop-items">
+
+          <div class="shop-item passive" id="lifeDisplay">
+            <span class="shop-icon">❤️</span>
+            <span class="shop-count" id="lives">3</span>
+          </div>
+
+          <div class="shop-item" id="slowUseBtn">
+            <span class="shop-icon">⏳</span>
+            <span class="shop-count" id="slowCount">0</span>
+          </div>
+
+          <div class="shop-item" id="shieldUseBtn">
+            <span class="shop-icon">🛡</span>
+            <span class="shop-count" id="shieldCount">0</span>
+          </div>
+
+          <div class="shop-item" id="rocketUseBtn">
+            <span class="shop-icon">🚀</span>
+            <span class="shop-count" id="rocketCount">0</span>
+          </div>
+
+          <div class="shop-item" id="tripleUseBtn">
+            <span class="shop-icon">✖️3</span>
+            <span class="shop-count" id="tripleCount">0</span>
+          </div>
+
+        </div>
+
+        <!-- دکمه شاپ -->
+        <button class="shop-cart" id="shopBtn">🛒</button>
       </div>
 
-      <!-- سپر -->
-      <div class="shop-item" id="shieldUseBtn">
-        <span class="shop-icon">🛡</span>
-        <span class="shop-count" id="shieldCount">0</span>
-      </div>
+      <!-- سکه -->
+      <span class="stat-pill badge-coins coins-pill-side">
+        🪙 <span id="coins">0</span>
+      </span>
 
-      <!-- موشک -->
-      <div class="shop-item" id="rocketUseBtn">
-        <span class="shop-icon">🚀</span>
-        <span class="shop-count" id="rocketCount">0</span>
-      </div>
-
-      <!-- شلیک سه‌تایی -->
-      <div class="shop-item" id="tripleUseBtn">
-        <span class="shop-icon">✖️3</span>
-        <span class="shop-count" id="tripleCount">0</span>
-      </div>
     </div>
 
-    <!-- دکمه باز کردن پاپ‌آپ فروشگاه -->
-    <button class="shop-cart" id="shopBtn" title="شاپ">
-      🛒
-    </button>
+    <!-- ستون راست: امتیاز + مرحله -->
+    <div class="hud-right-column">
+      <span class="stat-pill">امتیاز: <span id="score">0</span></span>
+      <span class="stat-pill badge-level">مرحله: <span id="levelLabel">۱</span></span>
+    </div>
+
   </div>
 
-  <!-- ۳. صدا + توقف/ادامه -->
-  <div class="top-actions">
-    <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
-    <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
-  </div>
-</div>
+  <!-- ردیف پایین -->
+  <div class="controls">
 
-          
+    <!-- چپ: شلیک -->
+    <div class="controls-left">
+      <button class="ctrl-btn fire" id="fireBtn">🔥</button>
+    </div>
 
-        <!-- امتیاز / مرحله + پیام الهام‌بخش -->
-        <div class="hud-sub">
-          <span class="stat-pill">
-            <span class="dot"></span> امتیاز: <span id="score">0</span>
-          </span>
-          <span class="stat-pill badge-level">
-            مرحله: <span id="levelLabel">۱</span>
-          </span>
-          <span class="hud-hint" id="motivationText"></span>
-        </div>
+    <!-- راست: پیام انگیزشی + چپ/راست -->
+    <div class="controls-right">
+
+      <div class="motivation-block">
+        <div class="motivation-line">یاد خدا به قلب آرامش می‌بخشد.</div>
+        <div class="motivation-line">در هیچ حالتی از یاد خدا غافل نشو.</div>
+        <div class="motivation-line">عشق به پدر و مادر عشق به خداست.</div>
+        <div class="motivation-line">محبت، اخلاق و ادب گنج‌های تو هستند.</div>
       </div>
 
-      <!-- کنترل‌ها -->
-      <div class="controls">
+      <div class="move-buttons">
         <button class="ctrl-btn" id="leftBtn">◀️</button>
-        <button class="ctrl-btn fire" id="fireBtn">🔥</button>
         <button class="ctrl-btn" id="rightBtn">▶️</button>
       </div>
 
-      <!-- توضیحات زیر دکمه‌های کنترل -->
-      <div class="controls-hint">
-        <div>برای حرکت از دکمه‌های بالا استفاده کن.</div>
-        <div>کامپیوتر: ◀️▶️ برای حرکت، Space برای شلیک | موبایل: از دکمه‌ها استفاده کن.</div>
-      </div>
-
     </div>
+
   </div>
 
+</div>
   <!-- مودال درباره طاویتا -->
 <div class="modal hidden" id="aboutModal">
   <div class="modal-box about-modal">
