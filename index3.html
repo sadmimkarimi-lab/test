@@ -229,34 +229,29 @@
       font-size:11px;
     }
 
-    .hud-left,
-    .hud-right{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      pointer-events:auto;
-    }
+  .hud-left,
+.hud-right{
+  position:absolute;
+  top:40%;                 /* کمی بالاتر از وسط، تانک زیرشون نمی‌ره */
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  pointer-events:auto;
+}
 
-    /* ستون چپ: نوار امتیاز که افقی می‌ماند ولی کل کادر می‌چرخد */
-    .hud-left{
-      left:-16px;
-      align-items:flex-start;
-    }
+/* ستون چپ: نوار امتیاز/مرحله/پیام – داخل بازی و باریک */
+.hud-left{
+  left:6px;                /* از بیرون صفحه میاد داخل */
+  align-items:flex-start;
+}
 
-    .hud-left .hud-glass{
-      transform:rotate(-90deg);
-      transform-origin:left center;
-    }
-
-    /* ستون راست: دکمه‌ها و شاپ، با عرض ثابت */
-    .hud-right{
-      right:8px;
-      align-items:flex-end;
-      width:64px;
-    }
+/* ستون راست: استپ / صدا / شاپ / سکه – باریک و هم‌عرض */
+.hud-right{
+  right:6px;
+  align-items:flex-end;
+  width:56px;              /* عرض کمتر از ۶۴؛ باریک و خوشگل */
+}
 
     .hud-right > *{
       width:100%;
@@ -447,16 +442,15 @@
 
   
 /* Controls: دکمه‌های حرکت در چپ، آتش گرد در راست */
-    .controls{
+ .controls{
       margin-top:10px;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
+      gap:18px;            /* فاصله بیشتر بین جهت‌ها و آتش */
       direction:ltr;
       animation:controlsPulse 3s ease-in-out 0s 2;
     }
-
     @keyframes controlsPulse{
       0%,100%{transform:translateY(0);}
       50%{transform:translateY(-3px);}
@@ -487,11 +481,11 @@
       gap:10px;
     }
 
-    .ctrl-btn.arrow{
+  .ctrl-btn.arrow{
       flex:1;
       border-radius:20px;
-      padding:12px 0;
-      font-size:18px;
+      padding:9px 0;       /* کمی کوچک‌تر */
+      font-size:16px;      /* کمی کوچک‌تر */
       background:radial-gradient(circle at top,#1d4ed8,#0ea5e9);
       color:#e0faff;
       box-shadow:0 10px 30px rgba(59,130,246,.7);
@@ -499,10 +493,10 @@
     }
 
     /* دکمه آتش گرد در سمت راست */
-    .big-fire{
-      flex:0 0 72px;
-      width:72px;
-      height:72px;
+   .big-fire{
+      flex:0 0 68px;
+      width:68px;
+      height:68px;
       border-radius:999px;
       padding:0;
       display:flex;
@@ -1040,6 +1034,15 @@
 
 
 
+html, body{
+  overscroll-behavior:none;
+}
+
+.game-wrapper,
+canvas{
+  touch-action:none;
+}
+  
   
   
   </style>
