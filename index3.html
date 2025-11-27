@@ -221,7 +221,7 @@
       box-shadow:0 3px 10px rgba(15,23,42,.9);
     }
 
-    /* HUD کناری صفحه: ستون چپ (امتیاز) و ستون راست (استپ/صدا/شاپ/سکه) */
+    /* HUD کناری صفحه: ستون چپ (امتیاز/مرحله/پیام) و ستون راست (استپ/صدا/شاپ/سکه) */
     .hud{
       position:absolute;
       inset:0;
@@ -240,19 +240,29 @@
       pointer-events:auto;
     }
 
-    /* ستون چپ: امتیاز / مرحله / پیام */
+    /* ستون چپ: نوار امتیاز که افقی می‌ماند ولی کل کادر می‌چرخد */
     .hud-left{
-      left:8px;
+      left:-16px;
       align-items:flex-start;
     }
 
-    /* ستون راست: استپ / صدا / شاپ / سکه */
+    .hud-left .hud-glass{
+      transform:rotate(-90deg);
+      transform-origin:left center;
+    }
+
+    /* ستون راست: دکمه‌ها و شاپ، با عرض ثابت */
     .hud-right{
       right:8px;
       align-items:flex-end;
+      width:64px;
     }
 
-    /* بلوک شیشه‌ای مشترک */
+    .hud-right > *{
+      width:100%;
+    }
+
+    /* بلوک شیشه‌ای عمومی */
     .hud-glass{
       background:rgba(15,23,42,0.55);
       border-radius:18px;
@@ -263,17 +273,19 @@
       padding:6px;
     }
 
-    /* استپ + صدا: کوچیک‌تر و شیک‌تر */
+    /* استپ + صدا: کوچیک و خوشگل */
     .hud-side-buttons{
       display:flex;
       flex-direction:column;
       gap:6px;
+      align-items:stretch;
     }
 
     .hud-side-buttons .top-icon-btn{
-      width:32px;
+      width:100%;
       height:32px;
       font-size:14px;
+      border-radius:999px;
       box-shadow:0 8px 20px rgba(59,130,246,.9);
     }
 
@@ -281,14 +293,13 @@
     .hud-shop-wrap{
       padding:6px 4px;
       border-radius:20px;
-      max-width:56px;
     }
 
     .hud-shop-wrap .shop-bar{
       display:flex;
       flex-direction:column;
       align-items:stretch;
-      gap:4px;
+      gap:6px;
       background:transparent;
       border:none;
       box-shadow:none;
@@ -315,7 +326,7 @@
     }
 
     .shop-icon{
-      font-size:14px;   /* آیکن‌ها کمی درشت‌تر و بامزه‌تر */
+      font-size:14px;  /* آیکن‌ها کمی بزرگ‌تر و جذاب‌تر */
     }
 
     .shop-count{
@@ -323,9 +334,8 @@
       font-weight:600;
     }
 
-    /* دکمه شاپ، شبیه دکمه واقعی و جذاب */
+    /* دکمه شاپ جذاب */
     .shop-cart{
-      margin-top:4px;
       width:100%;
       padding:4px 0;
       border-radius:999px;
@@ -338,27 +348,40 @@
       box-shadow:0 8px 22px rgba(248,113,113,.9);
       transition:transform .12s, box-shadow .15s;
     }
+
     .shop-cart:active{
       transform:scale(.94) translateY(1px);
       box-shadow:0 4px 14px rgba(127,29,29,.95);
     }
 
-    /* سکه‌ها زیر شاپ، کمی شیشه‌ای */
+    /* سکه‌ها: عدد بالا، آیکن پایین، هم‌عرض بقیه */
     .hud-coins{
-      display:inline-flex;
-      align-items:center;
-      gap:4px;
-      background:rgba(15,23,42,0.95);
-    }
-  
-   .hud-sub{
       display:flex;
       flex-direction:column;
-      align-items:flex-start;
-      gap:6px;
+      align-items:center;
+      justify-content:center;
+      gap:2px;
+      background:rgba(15,23,42,0.95);
     }
 
-    /* توضیحات زیر کنترل‌ها */
+    .hud-coins #coins{
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .hud-coins .coin-icon{
+      font-size:16px;
+    }
+
+    /* نوار امتیاز داخل کادر (قبل از چرخش) افقی می‌ماند */
+    .hud-sub{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:nowrap;
+    }
+
+    /* توضیحات زیر کنترل‌ها (مثل قبل) */
     .controls-hint{
       margin-top:6px;
       font-size:11px;
@@ -367,7 +390,7 @@
       text-align:right;
     }
 
-    /* پیام الهام‌بخش کنار امتیاز */
+    /* پیام الهام‌بخش */
     .hud-hint{
       font-size:13px;
       opacity:.95;
@@ -423,15 +446,17 @@
 }
 
   
-/* Controls (دکمه آتش بزرگ + دو دکمه حرکت) */
+/* Controls: دکمه‌های حرکت در چپ، آتش گرد در راست */
     .controls{
       margin-top:10px;
       display:flex;
-      gap:10px;
-      align-items:stretch;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
       direction:ltr;
       animation:controlsPulse 3s ease-in-out 0s 2;
     }
+
     @keyframes controlsPulse{
       0%,100%{transform:translateY(0);}
       50%{transform:translateY(-3px);}
@@ -447,56 +472,46 @@
       text-shadow:0 0 8px rgba(15,23,42,.9);
       transition:transform .12s, box-shadow .15s, filter .15s;
     }
+
     .ctrl-btn:active{
       transform:scale(.94) translateY(1px);
       box-shadow:0 4px 14px rgba(15,23,42,.9);
     }
 
-    /* دکمه آتش بزرگ (سمت چپ) */
-    .big-fire{
-      flex:0 0 46%;
-      border-radius:24px;
-      padding:18px 0;
-      font-size:26px;
-      background:radial-gradient(circle at top,#f97316,#e11d48);
-      box-shadow:0 14px 40px rgba(239,68,68,.8);
-      color:#fff;
-    }
-
-    /* سمت راست: متن الهام‌بخش + دکمه‌های حرکت */
-    .controls-right{
+    .controls-left{
       flex:1;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-    }
-
-    .controls-message{
-      flex:1;
-      border-radius:18px;
-      padding:8px 10px;
-      background:radial-gradient(circle at top,rgba(15,23,42,.35),rgba(15,23,42,.98));
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:12px;
-      text-align:center;
     }
 
     .controls-arrows{
       display:flex;
-      gap:8px;
+      gap:10px;
     }
 
     .ctrl-btn.arrow{
       flex:1;
       border-radius:20px;
-      padding:10px 0;
+      padding:12px 0;
       font-size:18px;
       background:radial-gradient(circle at top,#1d4ed8,#0ea5e9);
       color:#e0faff;
       box-shadow:0 10px 30px rgba(59,130,246,.7);
       border:1px solid rgba(15,23,42,0.9);
+    }
+
+    /* دکمه آتش گرد در سمت راست */
+    .big-fire{
+      flex:0 0 72px;
+      width:72px;
+      height:72px;
+      border-radius:999px;
+      padding:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      background:radial-gradient(circle at top,#f97316,#e11d48);
+      box-shadow:0 14px 40px rgba(239,68,68,.8);
+      color:#fff;
     }
   
 
@@ -1128,7 +1143,7 @@
       <!-- HUD کناری: ستون چپ = امتیاز/مرحله/پیام ، ستون راست = استپ/صدا/شاپ/سکه -->
       <div class="hud">
 
-        <!-- ستون چپ: امتیاز / مرحله / پیام الهام‌بخش -->
+        <!-- ستون چپ: نوار امتیاز که چرخیده -->
         <div class="hud-left">
           <div class="hud-glass">
             <div class="hud-sub">
@@ -1149,17 +1164,17 @@
         <!-- ستون راست: استپ / صدا / فروشگاه / سکه‌ها -->
         <div class="hud-right">
 
-          <!-- استپ + صدا (کوچیک و خوشگل) -->
+          <!-- استپ + صدا -->
           <div class="hud-glass hud-side-buttons">
             <button class="top-icon-btn" id="pauseBtn" title="توقف/ادامه">⏸️</button>
             <button class="top-icon-btn" id="soundToggle" title="قطع/وصل صدا">🔊</button>
           </div>
 
-          <!-- کادر فروشگاه عمودی -->
+          <!-- کادر فروشگاه عمودی، هم‌عرض دکمه‌ها -->
           <div class="hud-glass hud-shop-wrap">
             <div class="shop-bar">
               <div class="shop-items">
-                <!-- جان - فقط نمایش، کلیک‌خور نیست -->
+                <!-- جان - فقط نمایش -->
                 <div class="shop-item passive" id="lifeDisplay">
                   <span class="shop-icon">❤️</span>
                   <span class="shop-count" id="lives">3</span>
@@ -1190,36 +1205,32 @@
                 </div>
               </div>
 
-              <!-- دکمه باز کردن پاپ‌آپ فروشگاه (کاملاً دکمه‌ای و جذاب) -->
+              <!-- دکمه شاپ: دیگه سبد خرید نداره، فقط «شاپ» -->
               <button class="shop-cart" id="shopBtn" title="شاپ">
-                🛒 شاپ
+                شاپ
               </button>
             </div>
           </div>
 
-          <!-- سکه‌ها زیر فروشگاه -->
+          <!-- سکه‌ها: عدد بالا، آیکن پایین، هم‌عرض شاپ -->
           <span class="stat-pill badge-coins hud-glass hud-coins">
-            🪙 <span id="coins">0</span>
+            <span id="coins">0</span>
+            <span class="coin-icon">🪙</span>
           </span>
 
         </div>
       </div>
 
-      <!-- کنترل‌ها: دکمه آتش بزرگ + متن + دکمه‌های جهت -->
+      <!-- کنترل‌ها: جهت‌ها در چپ، آتش گرد در راست -->
       <div class="controls">
-        <!-- دکمه آتش بزرگ در سمت چپ -->
-        <button class="ctrl-btn big-fire" id="fireBtn">🔥</button>
-
-        <!-- سمت راست: متن الهام‌بخش + دکمه‌های چپ/راست -->
-        <div class="controls-right">
-          <div class="controls-message">
-            <span class="hud-hint" id="motivationText"></span>
-          </div>
+        <div class="controls-left">
           <div class="controls-arrows">
             <button class="ctrl-btn arrow" id="leftBtn">◀️</button>
             <button class="ctrl-btn arrow" id="rightBtn">▶️</button>
           </div>
         </div>
+
+        <button class="ctrl-btn big-fire" id="fireBtn">🔥</button>
       </div>
 
       
