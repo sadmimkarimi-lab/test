@@ -1084,6 +1084,48 @@ canvas{
     max-width:170px;
   }
 }
+
+
+
+/* --- فیکس نهایی ستون چپ HUD --- */
+
+/* خود ستون چپ: وسط صفحه، نزدیک لبه چپ */
+.hud-left{
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  align-items: flex-start;
+}
+
+/* کادر شیشه‌ای ستون چپ: باریک و عمودی */
+.hud-left .hud-glass{
+  max-width: 120px;    /* باریک‌تر از قبل */
+  padding: 6px 8px;
+}
+
+/* محتوا داخل کادر: از افقی به عمودی */
+.hud-sub{
+  display: flex;
+  flex-direction: column;     /* عمودی */
+  align-items: flex-start;    /* تراز راست/چپ تمیز */
+  gap: 6px;                   /* فاصله بین سطرها */
+}
+
+/* قرص‌ها (امتیاز و مرحله) تمام عرضِ کادر را بگیرند */
+.hud-sub .stat-pill{
+  width: 100%;
+  justify-content: space-between;
+}
+
+/* متن انگیزشی مطمئن درون کادر بماند */
+.hud-hint{
+  max-width: 100%;
+  white-space: normal;
+}
+
+
+
+  
 </style>
 </head>
 <body>
