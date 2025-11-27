@@ -1087,31 +1087,34 @@ canvas{
 
 
 
-/* ----- ستون چپ: یک نوار افقی که ۹۰ درجه چرخیده و عمودی شده ----- */
+/* ----- ستون چپ: نوار امتیاز افقی که ۹۰ درجه چرخیده ----- */
 
 .hud-left{
   position:absolute;
-  left:0px;
-  top:50%;
-  transform:translateY(-50%);
+
+  left: 14px;                 /* آمدن داخل کادر (افزایش/کاهش بدی = میلی‌متری تنظیم می‌کنم) */
+  top: 58%;                   /* پایین‌تر برای قرینه شدن با سمت راست */
+  transform: translateY(-50%);
+
   pointer-events:auto;
   z-index:20;
 }
 
-/* نوار شیشه‌ای که می‌چرخد */
+/* نوار شیشه‌ای */
 .hud-left .hud-glass{
   transform: rotate(-90deg);
   transform-origin: left center;
-  padding:8px 12px;
+
+  padding: 8px 12px;
   max-width:none;
   display:inline-block;
   white-space:nowrap;
 }
 
-/* محتوا داخل نوار افقی باقی بماند */
+/* محتوای درون نوار ثابت افقی */
 .hud-sub{
   display:flex;
-  flex-direction:row;  /* افقی */
+  flex-direction:row;
   align-items:center;
   gap:10px;
 }
