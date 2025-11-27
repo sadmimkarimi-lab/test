@@ -1037,6 +1037,73 @@
 .help-list li{
   margin-bottom:2px;
 }
+
+
+/* --- تنظیمات نهایی تانکیتای --- */
+
+/* 1. ستون راست (استپ / صدا / شاپ / سکه) باریک و یک‌دست شود */
+.hud-right{
+  width:56px;       /* نصف عرض قبلی تقریبا */
+  right:6px;        /* کمی داخل‌تر از لبه */
+  top:45%;          /* کمی بالاتر تا جلوی تانک رو نگیرد */
+  transform:translateY(-50%);
+}
+.hud-right > *{
+  width:100%;       /* همه کادرهای ستون راست یک عرض */
+}
+
+/* 2. ستون چپ (امتیاز / مرحله / پیام) داخل بازی و روبه‌روی شاپ بیاید */
+.hud-left{
+  left:6px;         /* از بیرون صفحه بیا داخل */
+  top:45%;          /* روبه‌روی ستون راست */
+  transform:translateY(-50%);
+}
+
+/* اگر نوار امتیاز را قبلاً چرخانده‌ای، این کمک می‌کند کادر باریک‌تر دیده شود */
+.hud-left .hud-glass{
+  max-width:200px;  /* نوار امتیاز باریک‌تر */
+  padding:4px 8px;
+}
+
+/* 3. کادر سکه – عدد بالا، آیکن پایین و هم‌عرض بقیه */
+.hud-coins{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+}
+.hud-coins #coins{
+  font-size:13px;
+  font-weight:700;
+}
+.hud-coins .coin-icon{
+  font-size:16px;
+}
+
+/* 4. دکمه‌های چپ و راست کمی کوچک‌تر و فاصله از دکمه آتش */
+.controls{
+  gap:16px;  /* فاصله بین جهت‌ها و آتش */
+}
+.ctrl-btn.arrow{
+  padding:10px 0;
+  font-size:16px;
+}
+.big-fire{
+  flex:0 0 68px;
+  width:68px;
+  height:68px;
+  border-radius:999px;
+}
+
+/* 5. جلوگیری از تکان خوردن صفحه موقع لمس بازی روی موبایل */
+html, body{
+  overscroll-behavior:none;
+}
+.game-wrapper{
+  touch-action:none;
+}
+
   
   
   </style>
