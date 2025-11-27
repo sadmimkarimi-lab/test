@@ -22,26 +22,26 @@
   user-select: none;
 }
 
-    body{
-      font-family: Vazir, Vazirmatn, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top,#111827,#020617);
-      color:#f9fafb;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
-      min-height:100vh;
-      padding:16px;
-    }
+body{
+  font-family: Vazir, Vazirmatn, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top,#111827,#020617);
+  color:#f9fafb;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  min-height:100vh;
+  padding:16px;
+}
 
-    .game-wrapper{
-      width:100%;
-      max-width:420px;
-    }
+.game-wrapper{
+  width:100%;
+  max-width:420px;
+}
 
-    /* هدر کارت‌شده */
+/* هدر کارت‌شده */
 .header{
   display:flex;
-  flex-direction: row;          /* ردیف معمولی */
+  flex-direction: row;
   justify-content:space-between;
   align-items:center;
   gap:10px;
@@ -53,186 +53,214 @@
   box-shadow:0 10px 30px rgba(15,23,42,.9);
 }
 
-    
-/* راست هدر: لوگو اول + عنوان راست‌چین */
+/* راست هدر */
 .header-right {
-  display: flex;
-  flex-direction: row; 
-  align-items: center;
-  gap: 6px;
-  text-align: right;
-  flex: 1;
-  justify-content: flex-start;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:6px;
+  text-align:right;
+  flex:1;
+  justify-content:flex-start;
 }
-    .logo-badge{
-      width:64px;
-      height:64px;
-      border-radius:16px;
-      background:radial-gradient(circle at top,#38bdf8,#0f172a);
-      box-shadow:0 0 18px rgba(56,189,248,.9);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      font-size:20px;
-      letter-spacing:1px;
-      color:#e0faff;
-      flex-shrink:0;
-    }
-  .title-block{
+
+.logo-badge{
+  width:64px;
+  height:64px;
+  border-radius:16px;
+  background:radial-gradient(circle at top,#38bdf8,#0f172a);
+  box-shadow:0 0 18px rgba(56,189,248,.9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:20px;
+  letter-spacing:1px;
+  color:#e0faff;
+  flex-shrink:0;
+}
+
+.title-block{
   display:flex;
   flex-direction:column;
   gap:2px;
-  text-align:right;   
+  text-align:right;
 }
-  .title-row{
+
+.title-row{
   display:flex;
   align-items:center;
   gap:6px;
   justify-content:flex-start;
 }
-    h1{
-      font-size:18px;
-      font-weight:800;
-      white-space:nowrap;
-    }
-    .subtitle{
-      font-size:12px;
-      opacity:.9;
-      white-space:nowrap;
-    }
 
-    /* چپ هدر: فقط درباره ما */
-    .header-left{
-      display:flex;
-      flex-direction:row;
-      align-items:center;
-      gap:6px;
-    }
-    .header-link{
-      background:linear-gradient(135deg,#3b82f6,#0ea5e9);
-      border:1px solid rgba(191,219,254,.9);
-      color:#e5e7eb;
-      cursor:pointer;
-      padding:6px 11px;
-      border-radius:999px;
-      font-size:11px;
-      font-weight:600;
-      white-space:nowrap;
-      box-shadow:0 6px 18px rgba(37,99,235,.8);
-      transition:all .15s;
-    }
-    .header-link:hover{
-      background:linear-gradient(135deg,#0ea5e9,#22c55e);
-      border-color:rgba(190,242,100,1);
-      color:#f9fafb;
-      transform:translateY(-1px) scale(1.03);
-      box-shadow:0 10px 24px rgba(34,197,94,.85);
-    }
-    .header-link:active{
-      transform:translateY(1px) scale(.97);
-      box-shadow:0 3px 10px rgba(15,23,42,.9);
-    }
+h1{
+  font-size:18px;
+  font-weight:800;
+  white-space:nowrap;
+}
 
-  .game-panel{
-      position:relative; /* اضافه شد که HUD رو روی بازی جا بدیم */
-      background:radial-gradient(circle at top,#020617,#020617 60%,#000);
-      border-radius:22px;
-      padding:12px 12px 16px;
-      box-shadow:0 16px 40px rgba(15,23,42,.9);
-      border:1px solid rgba(148,163,184,.3);
-    }
+.subtitle{
+  font-size:12px;
+  opacity:.9;
+  white-space:nowrap;
+}
 
-    .canvas-wrap{
-      position:relative;
-      border-radius:18px;
-      overflow:hidden;
-      border:1px solid rgba(148,163,184,.35);
-      margin-bottom:10px;
-    }
-    canvas{ display:block; width:100%; height:auto; }
+/* چپ هدر */
+.header-left{
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:6px;
+}
 
-    /* استایل کلی پیکسل‌های وضعیت */
-    .stat-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:5px;
-      padding:3px 9px;
-      border-radius:999px;
-      background:rgba(15,23,42,.85);
-      border:1px solid rgba(148,163,184,.5);
-      white-space:nowrap;
-      transition:all .2s;
-      font-size:11px;
-    }
-    .dot{
-      width:6px;height:6px;border-radius:999px;
-      background:#22c55e;
-      box-shadow:0 0 8px rgba(34,197,94,.9);
-    }
-    .badge-level{
-      background:rgba(59,130,246,.2);
-      border-color:rgba(59,130,246,.7);
-    }
-    .badge-coins{
-      background:rgba(234,179,8,.12);
-      border-color:rgba(234,179,8,.6);
-    }
-  .danger{
+.header-link{
+  background:linear-gradient(135deg,#3b82f6,#0ea5e9);
+  border:1px solid rgba(191,219,254,.9);
+  color:#e5e7eb;
+  cursor:pointer;
+  padding:6px 11px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  white-space:nowrap;
+  box-shadow:0 6px 18px rgba(37,99,235,.8);
+  transition:all .15s;
+}
+
+.header-link:hover{
+  background:linear-gradient(135deg,#0ea5e9,#22c55e);
+  border-color:rgba(190,242,100,1);
+  color:#f9fafb;
+  transform:translateY(-1px) scale(1.03);
+  box-shadow:0 10px 24px rgba(34,197,94,.85);
+}
+
+.header-link:active{
+  transform:translateY(1px) scale(.97);
+  box-shadow:0 3px 10px rgba(15,23,42,.9);
+}
+
+/* پنل بازی */
+.game-panel{
+  position:relative;
+  background:radial-gradient(circle at top,#020617,#020617 60%,#000);
+  border-radius:22px;
+  padding:12px 12px 16px;
+  box-shadow:0 16px 40px rgba(15,23,42,.9);
+  border:1px solid rgba(148,163,184,.3);
+}
+
+/* بوم */
+.canvas-wrap{
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid rgba(148,163,184,.35);
+  margin-bottom:10px;
+  z-index:10;
+}
+
+canvas{
+  display:block;
+  width:100%;
+  height:auto;
+}
+
+/* استایل کلی پیکسل‌های وضعیت */
+.stat-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  padding:3px 9px;
+  border-radius:999px;
+  background:rgba(15,23,42,.85);
+  border:1px solid rgba(148,163,184,.5);
+  white-space:nowrap;
+  transition:all .2s;
+  font-size:11px;
+}
+
+.dot{
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:#22c55e;
+  box-shadow:0 0 8px rgba(34,197,94,.9);
+}
+
+.badge-level{
+  background:rgba(59,130,246,.2);
+  border-color:rgba(59,130,246,.7);
+  cursor:pointer;
+}
+
+.badge-coins{
+  background:rgba(234,179,8,.12);
+  border-color:rgba(234,179,8,.6);
+}
+
+.danger{
   background:rgba(248,113,113,0.2) !important;
   border-color:#ef4444 !important;
   animation:dangerPulse 0.6s ease-in-out 0s 2;
 }
-    @keyframes dangerPulse{
-      0%{transform:scale(1);}
-      50%{transform:scale(1.08);}
-      100%{transform:scale(1);}
-    }
 
-    /* دکمه‌های بالای HUD (صدا / ری‌استارت) */
-    .top-actions{
-      display:flex;
-      align-items:center;
-      gap:4px;
-    }
-    .top-icon-btn{
-      width:30px;
-      height:30px;
-      border-radius:999px;
-      border:1px solid rgba(148,163,184,.6);
-      background:linear-gradient(135deg,#6366f1,#0ea5e9);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      cursor:pointer;
-      font-size:16px;
-      padding:0;
-      user-select:none;
-      -webkit-user-select:none;
-      box-shadow:0 6px 16px rgba(37,99,235,.8);
-      transition:all .15s;
-    }
-    .top-icon-btn:hover{
-      transform:translateY(-1px) scale(1.03);
-      box-shadow:0 9px 22px rgba(59,130,246,.9);
-    }
-    .top-icon-btn:active{
-      transform:translateY(1px) scale(.96);
-      box-shadow:0 3px 10px rgba(15,23,42,.9);
-    }
+@keyframes dangerPulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
 
-    /* HUD کناری صفحه: ستون چپ (امتیاز/مرحله/پیام) و ستون راست (استپ/صدا/شاپ/سکه) */
-    .hud{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      font-size:11px;
-    }
+/* دکمه‌های بالای HUD (صدا / ری‌استارت) */
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
 
-  .hud-left,
+.top-icon-btn{
+  width:30px;
+  height:30px;
+  border-radius:999px;
+  border:1px solid rgba(148,163,184,.6);
+  background:linear-gradient(135deg,#6366f1,#0ea5e9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  font-size:16px;
+  padding:0;
+  user-select:none;
+  -webkit-user-select:none;
+  box-shadow:0 6px 16px rgba(37,99,235,.8);
+  transition:all .15s;
+}
+
+.top-icon-btn:hover{
+  transform:translateY(-1px) scale(1.03);
+  box-shadow:0 9px 22px rgba(59,130,246,.9);
+}
+
+.top-icon-btn:active{
+  transform:translateY(1px) scale(.96);
+  box-shadow:0 3px 10px rgba(15,23,42,.9);
+}
+
+/* HUD کلی */
+.hud{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  font-size:11px;
+  z-index:15;
+}
+
+/* ستون‌های چپ و راست HUD */
+.hud-left,
 .hud-right{
   position:absolute;
-  top:40%;                 /* کمی بالاتر از وسط، تانک زیرشون نمی‌ره */
+  top:50%;
   transform:translateY(-50%);
   display:flex;
   flex-direction:column;
@@ -240,191 +268,212 @@
   pointer-events:auto;
 }
 
-/* ستون چپ: نوار امتیاز/مرحله/پیام – داخل بازی و باریک */
+/* ستون چپ: امتیاز / مرحله / پیام – عمودی مرتب */
 .hud-left{
-  left:6px;                /* از بیرون صفحه میاد داخل */
+  left:6px;
   align-items:flex-start;
 }
 
-/* ستون راست: استپ / صدا / شاپ / سکه – باریک و هم‌عرض */
+/* ستون راست: دکمه‌ها و شاپ */
 .hud-right{
   right:6px;
   align-items:flex-end;
-  width:50px;              /* عرض کمتر از ۶۴؛ باریک و خوشگل */
+  width:50px;
 }
 
-    .hud-right > *{
-      width:100%;
-    }
+.hud-right > *{
+  width:100%;
+}
 
-    /* بلوک شیشه‌ای عمومی */
-    .hud-glass{
-      background:rgba(15,23,42,0.55);
-      border-radius:18px;
-      border:1px solid rgba(148,163,184,0.55);
-      backdrop-filter:blur(9px);
-      -webkit-backdrop-filter:blur(9px);
-      box-shadow:0 6px 18px rgba(15,23,42,.75);
-      padding:6px;
-    }
+/* بلوک شیشه‌ای عمومی */
+.hud-glass{
+  background:rgba(15,23,42,0.55);
+  border-radius:18px;
+  border:1px solid rgba(148,163,184,0.55);
+  backdrop-filter:blur(9px);
+  -webkit-backdrop-filter:blur(9px);
+  box-shadow:0 6px 18px rgba(15,23,42,.75);
+  padding:6px;
+}
 
-/* نوار امتیاز/مرحله/پیام: همان یک خط افقی، ولی چرخیده و باریک کنار چپ */
+/* نوار امتیاز / مرحله / پیام در ستون چپ – بدون چرخش */
 .hud-left .hud-glass{
-  max-width:180px;             /* باریک‌تر؛ حدود نصف حالت قبلی */
-  padding:4px 8px;             /* کمی جمع‌وجورتر از hud-glass معمولی */
-  transform:rotate(-90deg);    /* کل نوار می‌چرخد و عمودی می‌شود */
-  transform-origin:left center;/* از سمت چپ بچرخد که بیرون نزند */
+  max-width:190px;
+  padding:6px 8px;
 }
-  
-    /* استپ + صدا: کوچیک و خوشگل */
-    .hud-side-buttons{
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      align-items:stretch;
-    }
 
-    .hud-side-buttons .top-icon-btn{
-      width:100%;
-      height:32px;
-      font-size:14px;
-      border-radius:999px;
-      box-shadow:0 8px 20px rgba(59,130,246,.9);
-    }
+/* داخل نوار امتیاز */
+.hud-sub{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:nowrap;
+}
 
-    /* فروشگاه عمودی، هم‌عرض دکمه‌ها */
-    .hud-shop-wrap{
-      padding:6px 4px;
-      border-radius:20px;
-    }
+/* استپ + صدا */
+.hud-side-buttons{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:stretch;
+}
 
-    .hud-shop-wrap .shop-bar{
-      display:flex;
-      flex-direction:column;
-      align-items:stretch;
-      gap:6px;
-      background:transparent;
-      border:none;
-      box-shadow:none;
-      padding:0;
-    }
+.hud-side-buttons .top-icon-btn{
+  width:100%;
+  height:32px;
+  font-size:14px;
+  border-radius:999px;
+  box-shadow:0 8px 20px rgba(59,130,246,.9);
+}
 
-    .hud-shop-wrap .shop-items{
-      display:flex;
-      flex-direction:column;
-      gap:4px;
-    }
+/* فروشگاه عمودی */
+.hud-shop-wrap{
+  padding:6px 4px;
+  border-radius:20px;
+}
 
-    .shop-item{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:3px 6px;
-      border-radius:999px;
-      background:rgba(15,23,42,0.9);
-    }
+.hud-shop-wrap .shop-bar{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:6px;
+  background:transparent;
+  border:none;
+  box-shadow:none;
+  padding:0;
+}
 
-    .shop-item.passive{
-      opacity:.9;
-    }
+.hud-shop-wrap .shop-items{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
 
-    .shop-icon{
-      font-size:14px;  /* آیکن‌ها کمی بزرگ‌تر و جذاب‌تر */
-    }
+.shop-item{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:3px 6px;
+  border-radius:999px;
+  background:rgba(15,23,42,0.9);
+}
 
-    .shop-count{
-      font-size:11px;
-      font-weight:600;
-    }
+.shop-item.passive{
+  opacity:.9;
+}
 
-    /* دکمه شاپ جذاب */
-    .shop-cart{
-      width:100%;
-      padding:4px 0;
-      border-radius:999px;
-      border:none;
-      cursor:pointer;
-      font-size:13px;
-      font-weight:600;
-      background:linear-gradient(135deg,#f97316,#e11d48);
-      color:#fff;
-      box-shadow:0 8px 22px rgba(248,113,113,.9);
-      transition:transform .12s, box-shadow .15s;
-    }
+.shop-icon{
+  font-size:14px;
+}
 
-    .shop-cart:active{
-      transform:scale(.94) translateY(1px);
-      box-shadow:0 4px 14px rgba(127,29,29,.95);
-    }
+.shop-count{
+  font-size:11px;
+  font-weight:600;
+}
 
-    /* سکه‌ها: عدد بالا، آیکن پایین، هم‌عرض بقیه */
-    .hud-coins{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:2px;
-      background:rgba(15,23,42,0.95);
-    }
+/* دکمه شاپ */
+.shop-cart{
+  width:100%;
+  padding:4px 0;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:600;
+  background:linear-gradient(135deg,#f97316,#e11d48);
+  color:#fff;
+  box-shadow:0 8px 22px rgba(248,113,113,.9);
+  transition:transform .12s, box-shadow .15s;
+}
 
-    .hud-coins #coins{
-      font-size:13px;
-      font-weight:700;
-    }
+.shop-cart:active{
+  transform:scale(.94) translateY(1px);
+  box-shadow:0 4px 14px rgba(127,29,29,.95);
+}
 
-    .hud-coins .coin-icon{
-      font-size:16px;
-    }
+/* سکه‌ها */
+.hud-coins{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  background:rgba(15,23,42,0.95);
+}
 
-    /* نوار امتیاز داخل کادر (قبل از چرخش) افقی می‌ماند */
-    .hud-sub{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      flex-wrap:nowrap;
-    }
+.hud-coins #coins{
+  font-size:13px;
+  font-weight:700;
+}
 
-    /* توضیحات زیر کنترل‌ها (مثل قبل) */
-    .controls-hint{
-      margin-top:6px;
-      font-size:11px;
-      opacity:.85;
-      line-height:1.7;
-      text-align:right;
-    }
+.hud-coins .coin-icon{
+  font-size:16px;
+}
 
-    /* پیام الهام‌بخش */
-    .hud-hint{
-      font-size:13px;
-      opacity:.95;
-      font-weight:500;
-    }
+/* پیام الهام‌بخش */
+.hud-hint{
+  font-size:13px;
+  opacity:.95;
+  font-weight:500;
+}
 
-    .overlay{
-      position:absolute; inset:0;
-      display:flex; flex-direction:column;
-      justify-content:center; align-items:center;
-      background:radial-gradient(circle at center,rgba(15,23,42,.35),rgba(15,23,42,.96));
-      text-align:center; padding:14px; z-index:3;
-    }
-    .overlay.hidden{display:none;}
-    .overlay h2{ font-size:19px; margin-bottom:6px; }
-    .overlay p{
-      font-size:12px; opacity:.9; margin-bottom:10px; line-height:1.9;
-    }
-    .overlay button{
-      border:none; border-radius:999px;
-      padding:7px 18px; font-size:13px; font-weight:600;
-      cursor:pointer;
-      background:linear-gradient(135deg,#ec4899,#6366f1);
-      color:#fff; box-shadow:0 10px 26px rgba(129,140,248,.9);
-      margin:2px;
-    }
-    .overlay .secondary{
-      background:transparent;
-      border:1px solid rgba(148,163,184,.6);
-      box-shadow:none;
-    }
+/* توضیحات زیر کنترل‌ها (فعلاً همونه) */
+.controls-hint{
+  margin-top:6px;
+  font-size:11px;
+  opacity:.85;
+  line-height:1.7;
+  text-align:right;
+}
+
+/* اوورلی‌ها */
+.overlay{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background:radial-gradient(circle at center,rgba(15,23,42,.35),rgba(15,23,42,.96));
+  text-align:center;
+  padding:14px;
+  z-index:30;
+}
+
+.overlay.hidden{
+  display:none;
+}
+
+.overlay h2{
+  font-size:19px;
+  margin-bottom:6px;
+}
+
+.overlay p{
+  font-size:12px;
+  opacity:.9;
+  margin-bottom:10px;
+  line-height:1.9;
+}
+
+.overlay button{
+  border:none;
+  border-radius:999px;
+  padding:7px 18px;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(135deg,#ec4899,#6366f1);
+  color:#fff;
+  box-shadow:0 10px 26px rgba(129,140,248,.9);
+  margin:2px;
+}
+
+.overlay .secondary{
+  background:transparent;
+  border:1px solid rgba(148,163,184,.6);
+  box-shadow:none;
+}
 
 /* مخصوص صفحه شروع بازی */
 #startOverlay button{
@@ -432,7 +481,7 @@
   max-width:260px;
 }
 
-/* استایل جدا برای دکمه مراحل بازی */
+/* دکمه مرحله در اینترو */
 #startOverlay #levelsBtn{
   background:linear-gradient(135deg,#22c55e,#16a34a);
   color:#ecfdf5;
@@ -441,185 +490,213 @@
   margin-top:4px;
 }
 
-/* دکمه ادامه مثل قبل ساده بماند */
+/* دکمه ادامه */
 #startOverlay #continueBtn{
   background:transparent;
   border:1px solid rgba(148,163,184,.6);
   box-shadow:none;
 }
 
-  
-/* Controls: دکمه‌های حرکت در چپ، آتش گرد در راست */
- .controls{
-      margin-top:10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;            /* فاصله بیشتر بین جهت‌ها و آتش */
-      direction:ltr;
-      animation:controlsPulse 3s ease-in-out 0s 2;
-    }
-    @keyframes controlsPulse{
-      0%,100%{transform:translateY(0);}
-      50%{transform:translateY(-3px);}
-    }
+/* کنترل‌ها: دکمه‌های حرکت و آتش */
+.controls{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  direction:ltr;
+  animation:controlsPulse 3s ease-in-out 0s 2;
+  position:relative;
+  z-index:40; /* همیشه روی HUD و بوم */
+}
 
-    /* استایل پایه دکمه‌ها */
-    .ctrl-btn{
-      border:none;
-      cursor:pointer;
-      font-weight:700;
-      user-select:none;
-      -webkit-user-select:none;
-      text-shadow:0 0 8px rgba(15,23,42,.9);
-      transition:transform .12s, box-shadow .15s, filter .15s;
-    }
+@keyframes controlsPulse{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-3px);}
+}
 
-    .ctrl-btn:active{
-      transform:scale(.94) translateY(1px);
-      box-shadow:0 4px 14px rgba(15,23,42,.9);
-    }
+/* استایل پایه دکمه‌ها */
+.ctrl-btn{
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  user-select:none;
+  -webkit-user-select:none;
+  text-shadow:0 0 8px rgba(15,23,42,.9);
+  transition:transform .12s, box-shadow .15s, filter .15s;
+}
 
-    .controls-left{
-      flex:1;
-    }
+.ctrl-btn:active{
+  transform:scale(.94) translateY(1px);
+  box-shadow:0 4px 14px rgba(15,23,42,.9);
+}
 
-    .controls-arrows{
-      display:flex;
-      gap:10px;
-    }
+.controls-left{
+  flex:1;
+}
 
-  .ctrl-btn.arrow{
-      flex:1;
-      border-radius:20px;
-      padding:9px 0;       /* کمی کوچک‌تر */
-      font-size:16px;      /* کمی کوچک‌تر */
-      background:radial-gradient(circle at top,#1d4ed8,#0ea5e9);
-      color:#e0faff;
-      box-shadow:0 10px 30px rgba(59,130,246,.7);
-      border:1px solid rgba(15,23,42,0.9);
-    }
+.controls-arrows{
+  display:flex;
+  gap:10px;
+}
 
-    /* دکمه آتش گرد در سمت راست */
-   .big-fire{
-      flex:0 0 68px;
-      width:68px;
-      height:68px;
-      border-radius:999px;
-      padding:0;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:28px;
-      background:radial-gradient(circle at top,#f97316,#e11d48);
-      box-shadow:0 14px 40px rgba(239,68,68,.8);
-      color:#fff;
-    }
-  
+.ctrl-btn.arrow{
+  flex:1;
+  border-radius:20px;
+  padding:9px 0;
+  font-size:16px;
+  background:radial-gradient(circle at top,#1d4ed8,#0ea5e9);
+  color:#e0faff;
+  box-shadow:0 10px 30px rgba(59,130,246,.7);
+  border:1px solid rgba(15,23,42,0.9);
+}
 
-    /* Modal base */
-    .modal{
-      position:fixed; inset:0;
-      display:flex; justify-content:center; align-items:center;
-      background:rgba(15,23,42,0.9);
-      z-index:50;
-    }
-    .modal.hidden{ display:none; }
-    .modal-box{
-      background:radial-gradient(circle at top,#020617,#020617 60%,#000);
-      border-radius:20px;
-      padding:18px;
-      max-width:380px;
-      width:92%;
-      border:1px solid rgba(148,163,184,0.45);
-      box-shadow:0 18px 40px rgba(15,23,42,0.95);
-      text-align:right;
-      max-height:82vh;
+/* دکمه آتش گرد در سمت راست */
+.big-fire{
+  flex:0 0 68px;
+  width:68px;
+  height:68px;
+  border-radius:999px;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  background:radial-gradient(circle at top,#f97316,#e11d48);
+  box-shadow:0 14px 40px rgba(239,68,68,.8);
+  color:#fff;
+}
+
+/* مودال‌ها */
+.modal{
+  position:fixed;
+  inset:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(15,23,42,0.9);
+  z-index:50;
+}
+
+.modal.hidden{
+  display:none;
+}
+
+.modal-box{
+  background:radial-gradient(circle at top,#020617,#020617 60%,#000);
+  border-radius:20px;
+  padding:18px;
+  max-width:380px;
+  width:92%;
+  border:1px solid rgba(148,163,184,0.45);
+  box-shadow:0 18px 40px rgba(15,23,42,0.95);
+  text-align:right;
+  max-height:82vh;
   overflow-y:auto;
-    }
+}
 
-  /* فقط برای مودال مراحل: ارتفاع محدود + اسکرول داخلی */
+/* مودال مراحل: ارتفاع محدود */
 #levelModal .modal-box{
   max-height:82vh;
   overflow-y:auto;
 }
-    .modal-box h2{ font-size:16px; margin-bottom:6px; }
-    .modal-box p{
-      font-size:12px; line-height:1.9; opacity:0.9; margin-bottom:10px;
-    }
-    .modal-actions{
-      display:flex; justify-content:flex-end; gap:8px; margin-top:10px;
-    }
-    .modal-actions button{
-      border:none; border-radius:999px;
-      padding:6px 14px; font-size:12px; cursor:pointer;
-      background:linear-gradient(135deg,#6366f1,#0ea5e9);
-      color:#f9fafb;
-    }
-    .modal-actions .secondary{
-      background:transparent;
-      border:1px solid rgba(148,163,184,.6);
-    }
 
-    /* Shop modal */
-    .shop-grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-      margin-top:8px;
-    }
-    .shop-card{
-      background:rgba(2,6,23,.9);
-      border:1px solid rgba(148,163,184,.35);
-      border-radius:14px;
-      padding:10px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:8px;
-    }
-    .shop-info{
-      display:flex; flex-direction:column; gap:4px;
-    }
-    .shop-title{
-      font-size:13px; font-weight:800;
-    }
-    .shop-desc{
-      font-size:11px; opacity:.85; line-height:1.7;
-    }
-    .shop-buy{
-      border:none; border-radius:999px;
-      padding:6px 12px; font-size:12px; font-weight:700;
-      cursor:pointer;
-      background:linear-gradient(135deg,#f59e0b,#ef4444);
-      color:#fff;
-      white-space:nowrap;
-      box-shadow:0 8px 20px rgba(239,68,68,.7);
-    }
-    .shop-buy:disabled{
-      opacity:.5; cursor:not-allowed;
-      box-shadow:none;
-    }
-    .shop-coins{
-      margin-top:4px;
-      font-size:12px;
-      opacity:.9;
-    }
-
-    @media(max-width:480px){
-      h1{font-size:17px;}
-      .subtitle{font-size:11px;}
-      .logo-badge{width:56px;height:56px;}
-    }
-
-
-
-/* دکمه‌ی مرحله توی HUD کلیک‌خور باشد */
-.badge-level{
-  cursor:pointer;
+.modal-box h2{
+  font-size:16px;
+  margin-bottom:6px;
 }
 
-/* گرید مراحل – ۴ ستون، کارت‌های کوچیک */
+.modal-box p{
+  font-size:12px;
+  line-height:1.9;
+  opacity:0.9;
+  margin-bottom:10px;
+}
+
+.modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:10px;
+}
+
+.modal-actions button{
+  border:none;
+  border-radius:999px;
+  padding:6px 14px;
+  font-size:12px;
+  cursor:pointer;
+  background:linear-gradient(135deg,#6366f1,#0ea5e9);
+  color:#f9fafb;
+}
+
+.modal-actions .secondary{
+  background:transparent;
+  border:1px solid rgba(148,163,184,.6);
+}
+
+/* گرید شاپ */
+.shop-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:10px;
+  margin-top:8px;
+}
+
+.shop-card{
+  background:rgba(2,6,23,.9);
+  border:1px solid rgba(148,163,184,.35);
+  border-radius:14px;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+}
+
+.shop-info{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.shop-title{
+  font-size:13px;
+  font-weight:800;
+}
+
+.shop-desc{
+  font-size:11px;
+  opacity:.85;
+  line-height:1.7;
+}
+
+.shop-buy{
+  border:none;
+  border-radius:999px;
+  padding:6px 12px;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(135deg,#f59e0b,#ef4444);
+  color:#fff;
+  white-space:nowrap;
+  box-shadow:0 8px 20px rgba(239,68,68,.7);
+}
+
+.shop-buy:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  box-shadow:none;
+}
+
+.shop-coins{
+  margin-top:4px;
+  font-size:12px;
+  opacity:.9;
+}
+
+/* گرید مراحل */
 .level-grid{
   margin-top:12px;
   display:grid;
@@ -627,7 +704,6 @@
   gap:8px;
 }
 
-/* هر کارت مرحله */
 .level-btn{
   border:none;
   border-radius:16px;
@@ -644,23 +720,6 @@
   gap:4px;
 }
 
-/* تصویر غول */
-.level-boss-thumb{
-  width:52px;
-  height:52px;
-  border-radius:14px;
-  object-fit:cover;
-  box-shadow:0 0 0 2px rgba(15,23,42,0.9),
-             0 8px 18px rgba(15,23,42,0.95);
-}
-
-/* متن زیر تصویر */
-.level-btn .level-label{
-  text-align:center;
-  font-weight:600;
-}
-
-/* تصویر غول هر مرحله (داخل دکمه) */
 .level-boss-thumb{
   width:50px;
   height:50px;
@@ -670,12 +729,15 @@
              0 10px 22px rgba(15,23,42,0.9);
 }
 
-/* مرحله فعلی */
+.level-btn .level-label{
+  text-align:center;
+  font-weight:600;
+}
+
 .level-btn.current{
   background:linear-gradient(135deg,#16a34a,#22c55e);
 }
 
-/* مراحل قفل شده */
 .level-btn.locked{
   background:#020617;
   color:#9ca3af;
@@ -684,16 +746,12 @@
   cursor:not-allowed;
 }
 
-/* غولِ مرحله قفل‌شده؛ کم‌رنگ و سیاه‌وسفید */
 .level-btn.locked .level-boss-thumb{
   opacity:0.4;
   filter:grayscale(1);
 }
 
-
-  
-
-/* ===== اینتروی ویدئویی ===== */
+/* اینتروی ویدئویی */
 .intro-screen{
   position:fixed;
   inset:0;
@@ -712,7 +770,6 @@
   background:#000;
   box-shadow:0 20px 40px rgba(0,0,0,.9);
 }
-
 
 .intro-loader{
   position:fixed;
@@ -754,8 +811,8 @@
   0%{ transform:translateX(-120%); }
   100%{ transform:translateX(220%); }
 }
-    
-/* کنترل‌های ویدئوی اینترو – نوار مینیمال زیر ویدئو */
+
+/* کنترل‌های اینترو */
 .intro-controls{
   margin-top:10px;
   display:flex;
@@ -768,7 +825,6 @@
   backdrop-filter:blur(10px);
 }
 
-/* دکمه‌های اینترو (کوچیک و مینیمال) */
 .intro-btn{
   border-radius:999px;
   border:1px solid transparent;
@@ -782,65 +838,61 @@
   gap:4px;
 }
 
-/* دکمه صدا – تیره و ساده */
 .intro-btn.mute{
   background:transparent;
   color:#e5e7eb;
   border-color:rgba(148,163,184,0.7);
 }
 
-/* دکمه رد کردن – گرادیان کوچیک و جذاب */
 .intro-btn.skip{
   background:linear-gradient(135deg,#f97316,#ec4899);
   color:#fff;
   box-shadow:0 8px 18px rgba(248,113,113,0.8);
 }
+
 .hidden-game{
   display:none;
 }
 
 /* نوار جون باس */
 #bossHpBar {
-  position: absolute;
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 16px;
-  border-radius: 999px;
-  background: rgba(15, 23, 42, 0.9);
-  box-shadow: 0 0 18px rgba(248, 113, 113, 0.7);
-  overflow: hidden;
-  pointer-events: none;
-  z-index: 5;
+  position:absolute;
+  top:5%;
+  left:50%;
+  transform:translateX(-50%);
+  width:200px;
+  height:16px;
+  border-radius:999px;
+  background:rgba(15,23,42,0.9);
+  box-shadow:0 0 18px rgba(248,113,113,0.7);
+  overflow:hidden;
+  pointer-events:none;
+  z-index:25;
 }
 
-/* وقتی نوار باس hidden بشه، کلاً از صفحه بره */
-#bossHpBar.hidden {
-  display: none;
-}
-  
-/* پرشدگی نوار */
-#bossHpFill {
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(90deg, #22c55e, #eab308, #f97316, #ef4444);
-  box-shadow: 0 0 14px rgba(248, 113, 113, 0.9);
-  transition: width 0.18s ease-out;
+#bossHpBar.hidden{
+  display:none;
 }
 
-/* عدد HP وسط نوار */
-#bossHpText {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Vazir", Vazirmatn, system-ui;
-  font-size: 11px;
-  font-weight: 700;
-  color: #e5f6ff;
-  text-shadow: 0 0 6px #020617;
+#bossHpFill{
+  height:100%;
+  width:100%;
+  background:linear-gradient(90deg,#22c55e,#eab308,#f97316,#ef4444);
+  box-shadow:0 0 14px rgba(248,113,113,0.9);
+  transition:width 0.18s ease-out;
+}
+
+#bossHpText{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:"Vazir", Vazirmatn, system-ui;
+  font-size:11px;
+  font-weight:700;
+  color:#e5f6ff;
+  text-shadow:0 0 6px #020617;
 }
 
 .hidden{
@@ -859,171 +911,143 @@
   100% { transform: translate(0,0); }
 }
 
-.screen-shake {
-  animation: bossDieShake 0.75s ease-out; /* مدت بیشتر */
+.screen-shake{
+  animation:bossDieShake 0.75s ease-out;
 }
+
 /* انفجار / دود بنفش */
 @keyframes bossExplosion {
-  0%   { opacity: 1; transform: scale(0.4); filter: blur(0px); }
-  50%  { opacity: 1; transform: scale(2.4); filter: blur(2px); }
-  100% { opacity: 0; transform: scale(3.1); filter: blur(4px); }
+  0%   { opacity:1; transform:scale(0.4); filter:blur(0px); }
+  50%  { opacity:1; transform:scale(2.4); filter:blur(2px); }
+  100% { opacity:0; transform:scale(3.1); filter:blur(4px); }
 }
 
 .boss-death-flash {
-  position: absolute;
-  left: 50%;     /* مقدار پیش‌فرض، بعداً با JS override می‌شه */
-  top: 50%;
-  width: 220px;
-  height: 220px;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:220px;
+  height:220px;
+  transform:translate(-50%, -50%);
+  background:radial-gradient(
     circle,
-    rgba(0,0,0,0.85) 0%,      /* مرکز خیلی تیره */
-    rgba(76,29,149,0.90) 35%, /* بنفش خیلی تیره */
-    rgba(147,51,234,0.85) 70%,/* بنفش روشن‌تر مثل دود */
-    rgba(15,23,42,0) 100%     /* محو شدن */
+    rgba(0,0,0,0.85) 0%,
+    rgba(76,29,149,0.90) 35%,
+    rgba(147,51,234,0.85) 70%,
+    rgba(15,23,42,0) 100%
   );
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 30;
-  animation: bossExplosion 0.9s forwards;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:30;
+  animation:bossExplosion 0.9s forwards;
 }
 
-
-
-
-/* --- About Tavita Modal --- */
-
+/* مودال درباره طاویتا */
 .about-modal {
-  max-width: 520px;
-  padding: 24px 22px 18px;
-  background: radial-gradient(circle at top, #18243a 0%, #050814 60%, #040712 100%);
-  border-radius: 24px;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.85);
-  border: 1px solid rgba(120, 180, 255, 0.25);
+  max-width:520px;
+  padding:24px 22px 18px;
+  background:radial-gradient(circle at top, #18243a 0%, #050814 60%, #040712 100%);
+  border-radius:24px;
+  box-shadow:0 18px 60px rgba(0, 0, 0, 0.85);
+  border:1px solid rgba(120, 180, 255, 0.25);
 }
 
-.about-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
+.about-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
 }
 
-.about-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at 30% 0, #ff7dd4, #803bff);
-  box-shadow: 0 0 18px rgba(168, 120, 255, 0.7);
-  font-size: 22px;
+.about-icon{
+  width:46px;
+  height:46px;
+  border-radius:14px;
+  padding:4px;
+  background:rgba(255, 255, 255, 0.07);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 0 14px rgba(0, 0, 0, 0.35);
 }
 
-.about-title {
-  margin: 0;
-  font-size: 18px;
-  font-weight: 800;
+.about-icon img{
+  width:100%;
+  height:100%;
+  border-radius:12px;
+  object-fit:cover;
 }
 
-.about-tagline {
-  margin: 2px 0 0;
-  font-size: 12px;
-  opacity: 0.8;
+.about-title{
+  margin:0;
+  font-size:18px;
+  font-weight:800;
 }
 
-.about-body {
-  margin-top: 10px;
-  font-size: 13px;
-  line-height: 2.1;
-  text-align: right;
+.about-tagline{
+  margin:2px 0 0;
+  font-size:12px;
+  opacity:0.8;
 }
 
-.about-body p {
-  margin: 6px 0 8px;
+.about-body{
+  margin-top:10px;
+  font-size:13px;
+  line-height:2.1;
+  text-align:right;
 }
 
-.about-highlight {
-  margin: 10px 0 8px;
-  padding: 10px 12px;
-  border-radius: 16px;
-  background: rgba(74, 144, 226, 0.08);
-  border: 1px solid rgba(74, 144, 226, 0.25);
+.about-body p{
+  margin:6px 0 8px;
 }
 
-.about-highlight strong {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 13px;
+.about-highlight{
+  margin:10px 0 8px;
+  padding:10px 12px;
+  border-radius:16px;
+  background:rgba(74, 144, 226, 0.08);
+  border:1px solid rgba(74, 144, 226, 0.25);
 }
 
-.about-highlight ul {
-  margin: 0;
-  padding-right: 18px;
-  list-style: "•  ";
+.about-highlight strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:13px;
 }
 
-.about-highlight li {
-  margin: 2px 0;
+.about-highlight ul{
+  margin:0;
+  padding-right:18px;
+  list-style:"•  ";
 }
 
-.about-channel {
-  margin-top: 10px;
-  font-size: 12px;
+.about-highlight li{
+  margin:2px 0;
 }
 
-.about-channel-box {
-  margin-top: 6px;
-  padding: 8px 10px;
-  border-radius: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(13, 194, 138, 0.1);
-  border: 1px solid rgba(13, 194, 138, 0.4);
+.about-channel{
+  margin-top:10px;
+  font-size:12px;
 }
 
-.about-id {
-  font-weight: 700;
-  color: #0dc28a;
-  direction: ltr;
+.about-channel-box{
+  margin-top:6px;
+  padding:8px 10px;
+  border-radius:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(13, 194, 138, 0.1);
+  border:1px solid rgba(13, 194, 138, 0.4);
 }
 
-/* اطمینان از خوانایی روی موبایل */
-@media (max-width: 480px) {
-  .about-modal {
-    margin: 0 12px;
-    padding: 20px 18px 16px;
-  }
-
-  .about-title {
-    font-size: 16px;
-  }
-}
-  
-/* لوگوی واقعی طاویتا در مودال */
-.about-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  padding: 4px;
-  background: rgba(255, 255, 255, 0.07);  /* یه بک‌گراند خیلی لطیف */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 14px rgba(0, 0, 0, 0.35);
+.about-id{
+  font-weight:700;
+  color:#0dc28a;
+  direction:ltr;
 }
 
-.about-icon img {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-
+/* مودال راهنما */
 .help-modal h3{
   font-size:14px;
   margin:10px 0 4px;
@@ -1040,8 +1064,7 @@
   margin-bottom:2px;
 }
 
-
-
+/* اسکرول و لمس */
 html, body{
   overscroll-behavior:none;
 }
@@ -1050,10 +1073,18 @@ html, body{
 canvas{
   touch-action:none;
 }
-  
-  
-  
-  </style>
+
+/* ریسپانسیو موبایل */
+@media(max-width:480px){
+  h1{font-size:17px;}
+  .subtitle{font-size:11px;}
+  .logo-badge{width:56px;height:56px;}
+
+  .hud-left .hud-glass{
+    max-width:170px;
+  }
+}
+</style>
 </head>
 <body>
 
