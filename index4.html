@@ -1122,6 +1122,34 @@ canvas{
 
 
 
+
+/* --- فیکس نهایی برای همه دیوایس‌ها --- */
+
+/* روی صفحه‌های کوتاه‌تر از حدود 720px، کمی بازی را کوچیک کن */
+@media (max-height: 720px) {
+  .game-wrapper {
+    transform: scale(0.94);
+    transform-origin: top center;
+  }
+}
+
+/* روی صفحه‌های خیلی کوتاه‌تر (قد موبایل‌های ریز) کمی بیشتر کوچیک می‌کنیم */
+@media (max-height: 640px) {
+  .game-wrapper {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+/* جلوگیری از اسکرول عمودی ناخواسته */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+
+  
+
   
 </style>
 </head>
