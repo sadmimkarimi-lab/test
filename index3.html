@@ -268,6 +268,14 @@
       padding:6px;
     }
 
+/* نوار امتیاز/مرحله/پیام: همان یک خط افقی، ولی چرخیده و باریک کنار چپ */
+.hud-left .hud-glass{
+  max-width:180px;             /* باریک‌تر؛ حدود نصف حالت قبلی */
+  padding:4px 8px;             /* کمی جمع‌وجورتر از hud-glass معمولی */
+  transform:rotate(-90deg);    /* کل نوار می‌چرخد و عمودی می‌شود */
+  transform-origin:left center;/* از سمت چپ بچرخد که بیرون نزند */
+}
+  
     /* استپ + صدا: کوچیک و خوشگل */
     .hud-side-buttons{
       display:flex;
@@ -1559,12 +1567,7 @@ function finishIntro(){
     gameWrapper.classList.remove("hidden-game");
 
 
-// بعد از ظاهر شدن بازی، اسکرول به سمت دکمه‌ها
-    setTimeout(()=>{
-      try{
-        fireBtn.scrollIntoView({ behavior:"smooth", block:"end" });
-      }catch(e){}
-    }, 100);
+
 
     
     // پخش صدای شروع (اگر مرورگر اجازه بده)
