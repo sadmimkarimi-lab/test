@@ -2976,7 +2976,6 @@ function endGame() {
 
   if (bossHpBar) {
     bossHpBar.classList.add("hidden");
-    
   }
   if (bossHpFill) bossHpFill.style.width = "100%";
   if (bossHpText) bossHpText.textContent = "";
@@ -3000,33 +2999,33 @@ function endGame() {
   sfxGameOver();
   gameOverOverlay.classList.remove("hidden");
 
-// اسکرول خودکار به سمت دکمه آتش (پایین صفحه)
-setTimeout(() => {
-  const fireBtnEl = document.getElementById("fireBtn");
-  if (fireBtnEl) {
-    fireBtnEl.scrollIntoView({
-      behavior: "smooth",
-      block: "end"
-    });
-  }
-}, 300);
+  // اسکرول خودکار به سمت دکمه آتش (پایین صفحه)
+  setTimeout(() => {
+    const fireBtnEl = document.getElementById("fireBtn");
+    if (fireBtnEl) {
+      fireBtnEl.scrollIntoView({
+        behavior: "smooth",
+        block: "end"
+      });
+    }
+  }, 300);
+}  // 👈 این آکولاد بسته‌ی تابع endGame است
 
-    // رویدادهای اصلی
-    startBtn.addEventListener("click", ()=> startGame(0));
+// رویدادهای اصلی
+startBtn.addEventListener("click", ()=> startGame(0));
 
-    continueBtn.addEventListener("click", ()=>{
-      const saved=loadState();
-      if(!saved){ startGame(0); return; }
-      const idx=LEVELS.findIndex(l=>l.id===saved.lastLevel);
-      startGame(idx>=0?idx:0);
-    });
+continueBtn.addEventListener("click", ()=>{
+  const saved = loadState();
+  if(!saved){ startGame(0); return; }
+  const idx = LEVELS.findIndex(l=>l.id === saved.lastLevel);
+  startGame(idx>=0 ? idx : 0);
+});
 
-    nextLevelBtn.addEventListener("click", ()=>{
-      currentLevelIndex++;
-      if(currentLevelIndex>=LEVELS.length) currentLevelIndex=0;
-      startGame(currentLevelIndex);
-    });
-
+nextLevelBtn.addEventListener("click", ()=>{
+  currentLevelIndex++;
+  if(currentLevelIndex >= LEVELS.length) currentLevelIndex = 0;
+  startGame(currentLevelIndex);
+});
 
 
 pauseBtn.addEventListener("click", ()=>{
