@@ -3332,22 +3332,22 @@ function handleTouchMove(e) {
 let fireInterval = null;
 
 function startAutoFire() {
-    if (fireInterval) return;
+  if (fireInterval) return;
+  fireBullet();
+  fireInterval = setInterval(() => {
     fireBullet();
-    fireInterval = setInterval(() => {
-        fireBullet();
-    }, 250); // هر ۲۵۰ میلی‌ثانیه یک تیر
+  }, 250); // هر ۲۵۰ میلی‌ثانیه یک تیر
 }
 
 function stopAutoFire() {
-    clearInterval(fireInterval);
-    fireInterval = null;
+  clearInterval(fireInterval);
+  fireInterval = null;
 }
 
-// fireBtn بالاتر تو کد تعریف شده، اینجا فقط fireZone رو می‌گیریم
+// fireBtn بالاتر تعریف شده، اینجا فقط fireZone را می‌گیریم
 const fireZone = document.querySelector(".fire-zone");
 
-// روی خود دکمه آتش
+// روی خود دکمه آتش (موبایل و دسکتاپ)
 fireBtn.addEventListener("touchstart", startAutoFire);
 fireBtn.addEventListener("touchend", stopAutoFire);
 fireBtn.addEventListener("mousedown", startAutoFire);
@@ -3355,15 +3355,13 @@ fireBtn.addEventListener("mouseup", stopAutoFire);
 
 // اگر fire-zone وجود داشته باشد، روی آن هم لیسنر بگذار
 if (fireZone) {
-    fireZone.addEventListener("touchstart", startAutoFire);
-    fireZone.addEventListener("touchend", stopAutoFire);
-    fireZone.addEventListener("mousedown", startAutoFire);
-    fireZone.addEventListener("mouseup", stopAutoFire);
+  fireZone.addEventListener("touchstart", startAutoFire);
+  fireZone.addEventListener("touchend", stopAutoFire);
+  fireZone.addEventListener("mousedown", startAutoFire);
+  fireZone.addEventListener("mouseup", stopAutoFire);
 }
-    
-  
-  
-  </script>
+
+</script>
 
 </body>
 </html>
