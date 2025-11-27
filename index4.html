@@ -1087,40 +1087,33 @@ canvas{
 
 
 
-/* --- فیکس نهایی ستون چپ HUD --- */
+/* ----- ستون چپ: یک نوار افقی که ۹۰ درجه چرخیده و عمودی شده ----- */
 
-/* خود ستون چپ: وسط صفحه، نزدیک لبه چپ */
 .hud-left{
-  left: 8px;
-  top: 50%;
-  transform: translateY(-50%);
-  align-items: flex-start;
+  position:absolute;
+  left:0px;
+  top:50%;
+  transform:translateY(-50%);
+  pointer-events:auto;
+  z-index:20;
 }
 
-/* کادر شیشه‌ای ستون چپ: باریک و عمودی */
+/* نوار شیشه‌ای که می‌چرخد */
 .hud-left .hud-glass{
-  max-width: 120px;    /* باریک‌تر از قبل */
-  padding: 6px 8px;
+  transform: rotate(-90deg);
+  transform-origin: left center;
+  padding:8px 12px;
+  max-width:none;
+  display:inline-block;
+  white-space:nowrap;
 }
 
-/* محتوا داخل کادر: از افقی به عمودی */
+/* محتوا داخل نوار افقی باقی بماند */
 .hud-sub{
-  display: flex;
-  flex-direction: column;     /* عمودی */
-  align-items: flex-start;    /* تراز راست/چپ تمیز */
-  gap: 6px;                   /* فاصله بین سطرها */
-}
-
-/* قرص‌ها (امتیاز و مرحله) تمام عرضِ کادر را بگیرند */
-.hud-sub .stat-pill{
-  width: 100%;
-  justify-content: space-between;
-}
-
-/* متن انگیزشی مطمئن درون کادر بماند */
-.hud-hint{
-  max-width: 100%;
-  white-space: normal;
+  display:flex;
+  flex-direction:row;  /* افقی */
+  align-items:center;
+  gap:10px;
 }
 
 
