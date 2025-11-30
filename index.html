@@ -1709,7 +1709,7 @@ introMuteBtn.addEventListener("click", () => {
 
     
     function resizeCanvas(){
-      const maxWidth = 420, ratio = 9/16;
+      const maxWidth = 420, ratio = 0.65;
       const width = Math.min(maxWidth, window.innerWidth - 32);
       const height = width / ratio;
       canvas.width = width; canvas.height = height;
