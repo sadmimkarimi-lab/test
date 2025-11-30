@@ -1709,11 +1709,14 @@ introMuteBtn.addEventListener("click", () => {
 
     
     function resizeCanvas(){
-      const maxWidth = 420, ratio = 9/16;
-      const width = Math.min(maxWidth, window.innerWidth - 32);
-      const height = width / ratio;
-      canvas.width = width; canvas.height = height;
-    }
+  const maxWidth = 420;
+  const ratio = 9 / 16;        // نسبت ارتفاع به عرض (16:9 عمودی)
+  const width = Math.min(maxWidth, window.innerWidth - 32);
+  const height = width * ratio; // ✅ ارتفاع = عرض × نسبت
+
+  canvas.width  = width;
+  canvas.height = height;
+}
     resizeCanvas();
     window.addEventListener("resize", resizeCanvas);
 
