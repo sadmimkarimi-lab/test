@@ -253,7 +253,35 @@
       .hero-text h1 {
         font-size: 20px;
       }
+    
+.taavita {
+  background-color: #d0ebf8; 
+  padding: 2px 4px;
+  border-radius: 6px;
+}
+
+    .section-title {
+  border-bottom: 2px solid #e0d8ff;
+  padding-bottom: 4px;
     }
+
+.back-to-toc {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 10px 16px;
+  border-radius: 40px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 9999;
+  border: 1px solid rgba(255,255,255,0.8);
+}
+      
+
+   } 
   </style>
 </head>
 <body>
@@ -276,7 +304,7 @@
     </header>
 
     <!-- فهرست: فصل‌ها + مبحث‌ها -->
-    <section class="toc">
+ <section class="toc" id="toc">
       <h2>فهرست</h2>
       <ul class="toc-list">
 
@@ -3710,5 +3738,11 @@ Answer: ...
     // اگر خواستی یک فصل/مبحث به صورت پیش‌فرض باز باشد، این را فعال کن:
     // openSection("chapter-1", "section-1-1");
   </script>
+
+  
+<button class="back-to-toc" onclick="window.location.href='#toc'">
+  بازگشت به فهرست
+</button>
+
 </body>
 </html>
