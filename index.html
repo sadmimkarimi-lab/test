@@ -92,30 +92,42 @@
     justify-content:space-between;
     gap:0.6rem;
     flex-wrap:wrap;
-    direction:ltr;
-  }
-  #header-left{
-    display:flex;
-    gap:0.6rem;
-    flex-wrap:wrap;
-    direction:rtl;
-  }
-  #header-right{
-    display:flex;
-    gap:0.6rem;
-    align-items:center;
-    direction:rtl;
+    direction:ltr; /* لوگو سمت راست، آیکن‌ها سمت چپ در موبایل فارسی */
   }
 
+  /* سمت لوگو و عنوان */
+  #header-left{
+    display:flex;
+    align-items:center;
+    gap:0.6rem;
+    direction:rtl;
+    min-width:0;
+  }
   #gameLogo{
-    width:5rem;
-    height:5rem;
+    width:3rem;
+    height:3rem;
     border-radius:999px;
     object-fit:cover;
+    flex-shrink:0;
+  }
+  #header-text{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
   }
   #gameTitle{
-    font-size:1.3rem;
+    font-size:1.2rem;
     font-weight:700;
+    white-space:nowrap;
+  }
+
+  /* سمت آیکن‌ها (بازگشت، کانال، شاپ) */
+  #header-right{
+    display:flex;
+    gap:0.3rem;
+    align-items:center;
+    direction:ltr;
+    margin-left:auto;
   }
 
   /* نوار بالایی وضعیت (مرحله/امتیاز/جان + آیکون‌ها) */
@@ -175,7 +187,7 @@
   }
   #progressBarOuter{
     width:100%;
-    height:0.75rem; /* پهن‌تر و چشم‌گیرتر */
+    height:0.75rem;
     border-radius:999px;
     background:#22244a;
     overflow:hidden;
@@ -222,7 +234,7 @@
     border-radius:14px;
     box-shadow:0 0 18px rgba(0,0,0,.7);
     max-width:100%;
-    margin-top:-0.6rem; /* بازی کمی بالاتر، نزدیک پیام */
+    margin-top:-0.6rem;
   }
 
   /* نوار پایین */
@@ -269,13 +281,10 @@
     box-shadow:0 0 5px rgba(148,163,184,.6);
   }
 
-  /* دکمه بازگشت و کانال طاویتا */
-  .btn-back{
-    background:#4b5563;
-  }
-  .btn-channel{
-    background:linear-gradient(135deg,#6366f1,#8b5cf6);
-  }
+  /* آیکن‌های هدر خاص */
+  .icon-back{ background:#4b5563; }
+  .icon-channel{ background:linear-gradient(135deg,#6366f1,#8b5cf6); }
+  .icon-shop{ background:#ff8c00; }
 
   /* تمرین روزانه */
   #dailyInner{
@@ -314,7 +323,7 @@
     box-shadow:0 0 8px rgba(250,204,21,.8);
   }
 
-  /* اوورلی‌ها (راهنما / شاپ / ... ) */
+  /* اوورلی‌ها */
   .overlay{
     position:fixed;
     inset:0;
@@ -404,7 +413,6 @@
 
   #gameOverBox p{margin:0.25rem 0;}
 
-  /* افکت +۲ جون */
   .lifeGain{
     position:fixed;
     top:6px;
@@ -423,14 +431,12 @@
     100%{opacity:0;transform:translate(-50%,-22px);}
   }
 
-  /* پروفایل */
   #profileStats{
     font-size:0.9rem;
     margin-top:0.4rem;
     line-height:1.8;
   }
 
-  /* برای دسکتاپ کانتینر کمی محدود بشه */
   @media (min-width:992px){
     #game-container{
       max-width:900px;
@@ -444,21 +450,23 @@
 
 </head>
 <body>
-  <!-- هدر: لوگو + عنوان + دکمه‌ها -->
+  <!-- هدر: لوگو + عنوان + آیکن‌ها در یک خط -->
   <div id="header-bar">
     <div id="header-left">
-      <button id="backBtn" class="btn btn-back">⬅ بازگشت به ربات</button>
-      <button id="channelBtn" class="btn btn-channel">کانال طاویتا</button>
-      <button id="shopBtn" class="btn btn-shop">شاپ</button>
-    </div>
-
-    <div id="header-right">
       <img
         id="gameLogo"
         src="https://cdnfa.com/irangiah/a9be/uploads/bazi2/logobad.webp"
         alt="لوگوی طاویتا"
       />
-      <span id="gameTitle">بازی بَدشکن</span>
+      <div id="header-text">
+        <span id="gameTitle">بازی بَدشکن</span>
+      </div>
+    </div>
+
+    <div id="header-right">
+      <button id="backBtn" class="iconBtn icon-back" title="بازگشت به ربات">⬅</button>
+      <button id="channelBtn" class="iconBtn icon-channel" title="کانال طاویتا">📣</button>
+      <button id="shopBtn" class="iconBtn icon-shop" title="شاپ">🛒</button>
     </div>
   </div>
 
@@ -514,6 +522,8 @@
     </div>
   </div>
 
+  <!-- بقیه‌ی اوورلی‌ها و اسکریپت بازی عین نسخه‌ی قبلت هست (من تغییری تو منطقش ندادم) -->
+
   <!-- پاپ‌آپ نام کاربر -->
   <div id="nameOverlay" class="overlay">
     <div class="box">
@@ -530,7 +540,7 @@
     </div>
   </div>
 
-  <!-- راهنمای بازی -->
+  <!-- راهنما -->
   <div id="helpOverlay" class="overlay">
     <div class="box">
       <h3>راهنمای بازی بدشکن طاویتا 🎮</h3>
@@ -584,7 +594,7 @@
     </div>
   </div>
 
-  <!-- گیم اور -->
+  <!-- گیم‌اور -->
   <div id="gameOverOverlay" class="overlay">
     <div class="box" id="gameOverBox">
       <h3>پایان بازی 🎮</h3>
@@ -597,7 +607,7 @@
     </div>
   </div>
 
-  <!-- پاپ‌آپ تمرین روزانه -->
+  <!-- تمرین روزانه -->
   <div id="dailyOverlay" class="overlay">
     <div class="box">
       <h3>تمرین روزانه 🌱</h3>
@@ -606,7 +616,7 @@
     </div>
   </div>
 
-  <!-- پاپ‌آپ آرامش -->
+  <!-- آرامش -->
   <div id="calmOverlay" class="overlay">
     <div class="box">
       <h3>لحظه‌ای آرامش 💙</h3>
@@ -615,7 +625,7 @@
     </div>
   </div>
 
-  <script>
+<script>
     const canvas = document.getElementById("game");
     const ctx = canvas.getContext("2d");
     const gameContainer = document.getElementById("game-container");
