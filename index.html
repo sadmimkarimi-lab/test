@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function(){
         <div><strong>Year:</strong> ${found.year}</div>
         <div><strong>More Details:</strong> ${found.moreDetails}</div>
         ${found.photo ? `<img src="${found.photo}" style="width:120px;height:120px;border-radius:8px;margin-top:8px;">` : ''}
-
+      
       `;
     } else {
       resultBox.style.display = 'block';
@@ -385,7 +385,10 @@ document.addEventListener('DOMContentLoaded', function(){
 
   toggleFormBtn.addEventListener('click', function(){ studentForm.style.display = (studentForm.style.display==='none' || studentForm.style.display==='') ? 'block' : 'none'; });
 
-  goHomeBtn.addEventListener('click', function(){ const url = prompt('Enter your site URL:'); if(url) window.open(url,'_blank'); });
+  // اصلاح کد دکمه Home
+  goHomeBtn.addEventListener('click', function(){
+    window.location.href = 'http://www.laveniraa.com';  // جایگزین کردن با URL دلخواه شما
+  });
 
   // ---------- load stored data ----------
   loadFromStorage();
