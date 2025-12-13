@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -180,8 +181,6 @@
   .corner-btn {
       position: fixed;
       bottom: 20px;
-      right: 20px;
-      margin-left: 10px;
       padding: 10px 18px;
       border-radius: 8px;
       border: none;
@@ -191,15 +190,118 @@
       transition: 0.3s;
       z-index: 999;
   }
+  .home-btn{ 
+    right: 20px; 
+    background: #555; 
+    color: #fff; 
+  }
+  .home-btn:hover {
+    background: #666;
+  }
   .add-news-btn{ 
-
-    background: var(--save-btn-color)!important;
+    right: 130px;
+    background: var(--accent);
     color: white; 
   }
-  .home-btn{ 
-    right:140px; 
-    background:var(--accent); 
-    color:#fff; 
+  .add-news-btn:hover {
+    opacity: 0.9;
+  }
+
+  /* Custom Alert Modal */
+  .custom-alert-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 10000;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .custom-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(135deg, #2a1a2e 0%, #1a0f1e 100%);
+    border: 2px solid var(--accent);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(255, 5, 122, 0.3);
+    z-index: 10001;
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from { 
+      transform: translate(-50%, -40%);
+      opacity: 0;
+    }
+    to { 
+      transform: translate(-50%, -50%);
+      opacity: 1;
+    }
+  }
+
+  .custom-alert-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+  }
+
+  .custom-alert-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .custom-alert-message {
+    font-size: 16px;
+    color: var(--muted);
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.5;
+  }
+
+  .custom-alert-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .custom-alert-btn:hover {
+    background: #e00569;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 5, 122, 0.4);
+  }
+
+  .custom-alert-btn:active {
+    transform: translateY(0);
   }
 </style>
 </head>
@@ -246,11 +348,11 @@
       <span id="fileName"></span>
     </div>
     <div class="row" style="align-items:center;">
-      <img id="photoPreview" alt="preview" style="width:120px;height:120px;border-radius:8px;object-fit:cover;">
+      <img id="photoPreview" alt="preview" style="width:120px;height:120px;border-radius:8px;object-fit:cover;display:none;">
     </div>
     <div>
       
-      <button type="button" class="btn save-news-btn" id="saveStudentBtn">Save</button>
+      <button type="button" class="btn" id="saveStudentBtn">Save</button>
       <button type="button" class="btn" id="cancelStudentBtn" style="background:#777;">Cancel</button>
 
     </div>
@@ -258,8 +360,18 @@
   </form>
 </div>
 
-<button class="corner-btn" id="toggleFormBtn">Add News +</button>
 <button class="corner-btn home-btn" id="goHomeBtn">Home</button>
+<button class="corner-btn add-news-btn" id="toggleFormBtn">Add News +</button>
+
+<!-- Custom Alert Modal -->
+<div class="custom-alert-overlay" id="customAlertOverlay">
+  <div class="custom-alert">
+    <div class="custom-alert-icon">✓</div>
+    <div class="custom-alert-title" id="alertTitle">Success!</div>
+    <div class="custom-alert-message" id="alertMessage">Student saved successfully.</div>
+    <button class="custom-alert-btn" id="alertBtn">OK</button>
+  </div>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function(){
@@ -292,6 +404,31 @@ document.addEventListener('DOMContentLoaded', function(){
   const saveStudentBtn = document.getElementById('saveStudentBtn');
   const cancelStudentBtn = document.getElementById('cancelStudentBtn');
 
+  // Custom Alert Elements
+  const alertOverlay = document.getElementById('customAlertOverlay');
+  const alertTitle = document.getElementById('alertTitle');
+  const alertMessage = document.getElementById('alertMessage');
+  const alertBtn = document.getElementById('alertBtn');
+
+  // ---------- Custom Alert Function ----------
+  function showAlert(title, message, icon = '✓') {
+    alertTitle.textContent = title;
+    alertMessage.textContent = message;
+    document.querySelector('.custom-alert-icon').textContent = icon;
+    alertOverlay.style.display = 'block';
+  }
+
+  function hideAlert() {
+    alertOverlay.style.display = 'none';
+  }
+
+  alertBtn.addEventListener('click', hideAlert);
+  alertOverlay.addEventListener('click', function(e) {
+    if (e.target === alertOverlay) {
+      hideAlert();
+    }
+  });
+
   // ---------- helpers ----------
   function norm(s){ return String(s||"").toLowerCase().trim(); }
   function saveToStorage(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(students)); }
@@ -304,7 +441,7 @@ document.addEventListener('DOMContentLoaded', function(){
   function seedData() {
     if(students.length === 0){
       students.push(
-        {code:"18601", fullName:"Yasaman Molaei", course:"Advanced Ballet Course", country:"Iran", totalDuration:"6 Hour’s", courseMaster:"Rusa Kviciani", year:"2024", moreDetails:"Completed all course requirements successfully", photo:"yasaman.jpg" }
+        {code:"18601", fullName:"Yasaman Molaei", course:"Advanced Ballet Course", country:"Iran", totalDuration:"6 Hour's", courseMaster:"Rusa Kviciani", year:"2024", moreDetails:"Completed all course requirements successfully", photo:"yasaman.jpg" }
       );
       saveToStorage();
     }
@@ -327,7 +464,11 @@ document.addEventListener('DOMContentLoaded', function(){
   // ---------- add student ----------
   function addStudent(){
     const codeVal = newCode.value.trim();
-    if(!codeVal){ alert('Please enter Code'); newCode.focus(); return; }
+    if(!codeVal){ 
+      showAlert('Error', 'Please enter a code', '⚠');
+      newCode.focus(); 
+      return; 
+    }
     if(students.some(s=>norm(s.code)===norm(codeVal))){
       if(!confirm('A student with this code already exists. Add anyway?')) return;
     }
@@ -348,7 +489,7 @@ document.addEventListener('DOMContentLoaded', function(){
     selectedPhoto = "";
     photoPreview.style.display = 'none';
     fileNameSpan.textContent = '';
-    alert('Student saved.');
+    showAlert('Success!', 'Student saved successfully', '✓');
     searchInput.value = newStudent.code;
     doSearch();
   }
@@ -383,13 +524,20 @@ document.addEventListener('DOMContentLoaded', function(){
   clearBtn.addEventListener('click', function(){ searchInput.value=''; resultBox.style.display='none'; resultBox.innerHTML=''; });
 
   saveStudentBtn.addEventListener('click', addStudent);
-  cancelStudentBtn.addEventListener('click', function(){ studentForm.reset(); selectedPhoto=''; photoPreview.style.display='none'; fileNameSpan.textContent=''; studentForm.style.display='none'; });
+  cancelStudentBtn.addEventListener('click', function(){ 
+    studentForm.reset(); 
+    selectedPhoto=''; 
+    photoPreview.style.display='none'; 
+    fileNameSpan.textContent=''; 
+    studentForm.style.display='none'; 
+  });
 
-  toggleFormBtn.addEventListener('click', function(){ studentForm.style.display = (studentForm.style.display==='none' || studentForm.style.display==='') ? 'block' : 'none'; });
+  toggleFormBtn.addEventListener('click', function(){ 
+    studentForm.style.display = (studentForm.style.display==='none' || studentForm.style.display==='') ? 'block' : 'none'; 
+  });
 
-  // اصلاح کد دکمه Home
   goHomeBtn.addEventListener('click', function(){
-    window.location.assign('http://www.laveniraa.com');  // اینجا URL مورد نظر خود را وارد کنید
+    window.location.href = 'https://www.laveniraa.com';
   });
 
   // ---------- load stored data ----------
