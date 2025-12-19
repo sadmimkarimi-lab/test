@@ -1685,9 +1685,9 @@ if (floatMsg) {
   if (p >= 1) {
     floatMsg = null;
   } else {
-    const alpha = 0.7 * (1 - p);
-    const y = h * 0.52 - p * 10;
-    const fontSize = Math.max(13, Math.floor(w / 24));
+    const alpha = 0.55 * (1 - p);                 // کمتر تو چشم
+const y = Math.max(28, paddle.y - 26 - p * 6); // بالای پَد، مزاحم آجرها نیست
+const fontSize = Math.max(11, Math.floor(w / 28)); // کوچیک‌تر
 
     ctx.save();
     ctx.globalAlpha = alpha;
