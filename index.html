@@ -1760,7 +1760,7 @@ function hidePopup() {
     }
   }
 
-  // تایمر مود زمان‌دار
+  // تایمر حالت زمان‌دار
   function updateTimerLabel() {
     timerLabel.textContent = `⏱️ زمان: ${timeLeft} ثانیه`;
   }
@@ -2272,13 +2272,13 @@ hintBtn3.addEventListener("click", () => {
     playSafe(soundClick);
     if (gameMode === "normal") {
       gameMode = "timed";
-      modeToggleBtn.textContent = "⏱️ مود زمان‌دار";
+      modeToggleBtn.textContent = "⏱️ حالت زمان‌دار";
       if (modeHint) modeHint.classList.add("hidden");
       startLevelTimer();
       playSafe(voiceModeOn);
     } else {
       gameMode = "normal";
-      modeToggleBtn.textContent = "🎮 مود عادی";
+      modeToggleBtn.textContent = "🎮 حالت عادی";
       clearTimer();
       if (modeHint) modeHint.classList.remove("hidden");
     }
