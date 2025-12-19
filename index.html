@@ -693,6 +693,18 @@ const gameContainer = document.getElementById("game-container");
         totalBrokenHabits=0;
 
 
+// ===================== Floating message (center, non-intrusive) =====================
+let floatMsg = null;
+
+function showFloat(text, duration = 900) {
+  floatMsg = {
+    text,
+    t0: performance.now(),
+    dur: duration
+  };
+}
+// ===================================================================================
+    
 
 // ✅ ریسایز نهایی: بوم = کل فضای باقی‌ماندهٔ صفحه
 function resizeCanvas() {
@@ -1510,6 +1522,7 @@ window.addEventListener("orientationchange", resizeCanvas);
             }
             const posMsg=positiveByLabel[b.label]||`یکی از "${b.label}"‌ها رو شکستی؛ آفرین 💚`;
             flashHint(posMsg,2600);
+            showFloat(posMsg, 900);
             bricks.splice(i,1);
             if(totalBricksLevel>0){
               const cleared=totalBricksLevel-bricks.length;
@@ -1662,7 +1675,47 @@ window.addEventListener("orientationchange", resizeCanvas);
       ctx.strokeStyle=currentTheme==="light" ? "#00000040" : "#ffffff55";
       ctx.lineWidth=1;
       ctx.stroke();
-    }
+
+
+// ======= پیام شناور وسط بازی (اینجا دقیقاً) =======
+if (floatMsg) {
+  const now = performance.now();
+  const p = (now - floatMsg.t0) / floatMsg.dur;
+
+  if (p >= 1) {
+    floatMsg = null;
+  } else {
+    const alpha = 0.7 * (1 - p);
+    const y = h * 0.52 - p * 10;
+    const fontSize = Math.max(13, Math.floor(w / 24));
+
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.direction = "rtl";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = `700 ${fontSize}px Vazirmatn`;
+
+    const text = floatMsg.text;
+    const m = ctx.measureText(text);
+    const bw = Math.min(w - 30, m.width + 28);
+    const bh = Math.max(28, fontSize * 1.8);
+    const bx = (w - bw) / 2;
+    const by = y - bh / 2;
+
+    ctx.fillStyle = "rgba(0,0,0,0.25)";
+    drawRoundedRect(ctx, bx, by, bw, bh, 999);
+    ctx.fill();
+
+    ctx.fillStyle = "#fff";
+    ctx.fillText(text, w / 2, y);
+
+    ctx.restore();
+  }
+}
+// ================================================
+
+}
 
     function loop(){
       update();
