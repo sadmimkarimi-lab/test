@@ -764,6 +764,23 @@
       .header-main { align-items: flex-start; }
       .mode-box { min-width: 100px; }
     }
+
+.hint-box{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:8px;
+}
+
+.hint-note-under-input{
+  margin-top:8px;
+  font-size:13px;
+  font-weight:700;
+  opacity:.95;
+  text-align:center;
+}
+
+    
   </style>
 <script src="https://developer.eitaa.com/eitaa-web-app.js"></script>
   
@@ -917,6 +934,12 @@
         placeholder="کلمه‌ای که ساختی را اینجا بنویس و روی «ثبت کلمه» بزن..."
       />
 
+<div class="hint-note-under-input">
+  نکته: لازم نیست کلمه از همهٔ حروف ساخته شود.
+</div>
+
+
+      
       <div class="buttons-row">
         <button id="checkBtn" class="primary-btn btn-half" type="button">
           <span>➕</span>
@@ -929,10 +952,22 @@
         </button>
       </div>
 
-      <button id="hintBtn" class="hint-btn" type="button">
-        <span class="icon">💡</span>
-        <span id="hintText">راهنما (۵ امتیاز کم می‌شود)</span>
-      </button>
+<div class="hint-box">
+  <button id="hintBtn1" class="hint-btn" type="button">
+    <span class="icon">💡</span>
+    <span>راهنما ۱ — هزینه ۵ | نمایش ۱ حرف</span>
+  </button>
+
+  <button id="hintBtn2" class="hint-btn" type="button">
+    <span class="icon">💡💡</span>
+    <span>راهنما ۲ — هزینه ۱۵ | نمایش ۲ حرف</span>
+  </button>
+
+  <button id="hintBtn3" class="hint-btn" type="button">
+    <span class="icon">🔢</span>
+    <span>راهنما ۳ — هزینه ۱۵ | تعداد حروف</span>
+  </button>
+</div>
 
       <div id="rankText" class="rank-text rank-text-bottom">
         اگر همهٔ مراحل فعلی را رد کنی، <b>استاد کلمات طاویتا</b> می‌شوی 😉
@@ -1186,10 +1221,11 @@
   let isMuted = false;
   let playerName = "";
 
-  let hintStage = 0;         // 0=هیچ، 1=راهنما اول، 2=راهنما دوم
-let hintLocked = false;    // بعد از راهنما دوم قفل میشه
-let hintWordForLevel = ""; // کلمه‌ای که راهنما روی همون میچرخه
-
+  let hintWordForLevel = "";   // کلمه‌ای که راهنما روی آن می‌چرخد
+let usedHint1 = false;
+let usedHint2 = false;
+let usedHint3 = false;
+  
   // مود بازی و تایمر
   let gameMode = "normal";
   let timerId = null;
@@ -1226,7 +1262,9 @@ let hintWordForLevel = ""; // کلمه‌ای که راهنما روی همون 
   const comboValueEl    = document.getElementById("comboValue");
   const missionBadgeEl  = document.getElementById("missionBadge");
   const missionTextEl   = document.getElementById("missionText");
-  const hintBtn         = document.getElementById("hintBtn");
+  const hintBtn1 = document.getElementById("hintBtn1");
+const hintBtn2 = document.getElementById("hintBtn2");
+const hintBtn3 = document.getElementById("hintBtn3");
   const soundToggleBtn  = document.getElementById("soundToggle");
   const soundIndicator  = document.getElementById("soundIndicator");
   const soundLabel      = document.getElementById("soundLabel");
