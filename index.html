@@ -696,7 +696,7 @@ const gameContainer = document.getElementById("game-container");
 // ===================== Floating message (center, non-intrusive) =====================
 let floatMsg = null;
 
-function showFloat(text, duration = 900) {
+function showFloat(text, duration = 1600) {
   floatMsg = {
     text,
     t0: performance.now(),
@@ -1410,8 +1410,17 @@ window.addEventListener("orientationchange", resizeCanvas);
         ball.y=paddle.y-ball.r-1;
         return;
       }
-      let speedFactor=1;
-      if(slowBallTicks>0) speedFactor*=0.7;
+      let speedFactor = 1;
+
+// 🎯 کندتر فقط مراحل اول
+if (level <= 3) {
+  speedFactor *= 0.75;   // ملایم و دلنشین
+}
+
+// پاورآپ کندکننده
+if (slowBallTicks > 0) {
+  speedFactor *= 0.7;
+}
       ball.x+=ball.vx*speedFactor;
       ball.y+=ball.vy*speedFactor;
 
@@ -1677,44 +1686,54 @@ window.addEventListener("orientationchange", resizeCanvas);
       ctx.stroke();
 
 
-// ======= پیام شناور وسط بازی (اینجا دقیقاً) =======
+// ======= پیام شناور (بزرگ‌تر + ماندگارتر + غیرمزاحم) =======
 if (floatMsg) {
   const now = performance.now();
-  const p = (now - floatMsg.t0) / floatMsg.dur;
+  const pRaw = (now - floatMsg.t0) / floatMsg.dur;
 
-  if (p >= 1) {
+  if (pRaw >= 1) {
     floatMsg = null;
   } else {
-    const alpha = 0.55 * (1 - p);                 // کمتر تو چشم
-const y = Math.max(28, paddle.y - 26 - p * 6); // بالای پَد، مزاحم آجرها نیست
-const fontSize = Math.max(11, Math.floor(w / 28)); // کوچیک‌تر
+    // حرکت خیلی کم + محوشدن نرم
+    const p = Math.max(0, Math.min(1, pRaw));
+    const alpha = 0.90 * (1 - p * 0.85);          // واضح‌تر و دیرتر محو
+    const fontSize = Math.max(18, Math.floor(w / 18)); // بزرگ‌تر
+    const y = h * 0.45 - p * 8;                    // نزدیک مرکز، کمی رو به بالا
 
     ctx.save();
     ctx.globalAlpha = alpha;
     ctx.direction = "rtl";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.font = `700 ${fontSize}px Vazirmatn`;
+    ctx.font = `800 ${fontSize}px Vazirmatn`;
 
     const text = floatMsg.text;
     const m = ctx.measureText(text);
-    const bw = Math.min(w - 30, m.width + 28);
-    const bh = Math.max(28, fontSize * 1.8);
+
+    // باکس بزرگ‌تر و خواناتر
+    const bw = Math.min(w - 26, m.width + 46);
+    const bh = Math.max(38, fontSize * 1.9);
     const bx = (w - bw) / 2;
     const by = y - bh / 2;
 
-    ctx.fillStyle = "rgba(0,0,0,0.25)";
+    // پس‌زمینه قوی‌تر (ولی هنوز شفاف)
+    ctx.fillStyle = "rgba(0,0,0,0.50)";
     drawRoundedRect(ctx, bx, by, bw, bh, 999);
     ctx.fill();
 
-    ctx.fillStyle = "#fff";
+    // حاشیه‌ی خیلی ملایم برای شفافیت بیشتر
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = "rgba(255,255,255,0.18)";
+    ctx.stroke();
+
+    // متن
+    ctx.fillStyle = "rgba(255,255,255,0.98)";
     ctx.fillText(text, w / 2, y);
 
     ctx.restore();
   }
 }
-// ================================================
-
+// ============================================================
 }
 
     function loop(){
