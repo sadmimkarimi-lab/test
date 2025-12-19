@@ -2042,80 +2042,149 @@ hintBtn.textContent = "راهنما";
     setTavita("shuffle", "حروف را جابه‌جا کردم، شاید ایدهٔ جدیدی به ذهنت برسد ✨");
   });
 
-hintBtn.addEventListener("click", () => {
+
+
+  
+function pickHintWord() {
   const level = levels[currentLevelIndex];
+  const remaining = level.answers.map(normalizeWord).filter(a => !foundWords.includes(a));
+  if (remaining.length === 0) return "";
+  return remaining[Math.floor(Math.random() * remaining.length)];
+}
 
-  // 1) اگر قفل شده: فقط پیام بده، امتیاز کم نکن
-  if (hintLocked) {
-    setStatus("راهنماهای این مرحله تمام شد 🔒", "ok");
-    return;
+function resetHintsForNextWord() {
+  hintWordForLevel = "";
+  usedHint1 = usedHint2 = usedHint3 = false;
+  hintBtn1.disabled = false;
+  hintBtn2.disabled = false;
+  hintBtn3.disabled = false;
+}
+
+function ensureHintWord() {
+  if (!hintWordForLevel || foundWords.includes(hintWordForLevel)) {
+    hintWordForLevel = pickHintWord();
+    usedHint1 = usedHint2 = usedHint3 = false;
+    hintBtn1.disabled = false;
+    hintBtn2.disabled = false;
+    hintBtn3.disabled = false;
   }
+  return hintWordForLevel;
+}
 
-  // 2) کلمات باقی‌مانده
+function pickHintWord() {
+  const level = levels[currentLevelIndex];
   const remaining = level.answers
     .map(normalizeWord)
     .filter(a => !foundWords.includes(a));
 
-  if (remaining.length === 0) {
-    setStatus("همه کلمات رو پیدا کردی 🌟", "ok");
+  if (remaining.length === 0) return "";
+  return remaining[Math.floor(Math.random() * remaining.length)];
+}
+
+function resetHintsForNextWord() {
+  hintWordForLevel = "";
+  usedHint1 = usedHint2 = usedHint3 = false;
+
+  hintBtn1.disabled = false;
+  hintBtn2.disabled = false;
+  hintBtn3.disabled = false;
+}
+
+function ensureHintWord() {
+  if (!hintWordForLevel || foundWords.includes(hintWordForLevel)) {
+    hintWordForLevel = pickHintWord();
+    usedHint1 = usedHint2 = usedHint3 = false;
+
+    hintBtn1.disabled = false;
+    hintBtn2.disabled = false;
+    hintBtn3.disabled = false;
+  }
+  return hintWordForLevel;
+}
+
+function applyHint(cost, msg, btn, flagSetter) {
+  if (score < cost) {
+    setStatus("امتیاز کافی نداری 😕", "bad");
     return;
   }
 
-  // 3) یک کلمه ثابت برای این مرحله انتخاب کن (تا راهنمای ۱ و ۲ روی یک کلمه باشن)
-  if (!hintWordForLevel) {
-    hintWordForLevel = remaining[Math.floor(Math.random() * remaining.length)];
-  }
+  score -= cost;
+  scoreTextEl.textContent = String(score);
 
-  // اگر آن کلمه پیدا شد، یکی دیگر انتخاب کن
-  if (foundWords.includes(hintWordForLevel)) {
-    hintWordForLevel = remaining[Math.floor(Math.random() * remaining.length)];
-  }
+  setStatus(msg, "ok");
+  flagSetter();
+  btn.disabled = true;
 
-  // 4) راهنمای ۱: فقط حرف اول (هزینه کمتر)
-  if (hintStage === 0) {
-    const cost1 = 5;
+  saveGameState();
+}
 
-    // اگر امتیاز کافی نیست
-    if (score < cost1) {
-      setStatus("امتیاز کافی نداری 😅", "bad");
-      return;
-    }
-
-    score -= cost1;
-    scoreTextEl.textContent = String(score);
-
-    const msg = `راهنما ۱: با «${hintWordForLevel[0]}» شروع می‌شود.`;
-    setStatus(msg, "ok");
-
-    hintStage = 1;
-    saveGameState?.();
+/* ===== راهنما ۱: یک حرف ===== */
+hintBtn1.addEventListener("click", () => {
+  if (usedHint1) {
+    setStatus("این راهنما قبلاً استفاده شده 🔒", "bad");
     return;
   }
 
-  // 5) راهنمای ۲: تعداد حروف (هزینه بیشتر) + قفل
-  if (hintStage === 1) {
-    const cost2 = 12;
-
-    if (score < cost2) {
-      setStatus("امتیاز کافی نداری 😅", "bad");
-      return;
-    }
-
-    score -= cost2;
-    scoreTextEl.textContent = String(score);
-
-    const msg = `راهنما ۲: ${hintWordForLevel.length} حرفی است.`;
-    setStatus(msg, "ok");
-
-    hintStage = 2;
-    hintLocked = true;               // 🔒 قفل
-    hintBtn.disabled = true;
-    hintBtn.textContent = "راهنما 🔒";
-
-    saveGameState?.();
+  const w = ensureHintWord();
+  if (!w) {
+    setStatus("همه کلمات پیدا شده 🎉", "ok");
     return;
   }
+
+  applyHint(
+    5,
+    `راهنما: یک حرف → «${w[0]}»`,
+    hintBtn1,
+    () => (usedHint1 = true)
+  );
 });
+
+/* ===== راهنما ۲: دو حرف ===== */
+hintBtn2.addEventListener("click", () => {
+  if (usedHint2) {
+    setStatus("این راهنما قبلاً استفاده شده 🔒", "bad");
+    return;
+  }
+
+  const w = ensureHintWord();
+  if (!w) {
+    setStatus("همه کلمات پیدا شده 🎉", "ok");
+    return;
+  }
+
+  const a = w[0];
+  const b = w.length >= 2 ? w[1] : "";
+
+  applyHint(
+    15,
+    `راهنما: دو حرف → «${a}${b}»`,
+    hintBtn2,
+    () => (usedHint2 = true)
+  );
+});
+
+/* ===== راهنما ۳: تعداد حروف ===== */
+hintBtn3.addEventListener("click", () => {
+  if (usedHint3) {
+    setStatus("این راهنما قبلاً استفاده شده 🔒", "bad");
+    return;
+  }
+
+  const w = ensureHintWord();
+  if (!w) {
+    setStatus("همه کلمات پیدا شده 🎉", "ok");
+    return;
+  }
+
+  applyHint(
+    15,
+    `راهنما: تعداد حروف → ${w.length}`,
+    hintBtn3,
+    () => (usedHint3 = true)
+  );
+});
+
+  
   nextBtn.addEventListener("click", () => {
     // صدای «مرحله بعد» + ویس مربوطه
     playSafe(soundLevelUp);
