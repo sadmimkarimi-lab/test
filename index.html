@@ -1865,10 +1865,10 @@ function hidePopup() {
       );
     }
 
-    // وضعیت مود
+    // وضعیت حالت
     modeToggleBtn.disabled = modeLocked;
     if (gameMode === "timed") {
-      modeToggleBtn.textContent = "⏱️ مود زمان‌دار";
+      modeToggleBtn.textContent = "⏱️ حالت زمان‌دار";
       if (!modeLocked) {
         startLevelTimer();
       } else {
@@ -1876,7 +1876,7 @@ function hidePopup() {
       }
       if (modeHint) modeHint.classList.add("hidden");
     } else {
-      modeToggleBtn.textContent = "🎮 مود عادی";
+      modeToggleBtn.textContent = "🎮 حالت عادی";
       clearTimer();
       if (modeHint) {
         if (!modeLocked) modeHint.classList.remove("hidden");
@@ -1987,19 +1987,27 @@ hintBtn.textContent = "راهنما";
     if (hintWordForLevel && w === hintWordForLevel) {
   resetHintsForNextWord();
     }
+
+// اگر مرحله تموم شد، زمان متوقف شود
+if (gameMode === "timed" && foundWords.length >= level.needed) {
+  clearTimer();
+  timeLeft = 0;
+}
+
+    
     totalWords += 1;
     renderFoundWords();
     wordInputEl.value = "";
     wordInputEl.focus();
 
-    // بعد از اولین کلمه، مود قفل می‌شود
+    // بعد از اولین کلمه، حالت زمان قفل می‌شود
     if (foundWords.length === 1) {
       modeLocked = true;
       modeToggleBtn.disabled = true;
       if (modeHint) modeHint.classList.add("hidden");
     }
 
-    // امتیاز + کامبو (در مود زمان‌دار دوبرابر)
+    // امتیاز + کامبو (در حالت زمان‌دار دوبرابر)
     const baseInc = (gameMode === "timed" ? 20 : 10);
     applyComboAndScore(baseInc);
 
