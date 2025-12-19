@@ -1984,6 +1984,9 @@ hintBtn.textContent = "راهنما";
 
     // موفقیت
     foundWords.push(w);
+    if (hintWordForLevel && w === hintWordForLevel) {
+  resetHintsForNextWord();
+    }
     totalWords += 1;
     renderFoundWords();
     wordInputEl.value = "";
