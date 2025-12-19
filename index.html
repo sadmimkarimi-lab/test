@@ -1246,6 +1246,10 @@ let usedHint3 = false;
   const TIME_PER_WORD = 10;
   let modeLocked = false;
 
+let timedUsedThisLevel = false;   // هر مرحله فقط یک‌بار اجازه حالت زمان‌دار
+let timedLockStarted = false;     // وقتی زمان‌دار شروع شد دیگه قابل خاموش کردن نیست
+
+  
   const scoreTextEl     = document.getElementById("scoreText");
   const levelNumberEl   = document.getElementById("levelNumber");
   const totalLevelsEl   = document.getElementById("totalLevels");
@@ -1842,11 +1846,19 @@ function hidePopup() {
     clearTimer();
 
     if (resetFound) {
-      foundWords = [];
-      modeLocked = false;
-    } else {
-      modeLocked = foundWords.length > 0;
-    }
+  foundWords = [];
+
+  // هر مرحله از نو: حالت زمان‌دار باید دستی فعال بشه (اتومات شروع نشه)
+  gameMode = "normal";
+  timedUsedThisLevel = false;
+  timedLockStarted = false;
+
+  modeLocked = false;
+  modeToggleBtn.disabled = false;
+
+} else {
+  modeLocked = foundWords.length > 0;
+}
 
     renderFoundWords();
     scoreTextEl.textContent = score.toString();
@@ -2274,29 +2286,43 @@ hintBtn3.addEventListener("click", () => {
     );
   });
 
-  // دکمه مود زمان‌دار / عادی
-  modeToggleBtn.addEventListener("click", () => {
-    if (modeLocked) {
-      playSafe(soundClick);
-      setStatus("در هر مرحله فقط قبل از ثبت اولین کلمه می‌تونی مود زمان‌دار را تغییر بدهی.", "err");
-      setTavita("error", "این مرحله شروع شده؛ برای مرحله‌های بعدی از اول تصمیم بگیر زمان‌دار باشه یا نه 😉");
-      return;
-    }
+  // دکمه حالت زمان‌دار / عادی
+modeToggleBtn.addEventListener("click", () => {
+
+  // اگر در این مرحله یکبار استفاده شده، دیگه قفل
+  if (timedUsedThisLevel) {
     playSafe(soundClick);
-    if (gameMode === "normal") {
-      gameMode = "timed";
-      modeToggleBtn.textContent = "⏱️ حالت زمان‌دار";
-      if (modeHint) modeHint.classList.add("hidden");
-      startLevelTimer();
-      playSafe(voiceModeOn);
-    } else {
-      gameMode = "normal";
-      modeToggleBtn.textContent = "🎮 حالت عادی";
-      clearTimer();
-      if (modeHint) modeHint.classList.remove("hidden");
-    }
-    saveGameState();
-  });
+    setStatus("حالت زمان‌دار در هر مرحله فقط یک‌بار قابل استفاده است 🔒", "err");
+    setTavita("error", "این مرحله یک‌بار زمان‌دار شده؛ برای مرحله بعد دوباره انتخابش کن 😉");
+    return;
+  }
+
+  // اگر مرحله با ثبت کلمه شروع شده، اجازه تغییر نده
+  if (modeLocked) {
+    playSafe(soundClick);
+    setStatus("بعد از شروع مرحله نمی‌تونی حالت رو تغییر بدی 🔒", "err");
+    setTavita("error", "برای مرحله‌های بعدی قبل از ثبت کلمه تصمیم بگیر 😉");
+    return;
+  }
+
+  // روشن کردن زمان‌دار (فقط همین)
+  playSafe(soundClick);
+  gameMode = "timed";
+  timedUsedThisLevel = true;
+  timedLockStarted = true;
+
+  // از همین لحظه قفل بشه که نتونه وسط تایمر خاموش/روشن کنه
+  modeLocked = true;
+  modeToggleBtn.disabled = true;
+
+  modeToggleBtn.textContent = "⏱️ حالت زمان‌دار";
+  if (modeHint) modeHint.classList.add("hidden");
+
+  startLevelTimer();
+  playSafe(voiceModeOn);
+
+  saveGameState();
+});
 
   // خلاصه پیشرفت
 summaryBtn.addEventListener("click", () => {
