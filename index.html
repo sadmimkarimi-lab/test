@@ -1677,7 +1677,24 @@ if (window.Eitaa && window.Eitaa.WebApp) {
 }
 document.body.appendChild(tag);
 
+// ======== ADS ========
+const AD_IMAGE = "https://cdnfa.com/irangiah/a9be/uploads/ads/tankads.webp";
+const AD_LINK  = "https://irangiah.ir"; // لینک مقصد تبلیغ
 
+function openAdLink() {
+  const url = AD_LINK;
+
+  // اگر داخل ایتا هستیم، سعی کن لینک رو امن باز کنی
+  if (window.Eitaa && window.Eitaa.WebApp) {
+    const wa = window.Eitaa.WebApp;
+    if (typeof wa.openLink === "function") {
+      try { wa.openLink(url); return; } catch(e){}
+    }
+  }
+
+  // اگر نشد، عادی باز کن
+  window.open(url, "_blank");
+}
 
 
     
@@ -2838,8 +2855,11 @@ bullets.forEach((b, bi) => {
   boom.style.top  = centerY + "px";
 
   document.body.appendChild(boom);
-  setTimeout(() => boom.remove(), 900);
+ setTimeout(() => boom.remove(), 900);
 
+
+
+          
           // لرزش صفحه
           document.body.classList.add("screen-shake");
           setTimeout(() => document.body.classList.remove("screen-shake"), 500);
