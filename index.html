@@ -1163,6 +1163,40 @@ canvas{
   transform: scale(.96);
 }
 
+
+
+
+/* ===== Ads styles ===== */
+.intro-ad{
+  width:90%;
+  max-width:360px;
+  margin:14px auto 0;
+  display:block;
+  border-radius:16px;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.6);
+}
+
+.start-ad{
+  width:100%;
+  max-width:260px;
+  margin:10px auto 0;
+  display:block;
+  border-radius:14px;
+  cursor:pointer;
+  box-shadow:0 10px 22px rgba(15,23,42,.8);
+}
+
+.end-ad{
+  width:100%;
+  max-width:280px;
+  margin:14px auto 0;
+  display:block;
+  border-radius:16px;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(239,68,68,.35);
+}
+
   
 
   
@@ -1188,6 +1222,13 @@ canvas{
       muted
     ></video>
 
+<img
+  src="https://cdnfa.com/irangiah/a9be/uploads/ads/tankads.webp"
+  class="intro-ad"
+  alt="تبلیغ"
+  onclick="openAdLink()"
+/>
+    
 <audio id="startSfx" src="https://cdn.jsdelivr.net/gh/itsrahaa/sfx/tank-start.mp3" preload="auto"></audio>
     
     <div class="intro-controls">
@@ -1244,6 +1285,14 @@ canvas{
   <button id="continueBtn" class="secondary">ادامه از آخرین مرحله</button>
   <!-- 👇 دکمه جدید -->
   <button id="levelsBtn" class="secondary">مراحل بازی</button>
+
+<img
+  src="https://cdnfa.com/irangiah/a9be/uploads/ads/tankads.webp"
+  class="start-ad"
+  alt="تبلیغ"
+  onclick="openAdLink()"
+/>
+          
 </div>
 
         <!-- پایان مرحله -->
@@ -1263,6 +1312,14 @@ canvas{
             امتیاز این دور: <span id="finalScore">0</span><br>
             بهترین امتیاز: <span id="bestScore">0</span>
           </p>
+
+          <img
+  src="https://cdnfa.com/irangiah/a9be/uploads/ads/tankads.webp"
+  class="end-ad"
+  alt="تبلیغ"
+  onclick="openAdLink()"
+/>
+          
           <button id="restartBtn">شروع مجدد از مرحله قبل</button>
         </div>
       </div>
